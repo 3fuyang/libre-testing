@@ -19,7 +19,7 @@ export default function testingUseCases(testData) {
                 testResult = "该三角形的是等腰三角形";
             else testResult = "该三角形的是普通三角形";
         } else testResult = "所给三边数据不能构成三角形";
-        result.pushback(testResult);
+        result.push(testResult);
     }
     return result;
 }

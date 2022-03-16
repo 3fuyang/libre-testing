@@ -112,7 +112,7 @@ import { ref } from 'vue'
 import { CloudDownloadOutline } from '@vicons/ionicons5'
 import hljs from 'highlight.js/lib/core'
 import javascript from 'highlight.js/lib/languages/javascript'
-
+import Papa from 'papaparse'
 const usecaseType = ref(null)
 const options = [
   {
@@ -169,8 +169,13 @@ function handleChange(options){
   fileListLength.value = options.fileList.length;
   if(fileListLength.value !== 0){
     // 获取上传的文件对象
-    fileData.value = options.fileList[0]
-    console.log(fileData.value)
+    console.log(options.fileList[0].file)
+    Papa.parse(options.fileList[0].file, {
+      complete: (result) => {
+        fileData.value = result
+        console.log(fileData.value)
+      }
+    })
   }else{
     fileData.value = null
   }
