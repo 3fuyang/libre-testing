@@ -42,7 +42,12 @@
               Testing Result
             </template>
             <!-- 打印测试结果 -->
-            
+            <n-data-table
+              :bordered="false"
+              :columns="columns"
+              :data="result"
+              :pagination="pagination">
+            </n-data-table>
           </n-card>          
         </n-tab-pane>    
       </n-tabs>
@@ -65,6 +70,7 @@
         <p class="subtitle">Step 02. 上传用例集 (Optional)</p>
         <n-space justify="center">
           <n-upload
+            ref="uploadRef"
             action="#"
             :default-upload="false"
             accept=".csv"
@@ -101,7 +107,7 @@
 </template>
 
 <script setup>
-import { NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton } from 'naive-ui'
+import { NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable } from 'naive-ui'
 import { ref } from 'vue'
 import { CloudDownloadOutline } from '@vicons/ionicons5'
 import hljs from 'highlight.js/lib/core'
@@ -151,12 +157,27 @@ const options = [
   }
 ]
 
-const fileListLength = ref(0);
+const createColumns = (rawData) => {
+  const cols = []
+
+}
+
+const uploadRef = ref(null)
+const fileData = ref(null)
+const fileListLength = ref(0)
 function handleChange(options){
   fileListLength.value = options.fileList.length;
+  if(fileListLength.value !== 0){
+    // 获取上传的文件对象
+    fileData.value = options.fileList[0]
+    console.log(fileData.value)
+  }else{
+    fileData.value = null
+  }
 }
 function handleUpload(){
-  // 开始测试
+  // 转化csv文件的数据为数组
+  
 }
 
 hljs.registerLanguage('javascript', javascript)
