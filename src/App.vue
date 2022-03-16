@@ -1,9 +1,9 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader, NConfigProvider} from 'naive-ui'
-import SideNav from './components/SideNav.vue';
-import TopNav from './components/TopNav.vue';
-import { ref } from 'vue';
+import SideNav from './components/SideNav.vue'
+import TopNav from './components/TopNav.vue'
+import { ref } from 'vue'
 const collapsed = ref(false)
 </script>
 
@@ -27,8 +27,11 @@ const collapsed = ref(false)
           @collapse-sider="collapsed = true"
           @expand-sider="collapsed = false"/>
       </n-layout-header>
-      <n-layout-content embedded class="main-content" :native-scrollbar="false" bordered>
-        Content
+      <n-layout-content 
+        embedded 
+        class="main-content" 
+        :native-scrollbar="false" 
+        bordered>
         <RouterView/>
       </n-layout-content>
     </n-layout>
