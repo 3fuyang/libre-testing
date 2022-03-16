@@ -4,7 +4,7 @@
       <n-tabs>
         <n-tab-pane name="Question" tab="问题描述">
           <n-card 
-            class="output" 
+            class="description" 
             size="small" 
             header-style="padding: .8em;">
             <template #header>
@@ -43,6 +43,7 @@
             </template>
             <!-- 打印测试结果 -->
             <n-data-table
+              size="small"
               :bordered="false"
               :columns="columns"
               :data="result"
@@ -157,9 +158,32 @@ const options = [
   }
 ]
 
+// 传入.csv对应的数组，创建表头
 const createColumns = (rawData) => {
-  const cols = []
-
+  let cols = []
+  console.log(rawData[0])
+  for(let item of rawData[0]){
+    cols.push({
+      title: item,
+      key: item
+    })
+  }
+  return cols
+}
+const createRows = (rawData) => {
+  let data = []
+  let counter = 0
+  const rowNum = rawData.length
+  const colNum = rawData[0].length
+  for(let i=1;i<rowNum;++i){
+    let row = { key: counter++ }
+    let j = 0
+    for(let item of columns.value){
+      row[item.key] = rawData[i][j++]
+    }
+    data.push(row)
+  }
+  return data
 }
 
 const uploadRef = ref(null)
@@ -168,11 +192,11 @@ const fileListLength = ref(0)
 function handleChange(options){
   fileListLength.value = options.fileList.length;
   if(fileListLength.value !== 0){
-    // 获取上传的文件对象
+    // 获取上传的.csv文件对象,转化为数组
     console.log(options.fileList[0].file)
     Papa.parse(options.fileList[0].file, {
       complete: (result) => {
-        fileData.value = result
+        fileData.value = result.data
         console.log(fileData.value)
       }
     })
@@ -180,9 +204,18 @@ function handleChange(options){
     fileData.value = null
   }
 }
+const columns = ref([])
+const result = ref([])
+const pagination = {
+  pageSize: 7
+}
 function handleUpload(){
-  // 转化csv文件的数据为数组
-  
+  // 绘制表头
+  columns.value = createColumns(fileData.value)
+  // 进行测试并回填结果
+
+  // 绘制表格
+  result.value = createRows(fileData.value)
 }
 
 hljs.registerLanguage('javascript', javascript)
@@ -317,16 +350,22 @@ const code = `module.exports = {
 .left-flex-item{
   max-width: 63%;
   overflow-x: hidden;
-  flex: 0 0 auto;
+  flex: 1 0 auto;
+  overflow-y: auto;
 }
 .right-flex-item{
   padding-top: 3.2em;
   margin-left: .6em;
   flex: 1 1 auto;
 }
-.output{
+.description{
   box-sizing: border-box;
   width: 100%;
+  max-height: 85vh;
+}
+.output{
+  width: 100%;
+  min-height: 70vh;
   max-height: 85vh;
 }
 .subtitle{
