@@ -254,7 +254,7 @@ function handleUpload(){
     // 使用项目本地的.csv文件
     let rawFile = getLocalFile(`../../../testUseCase/triangleJudge/${usecaseType.value}.csv`)
     if(!rawFile){
-      message.warning(`暂时未准备该类型的测试用例，请选择其他用例集或手动上传用例集。`)
+      message.warning(`暂时未准备该类型测试用例，请选择其他用例集或手动上传用例集。`)
       return false
     }
     console.log(rawFile)
