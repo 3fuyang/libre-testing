@@ -1,6 +1,6 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader, NConfigProvider} from 'naive-ui'
+import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader, NConfigProvider, NMessageProvider} from 'naive-ui'
 import SideNav from './components/SideNav.vue'
 import TopNav from './components/TopNav.vue'
 import { ref } from 'vue'
@@ -8,34 +8,36 @@ const collapsed = ref(false)
 </script>
 
 <template>
-  <n-layout has-sider class="body">
-    <n-config-provider>
-      <n-layout-sider 
-        class="side-bar" 
-        width="13vw" 
-        :native-scrollbar="false" 
-        bordered
-        collapse-mode="width"
-        :collapsed-width="48"
-        :collapsed="collapsed">
-        <SideNav :showTitle="!collapsed"/>
-      </n-layout-sider>
-    </n-config-provider>
-    <n-layout bordered class="embedded-body">
-      <n-layout-header bordered class="top-bar">
-        <TopNav 
-          @collapse-sider="collapsed = true"
-          @expand-sider="collapsed = false"/>
-      </n-layout-header>
-      <n-layout-content 
-        embedded 
-        class="main-content" 
-        :native-scrollbar="false" 
-        bordered>
-        <RouterView/>
-      </n-layout-content>
-    </n-layout>
-  </n-layout>
+  <n-message-provider>
+    <n-layout has-sider class="body">
+      <n-config-provider>
+        <n-layout-sider 
+          class="side-bar" 
+          width="13vw" 
+          :native-scrollbar="false" 
+          bordered
+          collapse-mode="width"
+          :collapsed-width="48"
+          :collapsed="collapsed">
+          <SideNav :showTitle="!collapsed"/>
+        </n-layout-sider>
+      </n-config-provider>
+      <n-layout bordered class="embedded-body">
+        <n-layout-header bordered class="top-bar">
+          <TopNav 
+            @collapse-sider="collapsed = true"
+            @expand-sider="collapsed = false"/>
+        </n-layout-header>
+        <n-layout-content 
+          embedded 
+          class="main-content" 
+          :native-scrollbar="false" 
+          bordered>
+          <RouterView/>
+        </n-layout-content>
+      </n-layout>
+    </n-layout>    
+  </n-message-provider>
 </template>
 
 <style>

@@ -1,6 +1,6 @@
 export function judgeTriangle(a, b, c) {
     let result
-    if (a <= 0 || b <= 0 || c <= 0 ||  a >= 999 || b >= 999 || c >= 999){
+    if (a <= 0 || b <= 0 || c <= 0 ||  a > 200 || b > 200 || c > 200){
         return result = "数据非法，边长数值越界"
     }
     if (

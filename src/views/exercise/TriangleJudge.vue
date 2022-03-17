@@ -97,7 +97,7 @@
         <n-space justify="center">
           <n-button
             class="upload-btn"
-            :disabled="!fileListLength"
+            :disabled="!fileListLength && !usecaseType"
             @click="handleUpload"
             strong
             type="primary">
@@ -110,7 +110,7 @@
 </template>
 
 <script setup>
-import { NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable } from 'naive-ui'
+import { NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable, NMessageProvider, useMessage } from 'naive-ui'
 import { ref } from 'vue'
 import { CloudDownloadOutline } from '@vicons/ionicons5'
 import hljs from 'highlight.js/lib/core'
@@ -130,7 +130,7 @@ const options = [
       },
       {
         label: '健壮边界值',
-        value: 'robust-boundary',        
+        value: 'robustness-boundary',        
       },
       {
         label: '最坏边界值',
@@ -144,19 +144,19 @@ const options = [
     children: [
       {
         label: '弱一般等价类',
-        value: 'weak-equivalence',        
+        value: 'weak-general-equivalent',        
       },
       {
         label: '强一般等价类',
-        value: 'strong-equivalence',        
+        value: 'strong-general-equivalent',        
       },
       {
         label: '弱健壮等价类',
-        value: 'weak-robust',        
+        value: 'weak-robust-equivalent',        
       },
       {
         label: '强健壮等价类',
-        value: 'strong-robust',        
+        value: 'strong-robust-equivalent',        
       },                  
     ]    
   }
@@ -210,14 +210,14 @@ const executeTesting = (dataContent) => {
 const uploadRef = ref(null)
 const fileData = ref(null)
 const fileListLength = ref(0)
-function handleChange(options){
+function handleChange (options){
   fileListLength.value = options.fileList.length;
   if(fileListLength.value !== 0){
-    // 获取上传的.csv文件对象,转化为数组
+    // 获取手动上传的.csv文件对象,转化为数组
     //console.log(options.fileList[0].file)
     Papa.parse(options.fileList[0].file, {
-      complete: (result) => {
-        fileData.value = result.data
+      complete: (res) => {
+        fileData.value = res.data
         //console.log(fileData.value)
       }
     })
@@ -225,45 +225,77 @@ function handleChange(options){
     fileData.value = null
   }
 }
+function getLocalFile (filePath){
+  // 使用XMLHttpRequest读取本地文件
+  let xhr = null
+  if (window.XMLHttpRequest){
+    xhr = new XMLHttpRequest()
+  }else{
+    xhr = new ActiveXObject(`Microsoft.XMLHTTP`)
+  }
+  const okStatus = document.location.protocol === 'file' ? 0 : 200
+  xhr.open('GET', filePath, false)
+  xhr.overrideMimeType('text/html;charset=utf-8')
+  xhr.send()
+  return xhr.status === okStatus ? xhr.responseText : null
+}
 const columns = ref([])
 const result = ref([])
 const pagination = {
   pageSize: 7
 }
 const currTab = ref('Question')
+const message = useMessage()
 function handleUpload(){
+  if(fileListLength.value){
+    // 使用手动上传的.csv文件
+    message.info(`使用用户手动上传的测试用例。`)
+  }else{
+    // 使用项目本地的.csv文件
+    let rawFile = getLocalFile(`../../../testUseCase/triangleJudge/${usecaseType.value}.csv`)
+    if(!rawFile){
+      message.warning(`暂时未准备该类型的测试用例，请选择其他用例集或手动上传用例集。`)
+      return false
+    }
+    console.log(rawFile)
+    Papa.parse(rawFile, {
+      complete: (res) => {
+        fileData.value = res.data
+      }
+    })
+    console.log(fileData.value)
+  }
   // 绘制表头
   columns.value = createColumns(fileData.value)
   // 绘制表格
   result.value = createRows(fileData.value)
   // 进行测试并回填结果
   executeTesting(result.value)
+  message.success( `测试完毕，共执行 ${result.value.length} 个用例。`)
   currTab.value = 'Result'
 }
 
 hljs.registerLanguage('javascript', javascript)
 const code = `export function judgeTriangle(a, b, c) {
     let result
-    
-    if (a < 0) result = "数据非法，边长数值越界";
-    if (b < 0) result = "数据非法，边长数值越界";
-    if (c < 0) result = "数据非法，边长数值越界";
-    if (a >= 999) result = "数据非法，边长数值越界";
-    if (b >= 999) result = "数据非法，边长数值越界";
-    if (c >= 999) result = "数据非法，边长数值越界";
+    if (a <= 0 || b <= 0 || c <= 0 ||  a >= 999 || b >= 999 || c >= 999){
+        return result = "数据非法，边长数值越界"
+    }
     if (
         a + b > c &&
         a + c > b &&
         b + c > a
     ) {
-        if (a == b && a == c)
-            result = "该三角形的是等边三角形";
-        else if (a == b || a == c || b == c)
-            result = "该三角形的是等腰三角形";
-        else result = "该三角形的是普通三角形";
-    } else result = "所给三边数据不能构成三角形";
-    
-    return result;
+        if (a === b && a === c){
+            return result = "该三角形的是等边三角形"
+        }else if (a === b || a === c || b === c){
+            return result = "该三角形的是等腰三角形"
+        }else {
+            return result = "该三角形的是普通三角形"
+        }
+    } else {
+        return result = "所给三边数据不能构成三角形"
+    }
 }
 `
 </script>
