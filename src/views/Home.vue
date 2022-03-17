@@ -38,7 +38,7 @@
     <template #footer>
       <n-space justify="center">
         <n-p :depth="3">
-          Libre Testing beta 0.0.0 · Made in China
+          © 2022 LibreTest, Inc.
         </n-p>
       </n-space>
     </template>       
