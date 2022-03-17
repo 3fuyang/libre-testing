@@ -1,25 +1,23 @@
-export default function testingUseCases(testData) {
-    let result = []
-    for (side of testData) {
-        let testResult;
-        if (side[0] < 0) testResult = "数据非法，边长数值越界";
-        if (side[1] < 0) testResult = "数据非法，边长数值越界";
-        if (side[2] < 0) testResult = "数据非法，边长数值越界";
-        if (side[0] >= 999) testResult = "数据非法，边长数值越界";
-        if (side[1] >= 999) testResult = "数据非法，边长数值越界";
-        if (side[2] >= 999) testResult = "数据非法，边长数值越界";
-        if (
-            side[0] + side[1] > side[2] &&
-            side[0] + side[2] > side[1] &&
-            side[1] + side[2] > side[0]
-        ) {
-            if (side[0] == side[1] && side[0] == side[2])
-                testResult = "该三角形的是等边三角形";
-            else if (side[0] == side[1] || side[0] == side[2] || side[1] == side[2])
-                testResult = "该三角形的是等腰三角形";
-            else testResult = "该三角形的是普通三角形";
-        } else testResult = "所给三边数据不能构成三角形";
-        result.push(testResult);
-    }
+export function judgeTriangle(a, b, c) {
+    let result
+    
+    if (a < 0) result = "数据非法，边长数值越界";
+    if (b < 0) result = "数据非法，边长数值越界";
+    if (c < 0) result = "数据非法，边长数值越界";
+    if (a >= 999) result = "数据非法，边长数值越界";
+    if (b >= 999) result = "数据非法，边长数值越界";
+    if (c >= 999) result = "数据非法，边长数值越界";
+    if (
+        a + b > c &&
+        a + c > b &&
+        b + c > a
+    ) {
+        if (a == b && a == c)
+            result = "该三角形的是等边三角形";
+        else if (a == b || a == c || b == c)
+            result = "该三角形的是等腰三角形";
+        else result = "该三角形的是普通三角形";
+    } else result = "所给三边数据不能构成三角形";
+    
     return result;
 }

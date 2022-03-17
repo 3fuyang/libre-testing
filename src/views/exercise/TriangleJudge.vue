@@ -44,6 +44,7 @@
             <!-- 打印测试结果 -->
             <n-data-table
               size="small"
+              :max-height="420"
               :bordered="false"
               :columns="columns"
               :data="result"
@@ -114,6 +115,8 @@ import { CloudDownloadOutline } from '@vicons/ionicons5'
 import hljs from 'highlight.js/lib/core'
 import javascript from 'highlight.js/lib/languages/javascript'
 import Papa from 'papaparse'
+import { judgeTriangle } from '../../composables/triangleJudgeTest'
+
 const usecaseType = ref(null)
 const options = [
   {
@@ -161,7 +164,7 @@ const options = [
 // 传入.csv对应的数组，创建表头
 const createColumns = (rawData) => {
   let cols = []
-  console.log(rawData[0])
+  //console.log(rawData[0])
   for(let item of rawData[0]){
     cols.push({
       title: item,
@@ -174,7 +177,6 @@ const createRows = (rawData) => {
   let data = []
   let counter = 0
   const rowNum = rawData.length
-  const colNum = rawData[0].length
   for(let i=1;i<rowNum;++i){
     let row = { key: counter++ }
     let j = 0
@@ -186,6 +188,23 @@ const createRows = (rawData) => {
   return data
 }
 
+// 测试函数
+const executeTesting = (dataContent) => {
+  for(let row of dataContent){
+    console.log(row)
+    row.ActualOutput = judgeTriangle(row.Edge1, row.Edge2, row.Edge3)
+    row.TesterName = `RQD、fuyang`
+    let myTime = new Date()
+    row.Time = myTime.toLocaleDateString()
+    if(row.ActualOutput === row.ExpectedOutput){
+      row.Correctness = `TRUE`
+    }else{
+      row.Correctness =  `FALSE`
+    }
+    console.log(row)
+  }
+}
+
 const uploadRef = ref(null)
 const fileData = ref(null)
 const fileListLength = ref(0)
@@ -193,11 +212,11 @@ function handleChange(options){
   fileListLength.value = options.fileList.length;
   if(fileListLength.value !== 0){
     // 获取上传的.csv文件对象,转化为数组
-    console.log(options.fileList[0].file)
+    //console.log(options.fileList[0].file)
     Papa.parse(options.fileList[0].file, {
       complete: (result) => {
         fileData.value = result.data
-        console.log(fileData.value)
+        //console.log(fileData.value)
       }
     })
   }else{
@@ -212,133 +231,38 @@ const pagination = {
 function handleUpload(){
   // 绘制表头
   columns.value = createColumns(fileData.value)
-  // 进行测试并回填结果
-
   // 绘制表格
   result.value = createRows(fileData.value)
+  // 进行测试并回填结果
+  executeTesting(result.value)
 }
 
 hljs.registerLanguage('javascript', javascript)
-const code = `module.exports = {
-  env: {
-    browser: true,
-    es6: true,
-    node: true
-  },
-  extends: [
-    "eslint:recommended",
-    "standard"
-  ],
-  parserOptions: {
-    ecmaVersion: 2015,
-    sourceType: "module"
-  },
-  plugins: [
-    "@typescript-eslint"
-  ],
-  rules: {
-    "no-var": "warn",
-    "init-declarations": ["error", "always"],
-    "array-callback-return": "error",
-    "block-scoped-var": "error",
-    "no-multiple-empty-lines": ["error", { max: 2 }],
-    // we like our semi-colons
-    semi: ["error", "always"],
-    // our codebase doesn't do this at all, so disabled for now
-    "space-before-function-paren": ["error", "never"],
-    // for now ignore diff between types of quoting
-    quotes: "off",
-    // this is the style we are already using
-    "operator-linebreak": ["error", "before", {
-      overrides: {
-        "=": "after"
-      }
-    }],
-    // sometimes we declare variables with extra spacing
-    indent: ["error", 2, { VariableDeclarator: 2 }],
-    // seems like a good idea not to use explicit undefined
-    "no-undefined": "error",
-    // ensure import specifier contains file extension
-    "import/extensions": ["error", "always"]
-  },
-  overrides: [
-    {
-      files: ["types/*.ts", "src/*.ts"],
-      parser: '@typescript-eslint/parser',
-      rules: {
-        "import/no-duplicates": "off",
-        "import/extensions": "off"
-      }
-    },
-    {
-      files: ["src/**/*.js"],
-      rules: {
-        // make sure there is no Node.js specific API slipping into the source files
-        "import/no-nodejs-modules": "error",
-        "import/no-commonjs": "error"
-      }
-    },
-    {
-      files: ["src/languages/*.js"],
-      rules: {
-        "no-unused-expressions": "off",
-        // languages are all over the map and we don't want to
-        // do a mass edit so turn off the most egregious rule violations
-        // indent: "off",
-        camelcase: "off",
-        "no-control-regex": "off",
-        "no-useless-escape": "off",
-        "comma-dangle": "off",
-        "array-bracket-spacing": ["error", "always"
-          // {
-          //   objectsInArrays: true
-          // }
-        ],
-        // "object-curly-spacing": "warn",
-        // "key-spacing": "off",
-        // "array-bracket-spacing": ["warn"],
-        "array-bracket-newline": ["warn", {
-          multiline: true,
-          minItems: 2
-        }],
-        "array-element-newline": "warn",
-        "object-curly-newline": [1, {
-          minProperties: 2
-        }],
-        "object-property-newline": [2,
-          { allowAllPropertiesOnSameLine: false }
-        ]
-      }
-    },
-    {
-      files: ["demo/**/*.js"],
-      globals: {
-        hljs: "readonly"
-      }
-    },
-    {
-      files: ["test/**/*.js"],
-      globals: {
-        should: "readonly"
-      },
-      env: {
-        mocha: true
-      },
-      parserOptions: {
-        ecmaVersion: 2018
-      }
-    },
-    {
-      files: ["tools/**/*.js"],
-      parserOptions: {
-        ecmaVersion: 2018
-      },
-      rules: {
-        camelcase: "off"
-      }
+const code = `export function judgeTriangle(testData) {
+    let result = []
+    for (side of testData) {
+        let testResult;
+        if (side[0] < 0) testResult = "数据非法，边长数值越界";
+        if (side[1] < 0) testResult = "数据非法，边长数值越界";
+        if (side[2] < 0) testResult = "数据非法，边长数值越界";
+        if (side[0] >= 999) testResult = "数据非法，边长数值越界";
+        if (side[1] >= 999) testResult = "数据非法，边长数值越界";
+        if (side[2] >= 999) testResult = "数据非法，边长数值越界";
+        if (
+            side[0] + side[1] > side[2] &&
+            side[0] + side[2] > side[1] &&
+            side[1] + side[2] > side[0]
+        ) {
+            if (side[0] == side[1] && side[0] == side[2])
+                testResult = "该三角形的是等边三角形";
+            else if (side[0] == side[1] || side[0] == side[2] || side[1] == side[2])
+                testResult = "该三角形的是等腰三角形";
+            else testResult = "该三角形的是普通三角形";
+        } else testResult = "所给三边数据不能构成三角形";
+        result.push(testResult);
     }
-  ]
-};
+    return result;
+}
 `
 </script>
 
