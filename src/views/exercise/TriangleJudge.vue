@@ -1,7 +1,8 @@
 <template>
   <div class="flex-wrapper">
     <div class="left-flex-item">
-      <n-tabs>
+      <n-tabs
+        v-model:value="currTab">
         <n-tab-pane name="Question" tab="问题描述">
           <n-card 
             class="description" 
@@ -192,16 +193,17 @@ const createRows = (rawData) => {
 const executeTesting = (dataContent) => {
   for(let row of dataContent){
     console.log(row)
-    row.ActualOutput = judgeTriangle(row.Edge1, row.Edge2, row.Edge3)
+    row.ActualOutput = judgeTriangle(parseInt(row.Edge1), parseInt(row.Edge2), parseInt(row.Edge3))
     row.TesterName = `RQD、fuyang`
     let myTime = new Date()
-    row.Time = myTime.toLocaleDateString()
+    row.Time = myTime.toLocaleString()
+    myTime = null
     if(row.ActualOutput === row.ExpectedOutput){
       row.Correctness = `TRUE`
     }else{
       row.Correctness =  `FALSE`
     }
-    console.log(row)
+    //console.log(row)
   }
 }
 
@@ -228,6 +230,7 @@ const result = ref([])
 const pagination = {
   pageSize: 7
 }
+const currTab = ref('Question')
 function handleUpload(){
   // 绘制表头
   columns.value = createColumns(fileData.value)
@@ -235,32 +238,31 @@ function handleUpload(){
   result.value = createRows(fileData.value)
   // 进行测试并回填结果
   executeTesting(result.value)
+  currTab.value = 'Result'
 }
 
 hljs.registerLanguage('javascript', javascript)
-const code = `export function judgeTriangle(testData) {
-    let result = []
-    for (side of testData) {
-        let testResult;
-        if (side[0] < 0) testResult = "数据非法，边长数值越界";
-        if (side[1] < 0) testResult = "数据非法，边长数值越界";
-        if (side[2] < 0) testResult = "数据非法，边长数值越界";
-        if (side[0] >= 999) testResult = "数据非法，边长数值越界";
-        if (side[1] >= 999) testResult = "数据非法，边长数值越界";
-        if (side[2] >= 999) testResult = "数据非法，边长数值越界";
-        if (
-            side[0] + side[1] > side[2] &&
-            side[0] + side[2] > side[1] &&
-            side[1] + side[2] > side[0]
-        ) {
-            if (side[0] == side[1] && side[0] == side[2])
-                testResult = "该三角形的是等边三角形";
-            else if (side[0] == side[1] || side[0] == side[2] || side[1] == side[2])
-                testResult = "该三角形的是等腰三角形";
-            else testResult = "该三角形的是普通三角形";
-        } else testResult = "所给三边数据不能构成三角形";
-        result.push(testResult);
-    }
+const code = `export function judgeTriangle(a, b, c) {
+    let result
+    
+    if (a < 0) result = "数据非法，边长数值越界";
+    if (b < 0) result = "数据非法，边长数值越界";
+    if (c < 0) result = "数据非法，边长数值越界";
+    if (a >= 999) result = "数据非法，边长数值越界";
+    if (b >= 999) result = "数据非法，边长数值越界";
+    if (c >= 999) result = "数据非法，边长数值越界";
+    if (
+        a + b > c &&
+        a + c > b &&
+        b + c > a
+    ) {
+        if (a == b && a == c)
+            result = "该三角形的是等边三角形";
+        else if (a == b || a == c || b == c)
+            result = "该三角形的是等腰三角形";
+        else result = "该三角形的是普通三角形";
+    } else result = "所给三边数据不能构成三角形";
+    
     return result;
 }
 `
