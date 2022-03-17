@@ -58,6 +58,7 @@ import IconVue from '../components/icons/IconVue.vue'
 .home-box{
   width: 100%;
   max-height: 85vh;
+  overflow: auto;
 }
 .css3-logo{
   margin: .4em 0 .1em 0;
@@ -87,12 +88,16 @@ import IconVue from '../components/icons/IconVue.vue'
 .try{
   font-size: 1.2em;
   font-weight: 500;
-  margin: .8em 0 4em 0;
+  margin: .8em 0 3.6em 0;
 }
 .flex-wrapper{
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 100%;
+}
+::-webkit-scrollbar{
+  height: 0;
+  width: 0;
 }
 </style>
