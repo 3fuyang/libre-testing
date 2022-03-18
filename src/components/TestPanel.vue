@@ -119,10 +119,14 @@ import Papa from 'papaparse'
 
 const props = defineProps({
   context: String,  // 测试上下文
-  composable: Function, // 使用的外部测试函数
-  getArgs: Function, // 获取外部函数的参数签名
   options: Array,  // 支持的测试用例类型
   code: String // 代码字符串
+})
+
+let composable, getArgs
+import(`../composables/${props.context}`).then(({useSingleTest, useGetArgs}) => {
+  composable = useSingleTest
+  getArgs = useGetArgs
 })
 
 const code = ref(props.code),
@@ -160,8 +164,10 @@ const createRows = (rawData) => {
 // 测试函数
 const executeTesting = (dataContent) => {
   for(let row of dataContent){
-    let args = props.getArgs(row)
-    row.ActualOutput = props.composable.apply(this, args)
+    //console.log(getArgs)
+    //console.log(composable)
+    let args = getArgs(row)
+    row.ActualOutput = composable.apply(this, args)
     row.TesterName = `RQD、fuyang`
     let myTime = new Date()
     row.Time = myTime.toLocaleString()

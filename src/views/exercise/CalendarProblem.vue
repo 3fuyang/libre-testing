@@ -1,15 +1,13 @@
 <template>
   <test-panel 
     :context="context"
-    :composable="composable"
     :options="options"
-    :code="code"
-    :get-args="getArgs">
+    :code="code">
     <template #header>
       Question 02. 万年历问题
     </template>
     <template #sub-title>
-      算法思想
+      
     </template>
     <template #detail>
       罗老师，别这样
@@ -19,16 +17,8 @@
 
 <script setup>
 import TestPanel from '../../components/TestPanel.vue'
-import { judgeTriangle } from '../../composables/triangleJudgeTest'
 
-const context = 'triangleJudge'
-
-const composable = judgeTriangle
-
-const getArgs = function(row){
-  let args = [parseInt(row.Edge1), parseInt(row.Edge2), parseInt(row.Edge3)]
-  return args
-}
+const context = 'calendarProblem'
 
 const options = [
   {
