@@ -42,6 +42,17 @@
             <template #header>
               Testing Result
             </template>
+            <template #header-extra>
+              <n-button
+                v-if="result.length"
+                quaternary
+                size="small"
+                round
+                type="success"
+                @click="exportCsv">
+                导出
+              </n-button>
+            </template>
             <!-- 打印测试结果 -->
             <n-data-table
               size="small"
@@ -110,7 +121,7 @@
 </template>
 
 <script setup>
-import { NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable, NMessageProvider, useMessage } from 'naive-ui'
+import { NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable, useMessage } from 'naive-ui'
 import { ref } from 'vue'
 import { CloudDownloadOutline } from '@vicons/ionicons5'
 import hljs from 'highlight.js/lib/core'
@@ -247,6 +258,39 @@ function handleUpload(){
   executeTesting(result.value)
   message.success( `测试完毕，共执行 ${result.value.length} 个用例。`)
   currTab.value = 'Result'
+}
+// 导出.csv文件
+function exportCsv() {
+  const tableData = []
+  const cols = []
+  for(let col of columns.value){
+    cols.push(col.title)
+  }
+  tableData.push(cols)
+  for(let item of result.value){
+    let row = []
+    for(let property in item){
+      row.push(item[property])
+    }
+    row.shift()
+    tableData.push(row)
+  }
+  console.log(tableData)
+  const csv = Papa.unparse(tableData)
+  // 定义文件内容，类型为Blob
+  let content = new Blob([csv])
+  // 生产url对象
+  let urlObject = window.URL || window.webkitURL || window
+  let url = urlObject.createObjectURL(content)
+  // 生产<a></a>DOM元素
+  let el = document.createElement('a')
+  // 链接赋值
+  el.href = url
+  el.download = `${props.context}_${fileListLength.value?'manual':usecaseType.value}.csv`
+  // 模拟点击事件，开始下载
+  el.click()
+  // 移除链接，释放资源
+  urlObject.revokeObjectURL(url)
 }
 
 hljs.registerLanguage('javascript', javascript)
