@@ -22,7 +22,7 @@ function triangleJudge(a, b, c) {
 
 // 根据.csv文件的表头字段提取对应的参数，返回参数数组
 function getArgs(row) {
-    let args = [parseInt(row.Edge1), parseInt(row.Edge2), parseInt(row.Edge3)]
+    let args = [Number.parseInt(row.Edge1), Number.parseInt(row.Edge2), Number.parseInt(row.Edge3)]
     return args    
 }
 
