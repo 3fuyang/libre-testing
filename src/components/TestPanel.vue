@@ -131,17 +131,16 @@ import Papa from 'papaparse'
 const props = defineProps({
   context: String,  // 测试上下文
   options: Array,  // 支持的测试用例类型
-  code: String // 代码字符串
+  code: String, // 代码字符串
 })
 
 let composable, getArgs
 import(`../composables/${props.context}`).then(({useSingleTest, useGetArgs}) => {
-  composable = useSingleTest
-  getArgs = useGetArgs
+  [ composable, getArgs ] = [ useSingleTest, useGetArgs ]
 })
 
 const code = ref(props.code),
-      options = ref(props.options)
+options = ref(props.options)
 
 const usecaseType = ref(null)
 
@@ -152,7 +151,7 @@ const createColumns = (rawData) => {
   for(let item of rawData[0]){
     cols.push({
       title: item,
-      key: item
+      key: item,
     })
   }
   return cols
