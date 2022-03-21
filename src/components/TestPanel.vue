@@ -34,7 +34,7 @@
             </n-card>
           </n-card>
         </n-tab-pane>
-        <n-tab-pane name="Result" tab="测试结果">
+        <n-tab-pane v-if="result.length" name="Result" tab="测试结果">      
           <n-card 
             class="output" 
             size="small" 
@@ -121,7 +121,7 @@
 </template>
 
 <script setup>
-import { NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable, useMessage } from 'naive-ui'
+import { NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable, useMessage, NPopover } from 'naive-ui'
 import { ref } from 'vue'
 import { CloudDownloadOutline } from '@vicons/ionicons5'
 import hljs from 'highlight.js/lib/core'
