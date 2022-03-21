@@ -135,9 +135,21 @@ const props = defineProps({
 })
 
 let composable, getArgs
-import(`../composables/${props.context}`).then(({useSingleTest, useGetArgs}) => {
+const composables = import.meta.glob('../composables/*.js')
+for(let key in composables){
+  if(key === `../composables/${props.context}.js`){
+    composables[key]().then(({useSingleTest, useGetArgs}) => {
+      [ composable, getArgs ] = [ useSingleTest, useGetArgs ]
+      //console.log(composable)
+      //console.log(getArgs)
+    })
+    break
+  }
+}
+
+/* import(`../composables/${props.context}`).then(({useSingleTest, useGetArgs}) => {
   [ composable, getArgs ] = [ useSingleTest, useGetArgs ]
-})
+}) */
 
 const code = ref(props.code),
 options = ref(props.options)
@@ -236,7 +248,7 @@ function handleUpload(){
     message.info(`使用用户手动上传的测试用例。`)
   }else{
     // 使用项目本地的.csv文件
-    let rawFile = getLocalFile(`../../../testUseCase/${props.context}/${usecaseType.value}.csv`)
+    let rawFile = getLocalFile(`/testUsecases/${props.context}/${usecaseType.value}.csv`)
     if(!rawFile){
       message.warning(`暂时未准备该类型测试用例，请选择其他用例集或手动上传用例集。`)
       return false
