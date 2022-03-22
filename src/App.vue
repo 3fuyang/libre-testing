@@ -33,7 +33,12 @@ const collapsed = ref(false)
           class="main-content" 
           :native-scrollbar="false" 
           bordered>
-          <RouterView/>
+        <router-view v-slot="{ Component }">
+          <!--learn more about <router-view>'s slot API-->
+          <keep-alive>
+            <component :is="Component" />
+          </keep-alive>
+        </router-view>
         </n-layout-content>
       </n-layout>
     </n-layout>    
