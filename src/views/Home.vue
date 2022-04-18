@@ -1,5 +1,5 @@
 <template>
-  <n-card class="home-box">
+  <n-card class="home-box" content-style="padding-bottom: 0;" footer-style="margin-bottom: 0;padding-bottom: 0;">
     <n-space justify="center">
       <n-icon class="css3-logo" size="9em" color="#5FBC21">
         <LogoCss3/>
@@ -36,11 +36,12 @@
       <n-p class="try" :depth="3">Have a Try</n-p>
     </n-space>
     <template #footer>
-      <n-space justify="center">
+      <section class="flex-column">
         <n-p :depth="3">
           © 2022 LibreTest, Inc.
-        </n-p>
-      </n-space>
+        </n-p>  
+        <a class="icp" href="http://beian.miit.gov.cn/" target="_blank">蜀ICP备2022009593号-1</a>              
+      </section>
     </template>       
   </n-card>
 </template>
@@ -99,5 +100,32 @@ import IconVue from '../components/icons/IconVue.vue'
 ::-webkit-scrollbar{
   height: 0;
   width: 0;
+}
+.flex-column{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.icp{
+  color: #777;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+.icp:link{
+  text-decoration: none;
+}
+.icp:visited{
+  color: #777;
+  text-decoration: underline;
+}
+.icp:hover{
+  color: deepskyblue;
+  text-decoration: underline;
+}
+icp:active{
+  color: springgreen;
+  text-decoration: underline;
 }
 </style>
