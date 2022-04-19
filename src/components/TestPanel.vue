@@ -185,6 +185,7 @@ const createRows = (rawData) => {
 
 // 测试函数
 const executeTesting = (dataContent) => {
+  let falseNum = 0
   for(let row of dataContent){
     //console.log(getArgs)
     //console.log(composable)
@@ -198,9 +199,11 @@ const executeTesting = (dataContent) => {
       row.Correctness = `TRUE`
     }else{
       row.Correctness =  `FALSE`
+      falseNum++ 
     }
     //console.log(row)
   }
+  return falseNum
 }
 
 const uploadRef = ref(null)
@@ -266,8 +269,8 @@ function handleUpload(){
   // 绘制表格
   result.value = createRows(fileData.value)
   // 进行测试并回填结果
-  executeTesting(result.value)
-  message.success( `测试完毕，共执行 ${result.value.length} 个用例。`)
+  const falseNum = executeTesting(result.value)
+  message.success( `测试完毕，共执行 ${result.value.length} 个用例，通过 ${result.value.length - falseNum} 个用例。`)
   currTab.value = 'Result'
 }
 // 导出.csv文件

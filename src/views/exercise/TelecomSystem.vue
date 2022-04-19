@@ -53,11 +53,11 @@ const options = [
       },
       {
         label: '弱健壮等价类',
-        value: 'weak-robust-equivalent',        
+        value: 'weak-robustness-equivalent',        
       },
       {
         label: '强健壮等价类',
-        value: 'strong-robust-equivalent',        
+        value: 'strong-robustness-equivalent',        
       },                  
     ]    
   }
