@@ -136,9 +136,9 @@ const props = defineProps<{
 }>()
 
 let composable: Function, getArgs: (row: Row) => any[]
-const composables = import.meta.glob('../composables/*.js')
+const composables = import.meta.glob('../composables/*.ts')
 for(let index in composables){
-  if(index === `../composables/${props.context}.js`){
+  if(index === `../composables/${props.context}.ts`){
     composables[index]().then(({useSingleTest, useGetArgs}) => {
       [ composable, getArgs ] = [ useSingleTest, useGetArgs ]
     })
@@ -164,18 +164,18 @@ const createColumns = (rawData: any[]) => {
 }
 
 interface Row {
-  [index: string]: number | string | undefined
+  [index: string]: string | undefined
   key: string
   TestCaseID?: string
-  Year?: number
-  Month?: number
-  Day?: number
-  Edge1?: number
-  Edge2?: number
-  Edge3?: number
-  Host?: number
-  Monitor?: number
-  Peripheral?: number
+  Year?: string
+  Month?: string
+  Day?: string
+  Edge1?: string
+  Edge2?: string
+  Edge3?: string
+  Host?: string
+  Monitor?: string
+  Peripheral?: string
   ExpectedOutput?: string
   ActualOutput?: string
   Correctness?: string

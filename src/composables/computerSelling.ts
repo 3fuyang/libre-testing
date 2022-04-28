@@ -1,5 +1,24 @@
+interface Row {
+    [index: string]: string | undefined
+    key: string
+    TestCaseID?: string
+    Year?: string
+    Month?: string
+    Day?: string
+    Edge1?: string
+    Edge2?: string
+    Edge3?: string
+    Host?: string
+    Monitor?: string
+    Peripheral?: string
+    ExpectedOutput?: string
+    ActualOutput?: string
+    Correctness?: string
+    Time?: string
+    TesterName?: string
+  }
 // 接收一组参数，返回字符串结果
-function computerSelling(host, monitor, peripheral) {
+function computerSelling(host: number, monitor: number, peripheral: number): string {
     if (host == -1) {
         return "系统开始统计月度销售额"
     }
@@ -27,8 +46,8 @@ function computerSelling(host, monitor, peripheral) {
 }
 
 // 根据.csv文件的表头字段提取对应的参数，返回参数数组
-function getArgs(row) {
-    let args = [Number.parseInt(row.Host), Number.parseInt(row.Monitor), Number.parseInt(row.Peripheral)]
+function getArgs(row: Row): number[] {
+    let args = [Number.parseInt(row.Host as string), Number.parseInt(row.Monitor as string), Number.parseInt(row.Peripheral as string)]
     return args
 }
 

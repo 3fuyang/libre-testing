@@ -1,5 +1,24 @@
+interface Row {
+    [index: string]: string | undefined
+    key: string
+    TestCaseID?: string
+    Year?: string
+    Month?: string
+    Day?: string
+    Edge1?: string
+    Edge2?: string
+    Edge3?: string
+    Host?: string
+    Monitor?: string
+    Peripheral?: string
+    ExpectedOutput?: string
+    ActualOutput?: string
+    Correctness?: string
+    Time?: string
+    TesterName?: string
+  }
 // 接收一组参数，返回字符串结果
-function calendarProblem(year, month, day) {
+function calendarProblem(year: number, month: number, day: number): string {
     if (year < 1900 || year > 2100) {
         return "年份数值越界"
     }
@@ -16,14 +35,14 @@ function calendarProblem(year, month, day) {
 }
 
 //获取特定月份的天数
-function getMonthDays(year, month) {
+function getMonthDays(year: number, month: number): number {
     let thisDate = new Date(year, month, 0); //当天数为0时，js会自动处理为上一月的最后一天
     return thisDate.getDate();
 }
 
 // 根据.csv文件的表头字段提取对应的参数，返回参数数组
-function getArgs(row) {
-    let args = [Number.parseInt(row.Year), Number.parseInt(row.Month), Number.parseInt(row.Day)]
+function getArgs(row: Row): number[] {
+    let args = [Number.parseInt(row.Year as string), Number.parseInt(row.Month as string), Number.parseInt(row.Day as string)]
     return args
 }
 
