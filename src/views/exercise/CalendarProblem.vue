@@ -19,7 +19,7 @@
   </test-panel>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import TestPanel from '../../components/TestPanel.vue'
 
 const context = 'calendarProblem'

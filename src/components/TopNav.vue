@@ -25,23 +25,26 @@
 </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router';
-import { NBreadcrumb, NBreadcrumbItem, NIcon, NDropdown } from 'naive-ui';
+import { useRouter } from 'vue-router'
+import { NBreadcrumb, NBreadcrumbItem, NIcon, NDropdown } from 'naive-ui'
 import { LogoGithub, ChevronBackSharp, ChevronForwardSharp } from '@vicons/ionicons5'
 
 const router = useRouter()
-
-const exerciseCrumb = {
+interface Crumb {
+  label: string
+  path: string
+}
+const exerciseCrumb: Crumb = {
   label: '课程练习',
   path: '#'
-}, projectCrumb = {
+}, projectCrumb: Crumb = {
   label: '期末项目',
   path: '#'  
 }
 // 生成面包屑
-const crumbs = computed(() => {
+const crumbs = computed<Crumb[]>(() => {
   const result = [{
     label: '主页',
     path: '/'
@@ -129,11 +132,11 @@ const options1 = [
 ]
 
 // 下拉框选择条目，跳转到对应页面
-function handleSelect(path){
+function handleSelect(path: string): void {
   router.push(path)
 }
 
-function openGithub(){
+function openGithub(): void {
   const url = 'https://github.com/3fuyang/software-testing'
   window.open(url, '_blank')
 }

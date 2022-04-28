@@ -120,46 +120,40 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable, useMessage, NPopover } from 'naive-ui'
-import { ref } from 'vue'
+import { CascaderOption } from 'naive-ui'
+import { Component, ref } from 'vue'
 import { CloudDownloadOutline } from '@vicons/ionicons5'
 import hljs from 'highlight.js/lib/core'
 import javascript from 'highlight.js/lib/languages/javascript'
 import Papa from 'papaparse'
 
-const props = defineProps({
-  context: String,  // 测试上下文
-  options: Array,  // 支持的测试用例类型
-  code: String, // 代码字符串
-})
+const props = defineProps<{
+  context: string,  // 测试上下文
+  options: any[],  // 支持的测试用例类型
+  code: string // 代码字符串
+}>()
 
-let composable, getArgs
+let composable: Function, getArgs: (row: Row) => any[]
 const composables = import.meta.glob('../composables/*.js')
-for(let key in composables){
-  if(key === `../composables/${props.context}.js`){
-    composables[key]().then(({useSingleTest, useGetArgs}) => {
+for(let index in composables){
+  if(index === `../composables/${props.context}.js`){
+    composables[index]().then(({useSingleTest, useGetArgs}) => {
       [ composable, getArgs ] = [ useSingleTest, useGetArgs ]
-      //console.log(composable)
-      //console.log(getArgs)
     })
     break
   }
 }
 
-/* import(`../composables/${props.context}`).then(({useSingleTest, useGetArgs}) => {
-  [ composable, getArgs ] = [ useSingleTest, useGetArgs ]
-}) */
-
 const code = ref(props.code),
-options = ref(props.options)
+options = ref<CascaderOption[]>(props.options)
 
 const usecaseType = ref(null)
 
 // 传入.csv对应的数组，创建表头
-const createColumns = (rawData) => {
+const createColumns = (rawData: any[]) => {
   let cols = []
-  //console.log(rawData[0])
   for(let item of rawData[0]){
     cols.push({
       title: item,
@@ -168,23 +162,44 @@ const createColumns = (rawData) => {
   }
   return cols
 }
-const createRows = (rawData) => {
+
+interface Row {
+  [index: string]: number | string | undefined
+  key: string
+  TestCaseID?: string
+  Year?: number
+  Month?: number
+  Day?: number
+  Edge1?: number
+  Edge2?: number
+  Edge3?: number
+  Host?: number
+  Monitor?: number
+  Peripheral?: number
+  ExpectedOutput?: string
+  ActualOutput?: string
+  Correctness?: string
+  Time?: string
+  TesterName?: string
+}
+const createRows = (rawData: any[]) => {
   let data = []
   let counter = 0
   const rowNum = rawData.length
-  for(let i=1;i<rowNum;++i){
-    let row = { key: counter++ }
+  for (let i = 1; i < rowNum; ++i) {
+    let row: Row = { key: (counter++).toString() }
     let j = 0
     for(let item of columns.value){
       row[item.key] = rawData[i][j++]
     }
+    console.log(row)
     data.push(row)
   }
   return data
 }
 
 // 测试函数
-const executeTesting = (dataContent) => {
+const executeTesting = (dataContent: Row[]) => {
   let falseNum = 0
   for(let row of dataContent){
     //console.log(getArgs)
@@ -194,7 +209,6 @@ const executeTesting = (dataContent) => {
     row.TesterName = `RQD、fuyang`
     let myTime = new Date()
     row.Time = myTime.toLocaleString()
-    myTime = null
     if(row.ActualOutput === row.ExpectedOutput){
       row.Correctness = `TRUE`
     }else{
@@ -206,10 +220,10 @@ const executeTesting = (dataContent) => {
   return falseNum
 }
 
-const uploadRef = ref(null)
-const fileData = ref(null)
+const uploadRef = ref<Component | null>(null)
+const fileData = ref<any[] | null>(null)
 const fileListLength = ref(0)
-function handleChange (options){
+function handleChange (options: { fileList: string | any[] }){
   fileListLength.value = options.fileList.length;
   if(fileListLength.value !== 0){
     // 获取手动上传的.csv文件对象,转化为数组
@@ -224,7 +238,7 @@ function handleChange (options){
     fileData.value = null
   }
 }
-function getLocalFile (filePath){
+function getLocalFile (filePath: string){
   // 使用XMLHttpRequest读取本地文件
   let xhr = null
   if (window.XMLHttpRequest){
@@ -238,8 +252,12 @@ function getLocalFile (filePath){
   xhr.send()
   return xhr.status === okStatus ? xhr.responseText : null
 }
-const columns = ref([])
-const result = ref([])
+interface Column {
+  title: string
+  key: string
+}
+const columns = ref<Column[]>([])
+const result = ref<Row[]>([])
 const pagination = {
   pageSize: 7
 }
@@ -265,9 +283,9 @@ function handleUpload(){
     //console.log(fileData.value)
   }
   // 绘制表头
-  columns.value = createColumns(fileData.value)
+  columns.value = createColumns(fileData.value as any[])
   // 绘制表格
-  result.value = createRows(fileData.value)
+  result.value = createRows(fileData.value as any[])
   // 进行测试并回填结果
   const falseNum = executeTesting(result.value)
   message.success( `测试完毕，共执行 ${result.value.length} 个用例，通过 ${result.value.length - falseNum} 个用例。`)
@@ -282,7 +300,7 @@ function exportCsv() {
   }
   tableData.push(cols)
   for(let item of result.value){
-    let row = []
+    let row: any[] = []
     for(let property in item){
       row.push(item[property])
     }

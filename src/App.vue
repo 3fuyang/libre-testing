@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import { RouterView } from 'vue-router'
 import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader, NConfigProvider, NMessageProvider} from 'naive-ui'
 import SideNav from './components/SideNav.vue'
 import TopNav from './components/TopNav.vue'
 import { ref } from 'vue'
-const collapsed = ref(false)
+const collapsed = ref<boolean>(false)
 </script>
 
 <template>

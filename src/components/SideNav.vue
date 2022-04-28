@@ -10,17 +10,18 @@
     :default-expanded-keys="defaultExpandedKeys"/>
 </template>
 
-<script setup>
-import { h, ref, onUpdated } from 'vue'
-import { RouterLink } from 'vue-router';
-import { NMenu, NIcon } from 'naive-ui';
+<script setup lang="ts">
+import { h, ref, onUpdated, Component  } from 'vue'
+import { RouterLink } from 'vue-router'
+import { NMenu, NIcon } from 'naive-ui'
+import type { MenuOption } from 'naive-ui'
 import { MenuOutline, EaselSharp, LogoCss3 } from '@vicons/ionicons5'
 
-function renderIcon(icon) {
-  return () => h(NIcon, null, { default: () => h(icon) });
+function renderIcon(icon: Component) {
+  return () => h(NIcon, null, { default: () => h(icon) })
 }
 
-const menuOptions = [
+const menuOptions: MenuOption[] = [
   {
     label: '课程练习',
     key: 'course-exercise',

@@ -46,7 +46,7 @@
   </n-card>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { NIcon, NCard, NSpace, NP, NDivider } from 'naive-ui'
 import { AddSharp, LogoCss3 } from '@vicons/ionicons5'
 import IconNaiveUi from '../components/icons/IconNaiveUI.vue'
