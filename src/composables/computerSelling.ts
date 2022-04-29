@@ -1,22 +1,5 @@
-interface Row {
-    [index: string]: string | undefined
-    key: string
-    TestCaseID?: string
-    Year?: string
-    Month?: string
-    Day?: string
-    Edge1?: string
-    Edge2?: string
-    Edge3?: string
-    Host?: string
-    Monitor?: string
-    Peripheral?: string
-    ExpectedOutput?: string
-    ActualOutput?: string
-    Correctness?: string
-    Time?: string
-    TesterName?: string
-  }
+import { Row } from '../interface'
+
 // 接收一组参数，返回字符串结果
 function computerSelling(host: number, monitor: number, peripheral: number): string {
     if (host == -1) {

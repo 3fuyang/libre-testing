@@ -30,12 +30,10 @@ import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { NBreadcrumb, NBreadcrumbItem, NIcon, NDropdown } from 'naive-ui'
 import { LogoGithub, ChevronBackSharp, ChevronForwardSharp } from '@vicons/ionicons5'
+import { Crumb } from '../interface'
 
 const router = useRouter()
-interface Crumb {
-  label: string
-  path: string
-}
+
 const exerciseCrumb: Crumb = {
   label: '课程练习',
   path: '#'

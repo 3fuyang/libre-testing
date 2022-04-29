@@ -128,6 +128,7 @@ import { CloudDownloadOutline } from '@vicons/ionicons5'
 import hljs from 'highlight.js/lib/core'
 import javascript from 'highlight.js/lib/languages/javascript'
 import Papa from 'papaparse'
+import { Row, Column } from '../interface'
 
 const props = defineProps<{
   context: string,  // 测试上下文
@@ -163,25 +164,6 @@ const createColumns = (rawData: any[]) => {
   return cols
 }
 
-interface Row {
-  [index: string]: string | undefined
-  key: string
-  TestCaseID?: string
-  Year?: string
-  Month?: string
-  Day?: string
-  Edge1?: string
-  Edge2?: string
-  Edge3?: string
-  Host?: string
-  Monitor?: string
-  Peripheral?: string
-  ExpectedOutput?: string
-  ActualOutput?: string
-  Correctness?: string
-  Time?: string
-  TesterName?: string
-}
 const createRows = (rawData: any[]) => {
   let data = []
   let counter = 0
@@ -252,10 +234,7 @@ function getLocalFile (filePath: string){
   xhr.send()
   return xhr.status === okStatus ? xhr.responseText : null
 }
-interface Column {
-  title: string
-  key: string
-}
+
 const columns = ref<Column[]>([])
 const result = ref<Row[]>([])
 const pagination = {
