@@ -67,7 +67,10 @@
       </n-tabs>
     </div>
     <div class="right-flex-item">
-      <n-card class="upload-box" size="small" header-style="padding: .8em;margin-bottom: .8em;">
+      <n-card
+        class="upload-box"
+        size="small"
+        header-style="padding: .8em;margin-bottom: .8em;">
         <template #header>
           Program Test
         </template>
@@ -138,8 +141,8 @@ const props = defineProps<{
 
 let composable: Function, getArgs: (row: Row) => any[]
 const composables = import.meta.glob('../composables/*.ts')
-for(let index in composables){
-  if(index === `../composables/${props.context}.ts`){
+for (let index in composables) {
+  if (index === `../composables/${props.context}.ts`) {
     composables[index]().then(({useSingleTest, useGetArgs}) => {
       [ composable, getArgs ] = [ useSingleTest, useGetArgs ]
     })
@@ -155,7 +158,7 @@ const usecaseType = ref(null)
 // 传入.csv对应的数组，创建表头
 const createColumns = (rawData: any[]) => {
   let cols = []
-  for(let item of rawData[0]){
+  for (let item of rawData[0]) {
     cols.push({
       title: item,
       key: item,
@@ -171,7 +174,7 @@ const createRows = (rawData: any[]) => {
   for (let i = 1; i < rowNum; ++i) {
     let row: Row = { key: (counter++).toString() }
     let j = 0
-    for(let item of columns.value){
+    for (let item of columns.value) {
       row[item.key] = rawData[i][j++]
     }
     console.log(row)
@@ -191,9 +194,9 @@ const executeTesting = (dataContent: Row[]) => {
     row.TesterName = `RQD、fuyang`
     let myTime = new Date()
     row.Time = myTime.toLocaleString()
-    if(row.ActualOutput === row.ExpectedOutput){
+    if (row.ActualOutput === row.ExpectedOutput) {
       row.Correctness = `TRUE`
-    }else{
+    } else {
       row.Correctness =  `FALSE`
       falseNum++ 
     }
@@ -207,7 +210,7 @@ const fileData = ref<any[] | null>(null)
 const fileListLength = ref(0)
 function handleChange (options: { fileList: string | any[] }){
   fileListLength.value = options.fileList.length;
-  if(fileListLength.value !== 0){
+  if (fileListLength.value !== 0) {
     // 获取手动上传的.csv文件对象,转化为数组
     //console.log(options.fileList[0].file)
     Papa.parse(options.fileList[0].file, {
@@ -220,7 +223,7 @@ function handleChange (options: { fileList: string | any[] }){
     fileData.value = null
   }
 }
-function getLocalFile (filePath: string){
+function getLocalFile (filePath: string) {
   // 使用XMLHttpRequest读取本地文件
   let xhr = null
   if (window.XMLHttpRequest){
@@ -242,7 +245,7 @@ const pagination = {
 }
 const currTab = ref('Question')
 const message = useMessage()
-function handleUpload(){
+function handleUpload() {
   if(fileListLength.value){
     // 使用手动上传的.csv文件
     message.info(`使用用户手动上传的测试用例。`)
@@ -271,14 +274,14 @@ function handleUpload(){
   currTab.value = 'Result'
 }
 // 导出.csv文件
-function exportCsv() {
+function exportCsv () {
   const tableData = []
   const cols = []
-  for(let col of columns.value){
+  for (let col of columns.value) {
     cols.push(col.title)
   }
   tableData.push(cols)
-  for(let item of result.value){
+  for (let item of result.value) {
     let row: any[] = []
     for(let property in item){
       row.push(item[property])
