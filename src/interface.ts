@@ -1,6 +1,6 @@
 // Reusable Types
 export interface Row {
-  [index: string]: string | undefined
+  [index: string]: string | undefined | number
   key: string
   TestCaseID?: string
   Year?: string
@@ -12,6 +12,8 @@ export interface Row {
   Host?: string
   Monitor?: string
   Peripheral?: string
+  callingTime?: number
+  count?: number
   ExpectedOutput?: string
   ActualOutput?: string
   Correctness?: string
