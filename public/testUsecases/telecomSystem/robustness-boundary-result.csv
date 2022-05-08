@@ -1,0 +1,14 @@
+TestCaseID,CallingTime,Count,ExpectedOutput,ActualOutput,Correctness,Time,TesterName
+1,-1,3,通话时长数值越界,通话时长数值越界,TRUE,2022/5/8 16:56:48,RQD、fuyang
+2,0,3,25,25,TRUE,2022/5/8 16:56:48,RQD、fuyang
+3,1,3,25.15,25.15,TRUE,2022/5/8 16:56:48,RQD、fuyang
+4,44630,3,6518.67,6518.67,TRUE,2022/5/8 16:56:48,RQD、fuyang
+5,44640,3,6520.12,6520.12,TRUE,2022/5/8 16:56:48,RQD、fuyang
+6,44650,3,通话时长数值越界,通话时长数值越界,TRUE,2022/5/8 16:56:48,RQD、fuyang
+7,160,-1,未按时缴费次数越界,未按时缴费次数越界,TRUE,2022/5/8 16:56:48,RQD、fuyang
+8,160,0,48.52,48.52,TRUE,2022/5/8 16:56:48,RQD、fuyang
+9,160,1,48.52,48.52,TRUE,2022/5/8 16:56:48,RQD、fuyang
+10,160,10,49,49,TRUE,2022/5/8 16:56:48,RQD、fuyang
+11,160,11,49,49,TRUE,2022/5/8 16:56:48,RQD、fuyang
+12,160,12,未按时缴费次数越界,未按时缴费次数越界,TRUE,2022/5/8 16:56:48,RQD、fuyang
+13,160,5,49,49,TRUE,2022/5/8 16:56:48,RQD、fuyang
