@@ -186,7 +186,7 @@ const createRows = (rawData: any[]) => {
 // 测试函数
 const executeTesting = (dataContent: Row[]) => {
   let falseNum = 0
-  for(let row of dataContent){
+  for (let row of dataContent) {
     //console.log(getArgs)
     //console.log(composable)
     let args = getArgs(row)
@@ -219,16 +219,16 @@ function handleChange (options: { fileList: string | any[] }){
         //console.log(fileData.value)
       }
     })
-  }else{
+  } else {
     fileData.value = null
   }
 }
 function getLocalFile (filePath: string) {
   // 使用XMLHttpRequest读取本地文件
   let xhr = null
-  if (window.XMLHttpRequest){
+  if (window.XMLHttpRequest) {
     xhr = new XMLHttpRequest()
-  }else{
+  } else {
     xhr = new ActiveXObject(`Microsoft.XMLHTTP`)
   }
   const okStatus = document.location.protocol === 'file' ? 0 : 200
@@ -246,13 +246,13 @@ const pagination = {
 const currTab = ref('Question')
 const message = useMessage()
 function handleUpload() {
-  if(fileListLength.value){
+  if (fileListLength.value) {
     // 使用手动上传的.csv文件
     message.info(`使用用户手动上传的测试用例。`)
-  }else{
+  } else {
     // 使用项目本地的.csv文件
     let rawFile = getLocalFile(`/testUsecases/${props.context}/${usecaseType.value}.csv`)
-    if(!rawFile){
+    if (!rawFile) {
       message.warning(`暂时未准备该类型测试用例，请选择其他用例集或手动上传用例集。`)
       return false
     }
@@ -283,7 +283,7 @@ function exportCsv () {
   tableData.push(cols)
   for (let item of result.value) {
     let row: any[] = []
-    for(let property in item){
+    for (let property in item) {
       row.push(item[property])
     }
     row.shift()

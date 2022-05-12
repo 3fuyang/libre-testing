@@ -1,0 +1,4 @@
+no,stat,expected_result
+cf_1,待付款,请先付款
+cf_2,待确认,true
+cf_3,待评价,不可重复确认

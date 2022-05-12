@@ -1,0 +1,13 @@
+no,userID,goodID,collected,expected_result
+cl_1,null,1,true,请先登录
+cl_2,null,1,false,请先登录
+cl_3,null,null,true,请先登录
+cl_4,null,null,false,请先登录
+cl_5,0001,1,true,管理员请登录普通账号进行收藏
+cl_6,0001,1,false,管理员请登录普通账号进行收藏
+cl_7,0001,null,true,管理员请登录普通账号进行收藏
+cl_8,0001,null,false,管理员请登录普通账号进行收藏
+cl_9,1234567,1,true,不能重复收藏
+cl_10,1234567,1,false,true
+cl_11,1234567,null,true,商品不存在
+cl_12,1234567,null,false,商品不存在
