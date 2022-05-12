@@ -1,2 +1,2 @@
 ﻿TestCaseID,Edge1,Edge2,Edge3,ExpectedOutput,ActualOutput,Correctness,Time,TesterName
-1,100,100,100,该三角形的是等边三角形,该三角形的是等边三角形,TRUE,2022/3/16 21:46,RQD、fuyang
+1,100,100,100,该三角形的是等边三角形,,,,
