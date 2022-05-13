@@ -9,5 +9,3 @@ TestCaseID,CallingTime,Count,ExpectedOutput,ActualOutput,Correctness,Time,Tester
 8,150,6,47.5,,,,
 9,240,6,61,,,,
 10,360,11,79,,,,
-11,-1,6,通话时长数值越界,,,,
-12,30,-1,未按时缴费次数越界,,,,
