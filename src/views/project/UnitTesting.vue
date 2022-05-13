@@ -2,6 +2,9 @@
 import { NTabs, NTabPane } from 'naive-ui'
 import UnitPanelVue from '../../components/unitTesting/UnitPanel.vue'
 import UnitHomeVue from '../../components/unitTesting/UnitHome.vue'
+import sdk from '@stackblitz/sdk'
+import { onMounted } from 'vue'
+
 const tabs = [
   {
     name: 'home',
@@ -28,6 +31,27 @@ const tabs = [
     testCase: '使用强一般等价类设计测试用例。'
   }
 ]
+
+onMounted(() => {
+  // 嵌入stackblitz项目
+  const stackblitz = document.getElementById('stackblitz')
+
+  sdk.embedProjectId(
+    stackblitz as HTMLElement,
+    'vitest-dev-vitest-tz744h',
+    {
+      forceEmbedLayout: true,
+      openFile: 'README.md',
+      view: 'preview',
+      height: '99.5%',
+      width: '100%'
+    }
+  )
+  .then(() => {
+    const iframe = document.getElementById('stackblitz')
+    iframe?.setAttribute('style', 'border: none;border: 1px solid #eee;')
+  })
+})
 </script>
 
 <template>
@@ -54,8 +78,7 @@ const tabs = [
       </n-tabs>
     </div>
     <div class="right-part">
-      <iframe
-        src="https://stackblitz.com/edit/vitest-dev-vitest-tz744h?embed=1&file=README.md&view=preview"/>
+      <div id="stackblitz"/>
     </div>
   </div>
 </template>
@@ -70,12 +93,7 @@ const tabs = [
   width: 36em;
 }
 .right-part {
-  width: 48em;
-}
-iframe {
   box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  border: 1px solid #eee;
+  width: 45.6em;
 }
 </style>
