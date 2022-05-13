@@ -41,7 +41,7 @@ const options = [
   }
 ]
 
-const code = `function computerSelling(host, monitor, peripheral) {
+const code = `function computerSelling(host: number, monitor: number, peripheral: number): string {
     if (host == -1) {
         return "系统开始统计月度销售额"
     }
@@ -60,11 +60,11 @@ const code = `function computerSelling(host, monitor, peripheral) {
 
     let totalSales = host * 25 + monitor * 30 + peripheral * 45;
     if (totalSales <= 1000) {
-        return totalSales * 0.1
+        return String(totalSales * 0.1)
     } else if (totalSales <= 1800) {
-        return totalSales * 0.15
+        return String(totalSales * 0.15)
     } else {
-        return totalSales * 0.2
+        return String(totalSales * 0.2)
     }
 }`
 </script>

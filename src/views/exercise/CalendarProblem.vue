@@ -63,7 +63,7 @@ const options = [
   }
 ]
 
-const code = `function calendarProblem(year, month, day) {
+const code = `function calendarProblem(year: number, month: number, day: number): string {
     if (year < 1900 || year > 2100) {
         return "年份数值越界"
     }
@@ -79,7 +79,7 @@ const code = `function calendarProblem(year, month, day) {
     return tomorrowDate.getFullYear() + "/" + (tomorrowDate.getMonth()+ 1) + "/" + tomorrowDate.getDate()
 }
 
-function getMonthDays(year, month) {
+function getMonthDays(year: number, month: number): number {
     let thisDate = new Date(year, month, 0); //当天数为0时，js会自动处理为上一月的最后一天
     return thisDate.getDate();
 }`
