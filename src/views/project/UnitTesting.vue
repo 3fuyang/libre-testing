@@ -44,7 +44,8 @@ onMounted(() => {
       openFile: 'README.md',
       view: 'preview',
       height: '99.5%',
-      width: '100%'
+      width: '100%',
+      initialPath: '/__vitest__',
     }
   )
   .then(() => {

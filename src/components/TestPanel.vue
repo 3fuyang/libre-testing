@@ -177,7 +177,7 @@ const createRows = (rawData: any[]) => {
     for (let item of columns.value) {
       row[item.key] = rawData[i][j++]
     }
-    console.log(row)
+    //console.log(row)
     data.push(row)
   }
   return data

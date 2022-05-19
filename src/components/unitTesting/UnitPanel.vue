@@ -39,7 +39,7 @@ const createColumns = (cols: string[]) => {
       title: item
     })
   })
-  console.log(columns.value)
+  //console.log(columns.value)
 }
 
 // 生成行
@@ -52,7 +52,7 @@ const createRows = (rows: any[]) => {
     }
     data.value.push(rowTmp)
   })
-  console.log(data.value)
+  //console.log(data.value)
 }
 
 let fileData = getLocalFile()
