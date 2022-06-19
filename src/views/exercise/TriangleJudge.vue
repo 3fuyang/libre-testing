@@ -2,7 +2,10 @@
   <test-panel 
     :context="context"
     :options="options"
-    :code="code">
+    :code="code"
+    :versions="versions"
+    :ec-option="ecOption"
+    >
     <template #header>
       Question 01. 判断三角形类型
     </template>
@@ -20,10 +23,57 @@
 </template>
 
 <script setup lang="ts">
+import { ECOption } from '@/interface';
 import TestPanel from '../../components/TestPanel.vue'
 
 const context = 'triangleJudge'
 
+// 程序版本集
+const versions = [
+  {
+    label: '0.0.0',
+    value: '0.0.0'
+  },
+  {
+    label: '0.1.0',
+    value: '0.1.0'
+  },  
+]
+
+// ECharts 绘图选项
+const ecOption: ECOption = {
+  tooltip: {
+    triggerOn: 'mousemove',
+    trigger: 'item'
+  },  
+  xAxis: {
+    data: ['25 Apr', '26 Apr', '27 Apr', '28 Apr', '29 Apr', '30 Apr', '1 May']
+  },
+  yAxis: {},
+  series: [
+    {
+      data: [1, 3, 4, 5, 7, 8, 9],
+      type: 'line',
+      smooth: true,
+      lineStyle: {
+        color: '#43B5F4',
+        width: 2,
+      },
+      itemStyle: {
+        color: '#43B5F4',
+      },
+      tooltip: {
+        valueFormatter: (value: number) => `${value} Events`
+      }
+    }
+  ],
+  grid: {
+    top: 20,
+    bottom: 20
+  }  
+}
+
+// 可选用例集
 const options = [
   {
     label: '边界值',
@@ -63,6 +113,7 @@ const options = [
   }
 ]
 
+// 程序代码
 const code = `function triangleJudge(a: number, b: number, c: number): string {
     if (a <= 0 || b <= 0 || c <= 0 ||  a > 200 || b > 200 || c > 200){
         return '边长数值越界'

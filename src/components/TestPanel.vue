@@ -63,7 +63,18 @@
               :pagination="pagination">
             </n-data-table>
           </n-card>          
-        </n-tab-pane>    
+        </n-tab-pane> 
+        <n-tab-pane v-if="result.length" name="Visualization" tab="可视化分析">
+          <n-card
+            class="visualization" 
+            size="small" 
+            header-style="padding: .8em;">
+            <n-h2>
+              折线图
+            </n-h2>
+            <div id="chart" class="chart"/>
+          </n-card>
+        </n-tab-pane>   
       </n-tabs>
     </div>
     <div class="right-flex-item">
@@ -74,7 +85,15 @@
         <template #header>
           Program Test
         </template>
-        <p class="subtitle">Step 01. 选择用例集</p>
+        <p class="subtitle">Step 01. 选择程序版本</p>
+        <n-space vertical>
+          <n-select
+            class="cascader-input"
+            v-model:value="version"
+            :options="props.versions ? props.versions : [{ label: '0.0.0', value: '0.0.0'}]"
+            placeholder="Click to select"/>
+        </n-space>        
+        <p class="subtitle">Step 02. 选择用例集</p>
         <n-space vertical>
           <n-cascader
             class="cascader-input"
@@ -84,7 +103,7 @@
             :check-strategy="'child'"
             placeholder="Click to select"/>
         </n-space>
-        <p class="subtitle">Step 02. 上传用例集 (Optional)</p>
+        <p class="subtitle">Step 03. 上传用例集 (Optional)</p>
         <n-space justify="center">
           <n-upload
             ref="uploadRef"
@@ -107,7 +126,7 @@
             </n-upload-dragger>
           </n-upload>
         </n-space>
-        <p class="subtitle">Step 03. 运行测试集</p>
+        <p class="subtitle">Step 04. 运行测试集</p>
         <n-space justify="center">
           <n-button
             class="upload-btn"
@@ -124,20 +143,53 @@
 </template>
 
 <script setup lang="ts">
-import { NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable, useMessage, NPopover } from 'naive-ui'
+import { NH2, NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable, useMessage, NSelect } from 'naive-ui'
 import { CascaderOption } from 'naive-ui'
-import { Component, ref } from 'vue'
+import { Component, onUpdated, ref } from 'vue'
 import { CloudDownloadOutline } from '@vicons/ionicons5'
 import hljs from 'highlight.js/lib/core'
 import javascript from 'highlight.js/lib/languages/javascript'
 import Papa from 'papaparse'
-import { Row, Column } from '../interface'
+import { Row, Column, ECOption } from '../interface'
+import * as echarts from 'echarts/core'
+import { LineChart } from 'echarts/charts'
+import {
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+  DatasetComponent,
+  TransformComponent
+} from 'echarts/components'
+import { LabelLayout, UniversalTransition } from 'echarts/features'
+import { CanvasRenderer } from 'echarts/renderers'
+
 
 const props = defineProps<{
   context: string,  // 测试上下文
   options: any[],  // 支持的测试用例类型
-  code: string // 代码字符串
+  code: string, // 代码字符串
+  versions?: any[], // 可选版本集
+  ecOption?: ECOption // ECharts 选项
 }>()
+
+echarts.use([
+  LineChart,
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+  DatasetComponent,
+  TransformComponent,
+  LabelLayout,
+  UniversalTransition,
+  CanvasRenderer
+])
+
+onUpdated(() => {
+  if (currTab.value === 'Visualization') {
+    const eChart = echarts.init(document.getElementById('chart') as HTMLDivElement)
+    eChart.setOption(props.ecOption as ECOption)
+  }
+})
 
 let composable: Function, getArgs: (row: Row) => any[]
 const composables = import.meta.glob('../composables/*.ts')
@@ -150,8 +202,10 @@ for (let index in composables) {
   }
 }
 
-const code = ref(props.code),
+const code = props.code,
 options = ref<CascaderOption[]>(props.options)
+
+const version = ref<string>()
 
 const usecaseType = ref(null)
 
@@ -317,9 +371,19 @@ hljs.registerLanguage('javascript', javascript)
 }
 .left-flex-item{
   max-width: 63%;
-  overflow-x: hidden;
   flex: 1 0 auto;
   overflow-y: auto;
+}
+.visualization {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 83vh;
+  max-height: 85vh;  
+}
+.chart {
+  font-size: 1rem;
+  width: 42em;
+  height: 25em;
 }
 .right-flex-item{
   padding-top: 3.2em;
@@ -329,11 +393,10 @@ hljs.registerLanguage('javascript', javascript)
 .description{
   box-sizing: border-box;
   width: 100%;
-  max-height: 85vh;
 }
 .output{
   width: 100%;
-  min-height: 70vh;
+  min-height: 83vh;
   max-height: 85vh;
 }
 .subtitle{

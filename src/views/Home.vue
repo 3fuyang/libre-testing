@@ -58,7 +58,7 @@ import IconVue from '../components/icons/IconVue.vue'
 <style scoped>
 .home-box{
   width: 100%;
-  max-height: 85vh;
+  height: 88vh;
   overflow: auto;
 }
 .css3-logo{
