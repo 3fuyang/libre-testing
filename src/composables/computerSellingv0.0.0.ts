@@ -2,9 +2,6 @@ import type { Row } from '../interface'
 
 // 接收一组参数，返回字符串结果
 function computerSelling(host: number, monitor: number, peripheral: number): string {
-    if (host == -1) {
-        return "系统开始统计月度销售额"
-    }
     if (host <= 0 || monitor <= 0 || peripheral <= 0) {
         return "数据非法，各部件销售数量不能小于1"
     }
@@ -18,7 +15,7 @@ function computerSelling(host: number, monitor: number, peripheral: number): str
         return "数据非法，外设销售数量不能超过90"
     }
 
-    let totalSales = host * 25 + monitor * 30 + peripheral * 45;
+    let totalSales: number = host * 25 + monitor * 30 + peripheral * 45;
     if (totalSales <= 1000) {
         return String(totalSales * 0.1)
     } else if (totalSales <= 1800) {
