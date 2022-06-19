@@ -91,7 +91,8 @@
             class="cascader-input"
             v-model:value="version"
             :options="props.versions ? props.versions : [{ label: '0.0.0', value: '0.0.0'}]"
-            placeholder="Click to select"/>
+            placeholder="Click to select"
+            @change="handleSelect($event)"/>
         </n-space>        
         <p class="subtitle">Step 02. 选择用例集</p>
         <n-space vertical>
@@ -193,14 +194,6 @@ onUpdated(() => {
 
 let composable: Function, getArgs: (row: Row) => any[]
 const composables = import.meta.glob('../composables/*.ts')
-for (let index in composables) {
-  if (index === `../composables/${props.context}.ts`) {
-    composables[index]().then(({useSingleTest, useGetArgs}) => {
-      [ composable, getArgs ] = [ useSingleTest, useGetArgs ]
-    })
-    break
-  }
-}
 
 const code = props.code,
 options = ref<CascaderOption[]>(props.options)
@@ -290,6 +283,18 @@ function getLocalFile (filePath: string) {
   xhr.overrideMimeType('text/html;charset=utf-8')
   xhr.send()
   return xhr.status === okStatus ? xhr.responseText : null
+}
+
+function handleSelect(e) {
+  for (let index in composables) {
+    if (index === `../composables/${props.context}v${e}.ts`) {
+      console.log('success')
+      composables[index]().then(({useSingleTest, useGetArgs}) => {
+        [ composable, getArgs ] = [ useSingleTest, useGetArgs ]
+      })
+      break
+    }
+  }
 }
 
 const columns = ref<Column[]>([])

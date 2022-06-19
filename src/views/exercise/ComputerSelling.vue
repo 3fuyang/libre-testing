@@ -2,7 +2,9 @@
   <test-panel 
     :context="context"
     :options="options"
-    :code="code">
+    :code="code"
+    :versions="versions"
+    >
     <template #header>
       Question 03. 电脑销售问题
     </template>
@@ -23,6 +25,18 @@
 import TestPanel from '../../components/TestPanel.vue'
 
 const context = 'computerSelling'
+
+// 程序版本集
+const versions = [
+  {
+    label: '0.0.0',
+    value: '0.0.0'
+  },
+  {
+    label: '0.1.0',
+    value: '0.1.0'
+  },  
+]
 
 const options = [
   {
@@ -58,7 +72,7 @@ const code = `function computerSelling(host: number, monitor: number, peripheral
         return "数据非法，外设销售数量不能超过90"
     }
 
-    let totalSales = host * 25 + monitor * 30 + peripheral * 45;
+    let totalSales: number = host * 25 + monitor * 30 + peripheral * 45;
     if (totalSales <= 1000) {
         return String(totalSales * 0.1)
     } else if (totalSales <= 1800) {

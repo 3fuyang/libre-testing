@@ -2,7 +2,9 @@
   <test-panel 
     :context="context"
     :options="options"
-    :code="code">
+    :code="code"
+    :versions="versions"
+    >
     <template #header>
       Question 02. 万年历问题
     </template>
@@ -23,6 +25,22 @@
 import TestPanel from '../../components/TestPanel.vue'
 
 const context = 'calendarProblem'
+
+// 程序版本集
+const versions = [
+  {
+    label: '0.0.0',
+    value: '0.0.0'
+  },
+  {
+    label: '0.1.0',
+    value: '0.1.0'
+  },  
+  {
+    label: '0.2.0',
+    value: '0.2.0'
+  },  
+]
 
 const options = [
   {
@@ -70,18 +88,32 @@ const code = `function calendarProblem(year: number, month: number, day: number)
     if (month <= 0 || month > 12) {
         return "月份数值越界"
     }
-    let maxDays = getMonthDays(year, month)
+
+    let monthDays: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    let isLeap: number = 0
+    if (year % 400 == 0) {
+        isLeap = 1
+    } else if (year % 100 != 0 && year % 4 == 0) {
+        isLeap = 1;
+    }
+
+    monthDays[1] += isLeap
+    let maxDays: number = monthDays[month - 1]
     if (day <= 0 || day > maxDays) {
         return "日期数值越界"
     }
 
-    let tomorrowDate = new Date(year, month - 1, day + 1);
-    return tomorrowDate.getFullYear() + "/" + (tomorrowDate.getMonth()+ 1) + "/" + tomorrowDate.getDate()
-}
+    let result: number[] = [year, month, day + 1]
 
-function getMonthDays(year: number, month: number): number {
-    let thisDate = new Date(year, month, 0); //当天数为0时，js会自动处理为上一月的最后一天
-    return thisDate.getDate();
+    if (day == maxDays) {
+        result[2] = 1
+        result[1]++
+    }
+    if (result[1] > 12) {
+        result[1] = 1
+        result[0]++
+    }
+    return result[0] + "/" + result[1] + "/" + result[2]
 }`
 </script>
 
