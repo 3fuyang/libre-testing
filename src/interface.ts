@@ -1,11 +1,12 @@
 // Reusable Types
-import { LineSeriesOption } from 'echarts/charts'
-import {
+import type { LineSeriesOption } from 'echarts/charts'
+import type {
   TitleComponentOption,
   TooltipComponentOption,
   GridComponentOption,
   DatasetComponentOption,
 } from 'echarts/components'
+import type { ComposeOption } from 'echarts'
 
 export interface Row {
   [index: string]: string | undefined | number
@@ -39,7 +40,7 @@ export interface Crumb {
   path: string
 }
 
-export type ECOption = echarts.ComposeOption<
+export type ECOption = ComposeOption<
 | LineSeriesOption
 | TitleComponentOption
 | TooltipComponentOption

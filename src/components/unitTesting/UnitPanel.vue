@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { NCard, NText, NH2, NDataTable, DataTableColumns } from 'naive-ui'
+import { NCard, NText, NH2, NDataTable, type DataTableColumns } from 'naive-ui'
 import Papa from 'papaparse'
 
 const props = defineProps<{

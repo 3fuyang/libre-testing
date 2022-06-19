@@ -1,4 +1,4 @@
-import { Row } from '../interface'
+import type { Row } from '../interface'
 
 // 接收一组参数，返回字符串结果
 function calendarProblem(year: number, month: number, day: number): string {

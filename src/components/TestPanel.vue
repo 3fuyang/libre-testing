@@ -144,13 +144,13 @@
 
 <script setup lang="ts">
 import { NH2, NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable, useMessage, NSelect } from 'naive-ui'
-import { CascaderOption } from 'naive-ui'
-import { Component, onUpdated, ref } from 'vue'
+import type { CascaderOption } from 'naive-ui'
+import { type Component, onUpdated, ref } from 'vue'
 import { CloudDownloadOutline } from '@vicons/ionicons5'
 import hljs from 'highlight.js/lib/core'
 import javascript from 'highlight.js/lib/languages/javascript'
 import Papa from 'papaparse'
-import { Row, Column, ECOption } from '../interface'
+import type { Row, Column, ECOption } from '../interface'
 import * as echarts from 'echarts/core'
 import { LineChart } from 'echarts/charts'
 import {

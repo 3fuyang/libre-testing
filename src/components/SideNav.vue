@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { h, ref, onUpdated, Component  } from 'vue'
+import { h, ref, onUpdated, type Component  } from 'vue'
 import { RouterLink } from 'vue-router'
 import { NMenu, NIcon } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'

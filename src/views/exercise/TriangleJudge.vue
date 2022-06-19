@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { ECOption } from '@/interface';
+import type { ECOption } from '@/interface'
 import TestPanel from '../../components/TestPanel.vue'
 
 const context = 'triangleJudge'
@@ -63,7 +63,7 @@ const ecOption: ECOption = {
         color: '#43B5F4',
       },
       tooltip: {
-        valueFormatter: (value: number) => `${value} Events`
+        valueFormatter: (value) => `${value} Events`
       }
     }
   ],
