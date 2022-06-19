@@ -8,19 +8,32 @@ function calendarProblem(year: number, month: number, day: number): string {
     if (month <= 0 || month > 12) {
         return "月份数值越界"
     }
-    let maxDays = getMonthDays(year, month)
+
+    let monthDays: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    let isLeap: number = 0
+    if (year % 400 == 0) {
+        isLeap = 1
+    } else if (year % 100 != 0 && year % 4 == 0) {
+        isLeap = 1;
+    }
+
+    monthDays[1] += isLeap
+    let maxDays: number = monthDays[month - 1]
     if (day <= 0 || day > maxDays) {
         return "日期数值越界"
     }
 
-    let tomorrowDate = new Date(year, month - 1, day + 1);
-    return tomorrowDate.getFullYear() + "/" + (tomorrowDate.getMonth()+ 1) + "/" + tomorrowDate.getDate()
-}
+    let result: number[] = [year, month, day + 1]
 
-//获取特定月份的天数
-function getMonthDays(year: number, month: number): number {
-    let thisDate = new Date(year, month, 0); //当天数为0时，js会自动处理为上一月的最后一天
-    return thisDate.getDate();
+    if (day == maxDays) {
+        result[2] = 1
+        result[1]++
+    }
+    if (result[1] > 12) {
+        result[1] = 1
+        result[0]++
+    }
+    return result[0] + "/" + result[1] + "/" + result[2]
 }
 
 // 根据.csv文件的表头字段提取对应的参数，返回参数数组
