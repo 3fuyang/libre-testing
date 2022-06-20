@@ -32,14 +32,6 @@
                   language="js"></n-code>
               </n-scrollbar>
             </n-card>
-            <p class="subtitle">版本迭代</p>
-            <n-card 
-              class="description" 
-              embedded 
-              :bordered="false" 
-              content-style="padding: .5em;">
-              <div id="iterationChart" class="chart"/>
-            </n-card>
           </n-card>
         </n-tab-pane>
         <n-tab-pane v-if="result.length" name="Result" tab="测试结果">      
@@ -81,6 +73,16 @@
               测试结果
             </n-h2>
             <div id="chart" class="chart"/>
+            <n-h2>
+              版本迭代
+            </n-h2>
+            <n-card 
+              class="description" 
+              embedded 
+              :bordered="false" 
+              content-style="padding: .5em;">
+              <div id="iterationChart" class="chart"/>
+            </n-card>
           </n-card>
         </n-tab-pane>   
       </n-tabs>
@@ -245,16 +247,13 @@ const ecOption = {
 
 onUpdated(() => {
   if (currTab.value === 'Visualization') {
+    // 加载测试结果饼状图
     const eChart = echarts.init(document.getElementById('chart') as HTMLDivElement)
     eChart.setOption(ecOption as ECOption)
+    // 加载版本迭代柱状图
+    const iterationChart = echarts.init(document.getElementById('iterationChart') as HTMLDivElement)
+    iterationChart.setOption(props.ecOption as ECOption)
   }
-})
-
-onMounted(() => {
-  //加载版本迭代柱状图
-  const iterationChart = echarts.init(document.getElementById('iterationChart') as HTMLDivElement)
-  console.log(props.ecOption)
-  iterationChart.setOption(props.ecOption as ECOption)
 })
 
 let composable: Function, getArgs: (row: Row) => any[]
@@ -270,7 +269,6 @@ const usecaseType = ref(null)
 function handleVersionSelect (value: string) {
   for (let index in composables) {
     if (index === `../composables/${props.context}v${value}.ts`) {
-      //console.log('success')
       composables[index]().then(({useSingleTest, useGetArgs}) => {
         [ composable, getArgs ] = [ useSingleTest, useGetArgs ]
         //console.log(composable, getArgs)
