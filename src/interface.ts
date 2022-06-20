@@ -1,5 +1,5 @@
 // Reusable Types
-import type { LineSeriesOption } from 'echarts/charts'
+import type { LineSeriesOption, BarSeriesOption, PieSeriesOption } from 'echarts/charts'
 import type {
   TitleComponentOption,
   TooltipComponentOption,
@@ -42,6 +42,8 @@ export interface Crumb {
 
 export type ECOption = ComposeOption<
 | LineSeriesOption
+| BarSeriesOption
+| PieSeriesOption
 | TitleComponentOption
 | TooltipComponentOption
 | GridComponentOption

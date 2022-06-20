@@ -18,12 +18,7 @@ const pagination = {
 
 function getLocalFile () {
   // 使用XMLHttpRequest读取本地文件
-  let xhr = null
-  if (window.XMLHttpRequest) {
-    xhr = new XMLHttpRequest()
-  } else {
-    xhr = new ActiveXObject(`Microsoft.XMLHTTP`)
-  }
+  let xhr = new XMLHttpRequest()
   const okStatus = document.location.protocol === 'file' ? 0 : 200
   xhr.open('GET', `/testUsecases/integrationTesting/${props.context}.csv`, false)
   xhr.overrideMimeType('text/html;charset=utf-8')
@@ -55,13 +50,13 @@ const createRows = (rows: any[]) => {
   //console.log(data.value)
 }
 
-let fileData = getLocalFile()
-Papa.parse(fileData, {
+const fileData = getLocalFile()
+Papa.parse(fileData as string, {
   complete: (res) => {
-    fileData = res.data
-    createColumns(fileData[0])
-    fileData.splice(0, 1)
-    createRows(fileData)
+    const parsedResult = res.data as string[][]
+    createColumns(parsedResult[0])
+    parsedResult.splice(0, 1)
+    createRows(parsedResult)
   }
 })
 

@@ -20,9 +20,10 @@
 
 <script setup lang="ts">
 import * as echarts from 'echarts/core'
-import TestPanel from "../../components/TestPanel.vue";
+import TestPanel from "../../components/TestPanel.vue"
+import type { ECOption } from '@/interface'
 
-const context = "calendarProblem";
+const context = "calendarProblem"
 
 // 程序版本集
 const versions = [
@@ -38,7 +39,7 @@ const versions = [
     label: "0.2.0",
     value: "0.2.0",
   },
-];
+]
 
 // ECharts 绘图选项
 const ecOption: ECOption = {

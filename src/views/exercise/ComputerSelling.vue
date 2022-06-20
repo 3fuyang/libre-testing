@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import * as echarts from 'echarts/core'
 import TestPanel from '../../components/TestPanel.vue'
+import type { ECOption } from '@/interface'
 
 const context = 'computerSelling'
 

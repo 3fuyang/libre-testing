@@ -89,7 +89,7 @@
       <n-card
         class="upload-box"
         size="small"
-        header-style="padding: .8em;margin-bottom: .8em;">
+        header-style="padding: .8em; margin-bottom: .8em;">
         <template #header>
           Program Test
         </template>
@@ -98,9 +98,9 @@
           <n-select
             class="cascader-input"
             v-model:value="version"
-            :options="props.versions ? props.versions : [{ label: '0.0.0', value: '0.0.0'}]"
+            :options="props.versions"
             placeholder="Click to select"
-            @change="handleSelect($event)"/>
+            @update:value="handleVersionSelect"/>
         </n-space>        
         <p class="subtitle">Step 02. 选择用例集</p>
         <n-space vertical>
@@ -119,7 +119,7 @@
             action="#"
             :default-upload="false"
             accept=".csv"
-            @change="handleChange">
+            @change="handleUpload">
             <n-upload-dragger class="upload-content">
               <div style="margin-bottom: 12px">
                 <n-icon size="2.5em" :depth="3">
@@ -139,8 +139,8 @@
         <n-space justify="center">
           <n-button
             class="upload-btn"
-            :disabled="!fileListLength && !usecaseType"
-            @click="handleUpload"
+            :disabled="!((fileListLength || usecaseType) && version)"
+            @click="handleTesting"
             strong
             type="primary">
             开始测试
@@ -180,8 +180,8 @@ const props = defineProps<{
   context: string,  // 测试上下文
   options: any[],  // 支持的测试用例类型
   code: string, // 代码字符串
-  versions?: any[], // 可选版本集
-  ecOption?: ECOption // ECharts 选项
+  versions: any[], // 可选版本集
+  ecOption: ECOption // ECharts 选项
 }>()
 
 echarts.use([
@@ -241,7 +241,7 @@ const ecOption = {
       ]
     }
   ]
-};
+}
 
 onUpdated(() => {
   if (currTab.value === 'Visualization') {
@@ -263,9 +263,22 @@ const composables = import.meta.glob('../composables/*.ts')
 const code = props.code,
 options = ref<CascaderOption[]>(props.options)
 
-const version = ref<string>()
+const version = ref(null)
 
 const usecaseType = ref(null)
+
+function handleVersionSelect (value: string) {
+  for (let index in composables) {
+    if (index === `../composables/${props.context}v${value}.ts`) {
+      //console.log('success')
+      composables[index]().then(({useSingleTest, useGetArgs}) => {
+        [ composable, getArgs ] = [ useSingleTest, useGetArgs ]
+        //console.log(composable, getArgs)
+      })
+      break
+    }
+  }
+}
 
 // 传入.csv对应的数组，创建表头
 const createColumns = (rawData: any[]) => {
@@ -304,7 +317,7 @@ const executeTesting = (dataContent: Row[]) => {
     //console.log(composable)
     let args = getArgs(row)
     row.ActualOutput = composable.apply(this, args)
-    if(row.ActualOutput == null) {
+    if (row.ActualOutput == null) {
       nullAnsNum++
     }
     row.TesterName = `RQD、fuyang`
@@ -327,7 +340,7 @@ const executeTesting = (dataContent: Row[]) => {
 const uploadRef = ref<Component | null>(null)
 const fileData = ref<any[] | null>(null)
 const fileListLength = ref(0)
-function handleChange (options: { fileList: string | any[] }){
+function handleUpload (options: { fileList: string | any[] }){
   fileListLength.value = options.fileList.length;
   if (fileListLength.value !== 0) {
     // 获取手动上传的.csv文件对象,转化为数组
@@ -345,28 +358,12 @@ function handleChange (options: { fileList: string | any[] }){
 function getLocalFile (filePath: string) {
   // 使用XMLHttpRequest读取本地文件
   let xhr = null
-  if (window.XMLHttpRequest) {
-    xhr = new XMLHttpRequest()
-  } else {
-    xhr = new ActiveXObject(`Microsoft.XMLHTTP`)
-  }
+  xhr = new XMLHttpRequest()
   const okStatus = document.location.protocol === 'file' ? 0 : 200
   xhr.open('GET', filePath, false)
   xhr.overrideMimeType('text/html;charset=utf-8')
   xhr.send()
   return xhr.status === okStatus ? xhr.responseText : null
-}
-
-function handleSelect(e) {
-  for (let index in composables) {
-    if (index === `../composables/${props.context}v${e}.ts`) {
-      console.log('success')
-      composables[index]().then(({useSingleTest, useGetArgs}) => {
-        [ composable, getArgs ] = [ useSingleTest, useGetArgs ]
-      })
-      break
-    }
-  }
 }
 
 const columns = ref<Column[]>([])
@@ -376,7 +373,7 @@ const pagination = {
 }
 const currTab = ref('Question')
 const message = useMessage()
-function handleUpload() {
+function handleTesting () {
   if (fileListLength.value) {
     // 使用手动上传的.csv文件
     message.info(`使用用户手动上传的测试用例。`)
