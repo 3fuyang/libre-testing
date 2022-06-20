@@ -32,6 +32,14 @@
                   language="js"></n-code>
               </n-scrollbar>
             </n-card>
+            <p class="subtitle">版本迭代</p>
+            <n-card 
+              class="description" 
+              embedded 
+              :bordered="false" 
+              content-style="padding: .5em;">
+              <div id="iterationChart" class="chart"/>
+            </n-card>
           </n-card>
         </n-tab-pane>
         <n-tab-pane v-if="result.length" name="Result" tab="测试结果">      
@@ -70,7 +78,7 @@
             size="small" 
             header-style="padding: .8em;">
             <n-h2>
-              折线图
+              测试结果
             </n-h2>
             <div id="chart" class="chart"/>
           </n-card>
@@ -91,7 +99,8 @@
             class="cascader-input"
             v-model:value="version"
             :options="props.versions ? props.versions : [{ label: '0.0.0', value: '0.0.0'}]"
-            placeholder="Click to select"/>
+            placeholder="Click to select"
+            @change="handleSelect($event)"/>
         </n-space>        
         <p class="subtitle">Step 02. 选择用例集</p>
         <n-space vertical>
@@ -145,7 +154,7 @@
 <script setup lang="ts">
 import { NH2, NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable, useMessage, NSelect } from 'naive-ui'
 import type { CascaderOption } from 'naive-ui'
-import { type Component, onUpdated, ref } from 'vue'
+import { type Component, onUpdated, onMounted, ref } from 'vue'
 import { CloudDownloadOutline } from '@vicons/ionicons5'
 import hljs from 'highlight.js/lib/core'
 import javascript from 'highlight.js/lib/languages/javascript'
@@ -158,10 +167,13 @@ import {
   TooltipComponent,
   GridComponent,
   DatasetComponent,
-  TransformComponent
+  TransformComponent,
+  LegendComponent,
+  ToolboxComponent
 } from 'echarts/components'
 import { LabelLayout, UniversalTransition } from 'echarts/features'
 import { CanvasRenderer } from 'echarts/renderers'
+import { PieChart,BarChart } from 'echarts/charts';
 
 
 const props = defineProps<{
@@ -181,26 +193,72 @@ echarts.use([
   TransformComponent,
   LabelLayout,
   UniversalTransition,
-  CanvasRenderer
+  CanvasRenderer,
+  LegendComponent,
+  PieChart,
+  ToolboxComponent,
+  BarChart
 ])
+
+//测试结果饼状图
+const ecOption = {
+  tooltip: {
+    trigger: 'item'
+  },
+  legend: {
+    top: '5%',
+    left: 'center'
+  },
+  series: [
+    {
+      name: 'Access From',
+      type: 'pie',
+      radius: ['40%', '70%'],
+      avoidLabelOverlap: false,
+      itemStyle: {
+        borderRadius: 10,
+        borderColor: '#fff',
+        borderWidth: 2
+      },
+      label: {
+        show: false,
+        position: 'center'
+      },
+      emphasis: {
+        label: {
+          show: true,
+          fontSize: '40',
+          fontWeight: 'bold'
+        }
+      },
+      labelLine: {
+        show: false
+      },
+      data: [
+        { value: 60, name: 'No Output' },
+        { value: 80, name: 'Passed' },
+        { value: 32, name: 'Not Passed' }
+      ]
+    }
+  ]
+};
 
 onUpdated(() => {
   if (currTab.value === 'Visualization') {
     const eChart = echarts.init(document.getElementById('chart') as HTMLDivElement)
-    eChart.setOption(props.ecOption as ECOption)
+    eChart.setOption(ecOption as ECOption)
   }
+})
+
+onMounted(() => {
+  //加载版本迭代柱状图
+  const iterationChart = echarts.init(document.getElementById('iterationChart') as HTMLDivElement)
+  console.log(props.ecOption)
+  iterationChart.setOption(props.ecOption as ECOption)
 })
 
 let composable: Function, getArgs: (row: Row) => any[]
 const composables = import.meta.glob('../composables/*.ts')
-for (let index in composables) {
-  if (index === `../composables/${props.context}.ts`) {
-    composables[index]().then(({useSingleTest, useGetArgs}) => {
-      [ composable, getArgs ] = [ useSingleTest, useGetArgs ]
-    })
-    break
-  }
-}
 
 const code = props.code,
 options = ref<CascaderOption[]>(props.options)
@@ -240,11 +298,15 @@ const createRows = (rawData: any[]) => {
 // 测试函数
 const executeTesting = (dataContent: Row[]) => {
   let falseNum = 0
+  let nullAnsNum = 0
   for (let row of dataContent) {
     //console.log(getArgs)
     //console.log(composable)
     let args = getArgs(row)
     row.ActualOutput = composable.apply(this, args)
+    if(row.ActualOutput == null) {
+      nullAnsNum++
+    }
     row.TesterName = `RQD、fuyang`
     let myTime = new Date()
     row.Time = myTime.toLocaleString()
@@ -256,7 +318,10 @@ const executeTesting = (dataContent: Row[]) => {
     }
     //console.log(row)
   }
-  return falseNum
+  return {
+    falseNum,
+    nullAnsNum
+  }
 }
 
 const uploadRef = ref<Component | null>(null)
@@ -292,6 +357,18 @@ function getLocalFile (filePath: string) {
   return xhr.status === okStatus ? xhr.responseText : null
 }
 
+function handleSelect(e) {
+  for (let index in composables) {
+    if (index === `../composables/${props.context}v${e}.ts`) {
+      console.log('success')
+      composables[index]().then(({useSingleTest, useGetArgs}) => {
+        [ composable, getArgs ] = [ useSingleTest, useGetArgs ]
+      })
+      break
+    }
+  }
+}
+
 const columns = ref<Column[]>([])
 const result = ref<Row[]>([])
 const pagination = {
@@ -323,8 +400,11 @@ function handleUpload() {
   // 绘制表格
   result.value = createRows(fileData.value as any[])
   // 进行测试并回填结果
-  const falseNum = executeTesting(result.value)
+  const {falseNum, nullAnsNum} = executeTesting(result.value)
   message.success( `测试完毕，共执行 ${result.value.length} 个用例，通过 ${result.value.length - falseNum} 个用例。`)
+  ecOption.series[0].data[0].value = nullAnsNum;
+  ecOption.series[0].data[1].value = result.value.length - falseNum;
+  ecOption.series[0].data[2].value = falseNum;
   currTab.value = 'Result'
 }
 // 导出.csv文件

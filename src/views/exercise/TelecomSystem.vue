@@ -2,7 +2,10 @@
   <test-panel 
     :context="context"
     :options="options"
-    :code="code">
+    :code="code"
+    :versions="versions"
+    :ec-option="ecOption"
+    >
     <template #header>
       Question 04. 电信收费问题
     </template>
@@ -21,9 +24,137 @@
 </template>
 
 <script setup lang="ts">
+import * as echarts from 'echarts/core'
 import TestPanel from '../../components/TestPanel.vue'
 
 const context = 'telecomSystem'
+
+// 程序版本集
+const versions = [
+  {
+    label: '0.0.0',
+    value: '0.0.0'
+  },
+  {
+    label: '0.1.0',
+    value: '0.1.0'
+  },  
+  {
+    label: '0.2.0',
+    value: '0.2.0'
+  },  
+]
+
+// ECharts 绘图选项
+const ecOption: ECOption = {
+  xAxis: {
+    type: 'category',
+    data: ['0.0.0版本', '0.1.0版本', '0.2.0版本']
+  },
+  yAxis: [
+    {
+      type: 'value',
+      name: '测试用例通过率',
+      alignTicks: true,
+      position: 'left',
+      axisLabel: {
+        formatter: '{value} %'
+      }
+    },
+    {
+      type: 'value',
+      name: '测试用例通过数',
+      position: 'right',
+    }
+  ],
+  tooltip: {
+    trigger: 'axis'
+  },
+  toolbox: {
+    show: true,
+    feature: {
+      dataView: { show: true, readOnly: false },
+      magicType: { show: true, type: ['line', 'bar'] },
+      restore: { show: true },
+      saveAsImage: { show: true }
+    }
+  },
+  series: [
+    {
+      data: [
+        {
+          value: 79.6,
+          itemStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: "#83bff6" },
+              { offset: 0.8, color: "#188df0" },
+              { offset: 1, color: "#188df0" },
+            ]),
+          }
+        },
+        {
+          value: 93.9,
+          itemStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: "#83bff6" },
+              { offset: 0.8, color: "#188df0" },
+              { offset: 1, color: "#188df0" },
+            ]),
+          }
+        },
+        {
+          value: 100,
+          itemStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: "#83bff6" },
+              { offset: 0.8, color: "#188df0" },
+              { offset: 1, color: "#188df0" },
+            ]),
+          }
+        }
+      ],
+      type: 'bar',
+      yAxisIndex: 0,
+      name: '测试用例通过率',
+      tooltip: {
+        valueFormatter: (value) => value + ' %'
+      }
+    },
+    {
+      data: [
+        {
+          value: 39,
+          itemStyle: {
+            color: 'green'
+          }
+        },
+        {
+          value: 46,
+          itemStyle: {
+            color: 'green'
+          }
+        },
+        {
+          value: 49,
+          itemStyle: {
+            color: 'green'
+          }
+        }
+      ],
+      type: 'line',
+      yAxisIndex: 1,
+      markPoint: {
+        data: [
+          { type: 'max', name: 'Max' }
+        ]
+      },
+      name: '测试用例通过数',
+      tooltip: {
+        valueFormatter: (value) => value + ' 个'
+      }
+    }
+  ]
+}
 
 const options = [
   {
@@ -65,6 +196,16 @@ const options = [
         value: 'strong-robustness-equivalent',        
       },                  
     ]    
+  },
+  {
+    label: '决策表',
+    value: 'decision',
+    children: [
+      {
+        label: '决策表',
+        value: 'decision-table',        
+      }
+    ]    
   }
 ]
 
@@ -76,9 +217,9 @@ const code = `function telecomSystem(callingTime: number, count: number): string
         return "未按时缴费次数越界"
     }
 
-    let maxNum = [1, 2, 3, 3, 6]
-    let level = getLevel(callingTime)
-    if(count <= maxNum[level - 1]) {
+    let maxNum: number[] = [1, 2, 3, 3, 6]
+    let level: number = getLevel(callingTime)
+    if (count <= maxNum[level - 1]) {
         return String(Math.round((25 + 0.15 * callingTime * (1 - (level + 1) * 0.005)) * 100) / 100)
     } else {
         return String(Math.round((25 + 0.15 * callingTime) * 100) / 100)
@@ -86,13 +227,13 @@ const code = `function telecomSystem(callingTime: number, count: number): string
 }
 
 function getLevel(time: number): number {
-    if(time > 0 && time <= 60)
+    if (time > 0 && time <= 60)
         return 1
-    else if(time > 60 && time <= 120)
+    else if (time > 60 && time <= 120)
         return 2
-    else if(time > 120 && time <= 180)
+    else if (time > 120 && time <= 180)
         return 3
-    else if(time > 180 && time <= 300)
+    else if (time > 180 && time <= 300)
         return 4
     else
         return 5
