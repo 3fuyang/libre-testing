@@ -58,7 +58,7 @@
               size="small"
               :max-height="420"
               :bordered="false"
-              :columns="columns"
+              :columns="resultColumns"
               :data="result"
               :pagination="pagination">
             </n-data-table>
@@ -70,7 +70,7 @@
             size="small" 
             header-style="padding: .8em;">
             <n-h2>
-              测试结果
+              测试情况
             </n-h2>
             <div id="chart" class="chart"/>
             <n-h2>
@@ -83,6 +83,13 @@
               content-style="padding: .5em;">
               <div id="iterationChart" class="chart"/>
             </n-card>
+            <n-data-table
+              size="small"
+              :max-height="420"
+              :bordered="false"
+              :columns="iterationColumns"
+              :data="iterationTable">
+            </n-data-table>
           </n-card>
         </n-tab-pane>   
       </n-tabs>
@@ -182,6 +189,7 @@ const props = defineProps<{
   context: string,  // 测试上下文
   options: any[],  // 支持的测试用例类型
   code: string, // 代码字符串
+  iteration: object,
   versions: any[], // 可选版本集
   ecOption: ECOption // ECharts 选项
 }>()
@@ -250,9 +258,16 @@ onUpdated(() => {
     // 加载测试结果饼状图
     const eChart = echarts.init(document.getElementById('chart') as HTMLDivElement)
     eChart.setOption(ecOption as ECOption)
+
     // 加载版本迭代柱状图
     const iterationChart = echarts.init(document.getElementById('iterationChart') as HTMLDivElement)
     iterationChart.setOption(props.ecOption as ECOption)
+
+    // 绘制代码版本迭代表
+    console.log('iteration', props.iteration)
+    iterationColumns.value = props.iteration.columns  
+    iterationTable.value = props.iteration.data
+    console.log('iteration table', iterationTable)
   }
 })
 
@@ -297,7 +312,7 @@ const createRows = (rawData: any[]) => {
   for (let i = 1; i < rowNum; ++i) {
     let row: Row = { key: (counter++).toString() }
     let j = 0
-    for (let item of columns.value) {
+    for (let item of resultColumns.value) {
       row[item.key] = rawData[i][j++]
     }
     //console.log(row)
@@ -364,7 +379,10 @@ function getLocalFile (filePath: string) {
   return xhr.status === okStatus ? xhr.responseText : null
 }
 
-const columns = ref<Column[]>([])
+const iterationColumns = ref<Column[]>([])
+const iterationTable = ref<Row[]>([])
+
+const resultColumns = ref<Column[]>([])
 const result = ref<Row[]>([])
 const pagination = {
   pageSize: 7
@@ -388,12 +406,13 @@ function handleTesting () {
         fileData.value = res.data
       }
     })
-    //console.log(fileData.value)
+    console.log(fileData.value)
   }
   // 绘制表头
-  columns.value = createColumns(fileData.value as any[])
+  resultColumns.value = createColumns(fileData.value as any[])
   // 绘制表格
   result.value = createRows(fileData.value as any[])
+  console.log(result.value, resultColumns.value)
   // 进行测试并回填结果
   const {falseNum, nullAnsNum} = executeTesting(result.value)
   message.success( `测试完毕，共执行 ${result.value.length} 个用例，通过 ${result.value.length - falseNum} 个用例。`)
@@ -406,7 +425,7 @@ function handleTesting () {
 function exportCsv () {
   const tableData = []
   const cols = []
-  for (let col of columns.value) {
+  for (let col of resultColumns.value) {
     cols.push(col.title)
   }
   tableData.push(cols)
@@ -458,7 +477,7 @@ hljs.registerLanguage('javascript', javascript)
 .chart {
   font-size: 1rem;
   width: 42em;
-  height: 25em;
+  height: 20em;
 }
 .right-flex-item{
   padding-top: 3.2em;

@@ -5,6 +5,7 @@
     :code="code"
     :versions="versions"
     :ec-option="ecOption"
+    :iteration="iteration"
     >
     <template #header>
       Question 04. 电信收费问题
@@ -28,7 +29,93 @@ import * as echarts from 'echarts/core'
 import TestPanel from '../../components/TestPanel.vue'
 import type { ECOption } from '@/interface'
 
+// 上下文
 const context = 'telecomSystem'
+
+// 测试用例集选项
+const options = [
+  {
+    label: '边界值',
+    value: 'boundary-value',
+    children: [
+      {
+        label: '基本边界值',
+        value: 'basic-boundary',        
+      },
+      {
+        label: '健壮边界值',
+        value: 'robustness-boundary',        
+      },
+      {
+        label: '最坏边界值',
+        value: 'worst-boundary',        
+      },            
+    ]
+  },
+  {
+    label: '等价类',
+    value: 'equivalence',
+    children: [
+      {
+        label: '弱一般等价类',
+        value: 'weak-general-equivalent',        
+      },
+      {
+        label: '强一般等价类',
+        value: 'strong-general-equivalent',        
+      },
+      {
+        label: '弱健壮等价类',
+        value: 'weak-robustness-equivalent',        
+      },
+      {
+        label: '强健壮等价类',
+        value: 'strong-robustness-equivalent',        
+      },                  
+    ]    
+  },
+  {
+    label: '决策表',
+    value: 'decision',
+    children: [
+      {
+        label: '决策表',
+        value: 'decision-table',        
+      }
+    ]    
+  }
+]
+
+// 实现代码
+const code = `function telecomSystem(callingTime: number, count: number): string {
+    if (callingTime < 0 || callingTime > 31 * 24 * 60) {
+        return "通话时长数值越界"
+    }
+    if (count < 0 || count > 11) {
+        return "未按时缴费次数越界"
+    }
+
+    let maxNum: number[] = [1, 2, 3, 3, 6]
+    let level: number = getLevel(callingTime)
+    if (count <= maxNum[level - 1]) {
+        return String(Math.round((25 + 0.15 * callingTime * (1 - (level + 1) * 0.005)) * 100) / 100)
+    } else {
+        return String(Math.round((25 + 0.15 * callingTime) * 100) / 100)
+    }
+}
+
+function getLevel(time: number): number {
+    if (time > 0 && time <= 60)
+        return 1
+    else if (time > 60 && time <= 120)
+        return 2
+    else if (time > 120 && time <= 180)
+        return 3
+    else if (time > 180 && time <= 300)
+        return 4
+    else
+        return 5
+}`
 
 // 程序版本集
 const versions = [
@@ -157,88 +244,41 @@ const ecOption: ECOption = {
   ]
 }
 
-const options = [
-  {
-    label: '边界值',
-    value: 'boundary-value',
-    children: [
-      {
-        label: '基本边界值',
-        value: 'basic-boundary',        
-      },
-      {
-        label: '健壮边界值',
-        value: 'robustness-boundary',        
-      },
-      {
-        label: '最坏边界值',
-        value: 'worst-boundary',        
-      },            
-    ]
-  },
-  {
-    label: '等价类',
-    value: 'equivalence',
-    children: [
-      {
-        label: '弱一般等价类',
-        value: 'weak-general-equivalent',        
-      },
-      {
-        label: '强一般等价类',
-        value: 'strong-general-equivalent',        
-      },
-      {
-        label: '弱健壮等价类',
-        value: 'weak-robustness-equivalent',        
-      },
-      {
-        label: '强健壮等价类',
-        value: 'strong-robustness-equivalent',        
-      },                  
-    ]    
-  },
-  {
-    label: '决策表',
-    value: 'decision',
-    children: [
-      {
-        label: '决策表',
-        value: 'decision-table',        
-      }
-    ]    
-  }
-]
-
-const code = `function telecomSystem(callingTime: number, count: number): string {
-    if (callingTime < 0 || callingTime > 31 * 24 * 60) {
-        return "通话时长数值越界"
-    }
-    if (count < 0 || count > 11) {
-        return "未按时缴费次数越界"
-    }
-
-    let maxNum: number[] = [1, 2, 3, 3, 6]
-    let level: number = getLevel(callingTime)
-    if (count <= maxNum[level - 1]) {
-        return String(Math.round((25 + 0.15 * callingTime * (1 - (level + 1) * 0.005)) * 100) / 100)
-    } else {
-        return String(Math.round((25 + 0.15 * callingTime) * 100) / 100)
-    }
+// 代码版本迭代信息
+const iteration = {
+  columns: [{
+    title: '版本号',
+    key: 'version'
+    },{
+    title: '测试数据集',
+    key: 'dataset'
+    },{
+    title: '测试情况',
+    key: 'result'
+    },{
+    title: '缺陷描述',
+    key: 'bug'
+    }],
+  data: [{
+      key: '0',
+      version: '0.0.0',
+      dataset: '强健壮等价类',
+      result: '通过39/49',
+      bug: '获取最大允许未按时缴费次数时索引值有误'
+    }, {
+      key: '1',
+      version: '0.1.0',
+      dataset: '强健壮等价类',
+      result: '通过46/49',
+      bug: '最终计算结果没有保留两位小数'
+    }, {
+      key: '2',
+      version: '0.2.0',
+      dataset: '强健壮等价类',
+      result: '通过49/49',
+      bug: '测试全部通过'
+    }]
 }
-
-function getLevel(time: number): number {
-    if (time > 0 && time <= 60)
-        return 1
-    else if (time > 60 && time <= 120)
-        return 2
-    else if (time > 120 && time <= 180)
-        return 3
-    else if (time > 180 && time <= 300)
-        return 4
-    else
-        return 5
-}`
 </script>
 
 <style scoped>
