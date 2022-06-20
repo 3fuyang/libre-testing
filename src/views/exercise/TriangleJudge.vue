@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import type { ECOption } from '@/interface'
+import * as echarts from 'echarts/core'
 import TestPanel from '../../components/TestPanel.vue'
 
 const context = 'triangleJudge'
@@ -42,35 +43,97 @@ const versions = [
 
 // ECharts 绘图选项
 const ecOption: ECOption = {
-  tooltip: {
-    triggerOn: 'mousemove',
-    trigger: 'item'
-  },  
   xAxis: {
-    data: ['25 Apr', '26 Apr', '27 Apr', '28 Apr', '29 Apr', '30 Apr', '1 May']
+    type: 'category',
+    data: ['0.0.0版本', '0.1.0版本']
   },
-  yAxis: {},
-  series: [
+  yAxis: [
     {
-      data: [1, 3, 4, 5, 7, 8, 9],
-      type: 'line',
-      smooth: true,
-      lineStyle: {
-        color: '#43B5F4',
-        width: 2,
-      },
-      itemStyle: {
-        color: '#43B5F4',
-      },
-      tooltip: {
-        valueFormatter: (value) => `${value} Events`
+      type: 'value',
+      name: '测试用例通过率',
+      alignTicks: true,
+      position: 'left',
+      axisLabel: {
+        formatter: '{value} %'
       }
+    },
+    {
+      type: 'value',
+      name: '测试用例通过数',
+      position: 'right',
     }
   ],
-  grid: {
-    top: 20,
-    bottom: 20
-  }  
+  tooltip: {
+    trigger: 'axis'
+  },
+  toolbox: {
+    show: true,
+    feature: {
+      dataView: { show: true, readOnly: false },
+      magicType: { show: true, type: ['line', 'bar'] },
+      restore: { show: true },
+      saveAsImage: { show: true }
+    }
+  },
+  series: [
+    {
+      data: [
+        {
+          value: 97.2,
+          itemStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: "#83bff6" },
+              { offset: 0.8, color: "#188df0" },
+              { offset: 1, color: "#188df0" },
+            ]),
+          }
+        },
+        {
+          value: 100,
+          itemStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: "#83bff6" },
+              { offset: 0.8, color: "#188df0" },
+              { offset: 1, color: "#188df0" },
+            ]),
+          }
+        }
+      ],
+      type: 'bar',
+      yAxisIndex: 0,
+      name: '测试用例通过率',
+      tooltip: {
+        valueFormatter: (value) => value + ' %'
+      }
+    },
+    {
+      data: [
+        {
+          value: 35,
+          itemStyle: {
+            color: 'green'
+          }
+        },
+        {
+          value: 36,
+          itemStyle: {
+            color: 'green'
+          }
+        }
+      ],
+      type: 'line',
+      yAxisIndex: 1,
+      markPoint: {
+        data: [
+          { type: 'max', name: 'Max' }
+        ]
+      },
+      name: '测试用例通过数',
+      tooltip: {
+        valueFormatter: (value) => value + ' 个'
+      }
+    }
+  ]
 }
 
 // 可选用例集

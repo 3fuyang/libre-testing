@@ -4,6 +4,7 @@
     :options="options"
     :code="code"
     :versions="versions"
+    :ec-option="ecOption"
     >
     <template #header>
       Question 04. 电信收费问题
@@ -23,6 +24,7 @@
 </template>
 
 <script setup lang="ts">
+import * as echarts from 'echarts/core'
 import TestPanel from '../../components/TestPanel.vue'
 
 const context = 'telecomSystem'
@@ -42,6 +44,117 @@ const versions = [
     value: '0.2.0'
   },  
 ]
+
+// ECharts 绘图选项
+const ecOption: ECOption = {
+  xAxis: {
+    type: 'category',
+    data: ['0.0.0版本', '0.1.0版本', '0.2.0版本']
+  },
+  yAxis: [
+    {
+      type: 'value',
+      name: '测试用例通过率',
+      alignTicks: true,
+      position: 'left',
+      axisLabel: {
+        formatter: '{value} %'
+      }
+    },
+    {
+      type: 'value',
+      name: '测试用例通过数',
+      position: 'right',
+    }
+  ],
+  tooltip: {
+    trigger: 'axis'
+  },
+  toolbox: {
+    show: true,
+    feature: {
+      dataView: { show: true, readOnly: false },
+      magicType: { show: true, type: ['line', 'bar'] },
+      restore: { show: true },
+      saveAsImage: { show: true }
+    }
+  },
+  series: [
+    {
+      data: [
+        {
+          value: 79.6,
+          itemStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: "#83bff6" },
+              { offset: 0.8, color: "#188df0" },
+              { offset: 1, color: "#188df0" },
+            ]),
+          }
+        },
+        {
+          value: 93.9,
+          itemStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: "#83bff6" },
+              { offset: 0.8, color: "#188df0" },
+              { offset: 1, color: "#188df0" },
+            ]),
+          }
+        },
+        {
+          value: 100,
+          itemStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: "#83bff6" },
+              { offset: 0.8, color: "#188df0" },
+              { offset: 1, color: "#188df0" },
+            ]),
+          }
+        }
+      ],
+      type: 'bar',
+      yAxisIndex: 0,
+      name: '测试用例通过率',
+      tooltip: {
+        valueFormatter: (value) => value + ' %'
+      }
+    },
+    {
+      data: [
+        {
+          value: 39,
+          itemStyle: {
+            color: 'green'
+          }
+        },
+        {
+          value: 46,
+          itemStyle: {
+            color: 'green'
+          }
+        },
+        {
+          value: 49,
+          itemStyle: {
+            color: 'green'
+          }
+        }
+      ],
+      type: 'line',
+      yAxisIndex: 1,
+      markPoint: {
+        data: [
+          { type: 'max', name: 'Max' }
+        ]
+      },
+      name: '测试用例通过数',
+      tooltip: {
+        valueFormatter: (value) => value + ' 个'
+      }
+    }
+  ]
+}
 
 const options = [
   {
@@ -82,6 +195,16 @@ const options = [
         label: '强健壮等价类',
         value: 'strong-robustness-equivalent',        
       },                  
+    ]    
+  },
+  {
+    label: '决策表',
+    value: 'decision',
+    children: [
+      {
+        label: '决策表',
+        value: 'decision-table',        
+      }
     ]    
   }
 ]
