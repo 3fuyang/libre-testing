@@ -163,14 +163,14 @@
 <script setup lang="ts">
 import { NH2, NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable, useMessage, NSelect } from 'naive-ui'
 import type { CascaderOption } from 'naive-ui'
-import { type Component, onUpdated, onMounted, ref } from 'vue'
+import { type Component, onUpdated, ref } from 'vue'
 import { CloudDownloadOutline } from '@vicons/ionicons5'
 import hljs from 'highlight.js/lib/core'
 import javascript from 'highlight.js/lib/languages/javascript'
 import Papa from 'papaparse'
-import type { Row, Column, ECOption } from '../interface'
+import type { Row, Column, ECOption, Iteration } from '../interface'
 import * as echarts from 'echarts/core'
-import { LineChart } from 'echarts/charts'
+import { LineChart, PieChart, BarChart } from 'echarts/charts'
 import {
   TitleComponent,
   TooltipComponent,
@@ -182,14 +182,13 @@ import {
 } from 'echarts/components'
 import { LabelLayout, UniversalTransition } from 'echarts/features'
 import { CanvasRenderer } from 'echarts/renderers'
-import { PieChart,BarChart } from 'echarts/charts';
 
 
 const props = defineProps<{
   context: string,  // 测试上下文
   options: any[],  // 支持的测试用例类型
   code: string, // 代码字符串
-  iteration: object,
+  iteration: Iteration,
   versions: any[], // 可选版本集
   ecOption: ECOption // ECharts 选项
 }>()
@@ -211,7 +210,7 @@ echarts.use([
 ])
 
 //测试结果饼状图
-const ecOption = {
+const ecOption: ECOption = {
   tooltip: {
     trigger: 'item'
   },
@@ -257,16 +256,16 @@ onUpdated(() => {
   if (currTab.value === 'Visualization') {
     // 加载测试结果饼状图
     const eChart = echarts.init(document.getElementById('chart') as HTMLDivElement)
-    eChart.setOption(ecOption as ECOption)
+    eChart.setOption(ecOption)
 
     // 加载版本迭代柱状图
     const iterationChart = echarts.init(document.getElementById('iterationChart') as HTMLDivElement)
-    iterationChart.setOption(props.ecOption as ECOption)
+    iterationChart.setOption(props.ecOption)
 
     // 绘制代码版本迭代表
     console.log('iteration', props.iteration)
-    iterationColumns.value = props.iteration.columns  
-    iterationTable.value = props.iteration.data
+    iterationColumns.value.push(...props.iteration.columns)
+    iterationTable.value.push(...props.iteration.data)
     console.log('iteration table', iterationTable)
   }
 })
@@ -380,7 +379,7 @@ function getLocalFile (filePath: string) {
 }
 
 const iterationColumns = ref<Column[]>([])
-const iterationTable = ref<Row[]>([])
+const iterationTable = ref<any[]>([])
 
 const resultColumns = ref<Column[]>([])
 const result = ref<Row[]>([])
@@ -414,11 +413,13 @@ function handleTesting () {
   result.value = createRows(fileData.value as any[])
   console.log(result.value, resultColumns.value)
   // 进行测试并回填结果
-  const {falseNum, nullAnsNum} = executeTesting(result.value)
+  const { falseNum, nullAnsNum } = executeTesting(result.value)
   message.success( `测试完毕，共执行 ${result.value.length} 个用例，通过 ${result.value.length - falseNum} 个用例。`)
-  ecOption.series[0].data[0].value = nullAnsNum;
-  ecOption.series[0].data[1].value = result.value.length - falseNum;
-  ecOption.series[0].data[2].value = falseNum;
+
+    ecOption.series[0].data[0].value = nullAnsNum
+    ecOption.series[0].data[1].value = result.value.length - falseNum
+    ecOption.series[0].data[2].value = falseNum
+  
   currTab.value = 'Result'
 }
 // 导出.csv文件

@@ -49,3 +49,16 @@ export type ECOption = ComposeOption<
 | GridComponentOption
 | DatasetComponentOption
 >
+
+export interface IterationData {
+  key: string
+  version: string
+  dataset: string
+  result: string
+  bug: string
+}
+
+export interface Iteration {
+  columns: Column[]
+  data: IterationData[]
+}

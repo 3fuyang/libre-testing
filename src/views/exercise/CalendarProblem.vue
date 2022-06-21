@@ -236,42 +236,51 @@ const ecOption: ECOption = {
       },
     },
   ],
-};
+}
 
 // 代码版本迭代信息
 const iteration = {
-  columns: [{
-    title: '版本号',
-    key: 'version'
-    },{
-    title: '测试数据集',
-    key: 'dataset'
-    },{
-    title: '测试情况',
-    key: 'result'
-    },{
-    title: '缺陷描述',
-    key: 'bug'
-    }],
-  data: [{
+  columns: [
+    {
+      title: '版本号',
+      key: 'version'
+    },
+    {
+      title: '测试数据集',
+      key: 'dataset'
+    },
+    {
+      title: '测试情况',
+      key: 'result'
+    },
+    {
+      title: '缺陷描述',
+      key: 'bug'
+    }
+  ],
+  data: [
+    {
       key: '0',
       version: '0.0.0',
       dataset: '强健壮等价类',
       result: '通过137/167',
       bug: '当处于当月最后一天、当月为12月时的年月计算逻辑有误'
-    }, {
+    },
+    {
       key: '1',
       version: '0.1.0',
       dataset: '强健壮等价类',
       result: '通过167/168',
       bug: '闰年判断逻辑有误，整百年的特殊情况误判'
-    }, {
+    },
+    {
       key: '2',
       version: '0.2.0',
       dataset: '强健壮等价类',
       result: '通过168/168',
       bug: '测试全部通过'
-    }]
+    }
+  ]
 }
 </script>
 
