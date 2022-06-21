@@ -416,9 +416,12 @@ function handleTesting () {
   const { falseNum, nullAnsNum } = executeTesting(result.value)
   message.success( `测试完毕，共执行 ${result.value.length} 个用例，通过 ${result.value.length - falseNum} 个用例。`)
 
-    ecOption.series[0].data[0].value = nullAnsNum
-    ecOption.series[0].data[1].value = result.value.length - falseNum
-    ecOption.series[0].data[2].value = falseNum
+  // @ts-ignore
+  ecOption.series[0].data[0].value = nullAnsNum
+  // @ts-ignore
+  ecOption.series[0].data[1].value = result.value.length - falseNum
+  // @ts-ignore
+  ecOption.series[0].data[2].value = falseNum
   
   currTab.value = 'Result'
 }
