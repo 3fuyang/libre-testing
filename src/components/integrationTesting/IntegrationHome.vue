@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { NCard, NText, NA, NBlockquote, NH2, NUl, NLi } from 'naive-ui'
+import { NCard, NText, NA, NBlockquote, NH2 } from 'naive-ui'
 import IconVitestVue from '../icons/IconVitest.vue'
 
 </script>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { NTabs, NTabPane } from 'naive-ui'
-import UnitPanelVue from '../../components/unitTesting/UnitPanel.vue'
 import IntegrationHomeVue from '../../components/integrationTesting/IntegrationHome.vue'
 import sdk from '@stackblitz/sdk'
 import { onMounted } from 'vue'
@@ -9,26 +8,6 @@ const tabs = [
   {
     name: 'home',
     tab: '集成测试'
-  },
-  {
-    name: 'login',
-    tab: '登录模块',
-    testCase: '使用强健壮等价类设计测试用例。'
-  },
-  {
-    name: 'collect',
-    tab: '收藏模块',
-    testCase: '使用强一般等价类设计测试用例。'
-  },
-  {
-    name: 'deal-report',
-    tab: '受理举报模块',
-    testCase: '使用强一般等价类设计测试用例。'
-  },
-  {
-    name: 'confirm',
-    tab: '确认订单模块',
-    testCase: '使用强一般等价类设计测试用例。'
   }
 ]
 
@@ -68,14 +47,6 @@ onMounted(() => {
           :name="item.name"
           :tab="item.tab">
           <integration-home-vue v-if="item.name === 'home'"/>
-          <unit-panel-vue :context="item.name" v-else>
-            <template #title>
-              {{item.tab}}
-            </template>
-            <template #test-case>
-              {{item.testCase}}
-            </template>
-          </unit-panel-vue>
         </n-tab-pane>       
       </n-tabs>
     </div>
