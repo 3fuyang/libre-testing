@@ -1,10 +1,20 @@
-# software-testing
+# Libre Testing
 
 Fwio
 
-## 关于 StackBlitz 的嵌入
+## Introduction
 
-本项目的“单元测试”页面中嵌入（embed）了 StackBlitz 的项目，但是会出现在开发模式运行正常，而生产模式（指部署到服务器上）无法使用 Node 环境（只能查看文件）的情况。
+同济大学软件学院 2022 软件测试课设，一个自动化测试平台。
+
+技术栈：Vue 3 + TypeScript + Naive UI
+
+Online Demo: [Libre Testing](https://libretesting.xyz)
+
+## Issues and Resolutions
+
+### 关于 StackBlitz 的嵌入
+
+App 的项目测试页面中嵌入（embed）了托管在 StackBlitz 上的项目，但是会出现在开发模式运行正常，而生产模式（指部署到服务器上）无法使用 Node 环境（只能查看文件）的情况。
 
 其原因是 StackBlitz 中 WebContainers 极大地依赖 [SharedArrayBuffer](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer) 这一 Web API，它是一个试验性的 API，而在大多数浏览器中，它是被禁用的。
 
@@ -17,10 +27,6 @@ Fwio
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
 
