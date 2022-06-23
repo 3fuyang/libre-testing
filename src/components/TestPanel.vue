@@ -69,27 +69,28 @@
             class="visualization" 
             size="small" 
             header-style="padding: .8em;">
-            <n-h2>
-              测试情况
-            </n-h2>
-            <div id="chart" class="chart"/>
-            <n-h2>
-              版本迭代
-            </n-h2>
-            <n-card 
-              class="description" 
-              embedded 
-              :bordered="false" 
-              content-style="padding: .5em;">
-              <div id="iterationChart" class="chart"/>
-            </n-card>
-            <n-data-table
-              size="small"
-              :max-height="420"
-              :bordered="false"
-              :columns="iterationColumns"
-              :data="iterationTable">
-            </n-data-table>
+            <n-scrollbar style="max-height: 78vh;">
+              <n-h2>
+                测试情况
+              </n-h2>
+              <div id="chart" class="chart"/>
+              <n-h2>
+                版本迭代
+              </n-h2>
+              <n-card 
+                class="description" 
+                embedded 
+                :bordered="false" 
+                content-style="padding: .5em;">
+                <div id="iterationChart" class="chart"/>
+              </n-card>
+              <n-data-table
+                size="small"
+                :bordered="false"
+                :columns="iterationColumns"
+                :data="iterationTable">
+              </n-data-table>
+            </n-scrollbar>
           </n-card>
         </n-tab-pane>   
       </n-tabs>
@@ -263,7 +264,9 @@ onUpdated(() => {
     iterationChart.setOption(props.ecOption)
 
     // 绘制代码版本迭代表
-    console.log('iteration', props.iteration)
+    //console.log('iteration', props.iteration)
+    iterationColumns.value.length = 0
+    iterationTable.value.length = 0
     iterationColumns.value.push(...props.iteration.columns)
     iterationTable.value.push(...props.iteration.data)
     console.log('iteration table', iterationTable)
