@@ -2,15 +2,39 @@
 
 Fwio
 
-## Introduction
+## 简介
 
 同济大学软件学院 2022 软件测试课设，一个自动化测试平台。
 
-技术栈：Vue 3 + TypeScript + Naive UI
+前端：Vue 3 + TypeScript + Naive UI
 
-Online Demo: [Libre Testing](https://libretesting.xyz)
+测试：Vitest + Cypress
 
-## Issues and Resolutions
+Online Demo（在线体验）: [Libre Testing](https://libretesting.xyz)
+
+## 使用说明
+
+### 平时练习
+
+包含判断三角形类型、万年历问题、电信收费、电脑销售系统共四个题目。
+
+**使用方法：**
+
++ **使用自带用例集：**在右边栏选择**版本号**和**用例类型**后，点击**“开始测试”**按钮即可；
++ **上传用例集：**注意，**上传用例集**功能要求用例集遵循一定的**格式**，具体可参考`/public/testUsecases/*.csv`
+
+### 项目测试
+
+包括单元测试、集成测试（组件测试）和系统测试（E2E 测试），系统测试需要单独运行。
+
+使用嵌入的 **Stackblitz** 窗口实时演示测试过程。
+
+**注意：**
+
++ 单元测试与集成测试的嵌入窗口加载完毕后，如果 Preview (即视图)为空白的话，在嵌入窗口的 URL 中追加上`/__vitest__/`。
++ 由于 Cypress 本身是一个桌面应用，系统测试需要在 IDE 的 Node 环境中运行，具体参见 Flea Test 这个 repo。
+
+## 问题笔记
 
 ### 关于 StackBlitz 的嵌入
 
