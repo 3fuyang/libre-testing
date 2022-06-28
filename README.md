@@ -6,9 +6,9 @@ Fwio
 
 同济大学软件学院 2022 软件测试课设，一个**自动化测试平台**。
 
-**前端: **Vue 3 + TypeScript + Naive UI
+**前端**：Vue 3 + TypeScript + Naive UI
 
-**测试: **Vitest + Cypress
+**测试**：Vitest + Cypress
 
 Online Demo（**在线体验**）: [Libre Testing](https://libretesting.xyz)
 
