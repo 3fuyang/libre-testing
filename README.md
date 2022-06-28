@@ -33,6 +33,7 @@ Online Demo（**在线体验**）: [Libre Testing](https://libretesting.xyz)
 
 + 单元测试与集成测试的嵌入窗口加载完毕后，如果 Preview (即视图)为空白的话，在嵌入窗口的 URL 中追加上 `/__vitest__/`。
 + 由于 Cypress 本身是一个桌面应用，系统测试需要在 IDE 的 Node 环境中运行，具体参见 Flea Test 这个 repo。
++ 集成测试与系统测试使用的是同一个 repo，分别的启动命令应该是 `npm run test:unit` 和 `npm run test:e2e` ，如果结果不对，请手动在窗口终端运行对应脚本。
 
 ## 问题笔记
 
