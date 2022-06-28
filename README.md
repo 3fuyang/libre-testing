@@ -4,13 +4,13 @@ Fwio
 
 ## 简介
 
-同济大学软件学院 2022 软件测试课设，一个自动化测试平台。
+同济大学软件学院 2022 软件测试课设，一个**自动化测试平台**。
 
-前端：Vue 3 + TypeScript + Naive UI
+**前端：**Vue 3 + TypeScript + Naive UI
 
-测试：Vitest + Cypress
+**测试：**Vitest + Cypress
 
-Online Demo（在线体验）: [Libre Testing](https://libretesting.xyz)
+Online Demo（**在线体验**）: [Libre Testing](https://libretesting.xyz)
 
 ## 使用说明
 
@@ -20,8 +20,8 @@ Online Demo（在线体验）: [Libre Testing](https://libretesting.xyz)
 
 **使用方法：**
 
-+ **使用自带用例集：**在右边栏选择**版本号**和**用例类型**后，点击**“开始测试”**按钮即可；
-+ **上传用例集：**注意，**上传用例集**功能要求用例集遵循一定的**格式**，具体可参考`/public/testUsecases/*.csv`
++ **使用自带用例集：**在右边栏选择**版本号**和**用例类型**后，点击"**开始测试**"按钮即可；
++ **上传用例集：**注意，上传用例集功能要求用例集遵循一定的**格式**，具体可参考 `/public/testUsecases/*.csv`
 
 ### 项目测试
 
@@ -31,7 +31,7 @@ Online Demo（在线体验）: [Libre Testing](https://libretesting.xyz)
 
 **注意：**
 
-+ 单元测试与集成测试的嵌入窗口加载完毕后，如果 Preview (即视图)为空白的话，在嵌入窗口的 URL 中追加上`/__vitest__/`。
++ 单元测试与集成测试的嵌入窗口加载完毕后，如果 Preview (即视图)为空白的话，在嵌入窗口的 URL 中追加上 `/__vitest__/`。
 + 由于 Cypress 本身是一个桌面应用，系统测试需要在 IDE 的 Node 环境中运行，具体参见 Flea Test 这个 repo。
 
 ## 问题笔记
