@@ -26,12 +26,12 @@ function calendarProblem(year: number, month: number, day: number): string {
 
     let result: number[] = [year, month, day + 1]
 
-    if (day == maxDays) 
+    if (day == maxDays)
         result[2] = 1
-        result[1]++
-    if (result[1] > 12) 
+    result[1]++
+    if (result[1] > 12)
         result[1] = 1
-        result[0]++
+    result[0]++
     return result[0] + "/" + result[1] + "/" + result[2]
 }
 

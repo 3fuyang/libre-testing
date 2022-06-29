@@ -1,12 +1,6 @@
 <template>
-  <test-panel 
-    :context="context"
-    :options="options"
-    :code="code"
-    :versions="versions"
-    :ec-option="ecOption"
-    :iteration="iteration"
-    >
+  <test-panel :context="context" :options="options" :code="code" :versions="versions" :ec-option="ecOption"
+    :iteration="iteration">
     <template #header>
       Question 01. 判断三角形类型
     </template>
@@ -15,12 +9,12 @@
     </template>
     <template #detail>
       本题输入变量有a, b, c三个，首先判断其两边之和是否大于第三边，若大于则判断可以构成三角形，再进一步判断该三角形是什么三角形；否则不能构成三角形。
-      <br/>① 从键盘输入三角形的三条边；
-      <br/>② 判断两边之和是否大于第三边，若条件成立则判断可构成三角形，否则判断其不能构成三角形；
-      <br/>③ 继续判断三角形类型；
-      <br/>④ 首先判断其是否三边相等，条件成立则判断其为等边三角形；否则判断其是否有两边相等，条件成立则判断其为等腰三角形；否则判断其为普通三角形。      
+      <br />① 从键盘输入三角形的三条边；
+      <br />② 判断两边之和是否大于第三边，若条件成立则判断可构成三角形，否则判断其不能构成三角形；
+      <br />③ 继续判断三角形类型；
+      <br />④ 首先判断其是否三边相等，条件成立则判断其为等边三角形；否则判断其是否有两边相等，条件成立则判断其为等腰三角形；否则判断其为普通三角形。
     </template>
-  </test-panel>  
+  </test-panel>
 </template>
 
 <script setup lang="ts">
@@ -39,12 +33,12 @@ const options = [
     children: [
       {
         label: '基本边界值',
-        value: 'basic-boundary',        
+        value: 'basic-boundary',
       },
       {
         label: '健壮边界值',
-        value: 'robustness-boundary',        
-      },          
+        value: 'robustness-boundary',
+      },
     ]
   },
   {
@@ -53,21 +47,21 @@ const options = [
     children: [
       {
         label: '弱一般等价类',
-        value: 'weak-general-equivalent',        
+        value: 'weak-general-equivalent',
       },
       {
         label: '强一般等价类',
-        value: 'strong-general-equivalent',        
+        value: 'strong-general-equivalent',
       },
       {
         label: '弱健壮等价类',
-        value: 'weak-robustness-equivalent',        
+        value: 'weak-robustness-equivalent',
       },
       {
         label: '强健壮等价类',
-        value: 'strong-robustness-equivalent',        
-      },                  
-    ]    
+        value: 'strong-robustness-equivalent',
+      },
+    ]
   }
 ]
 
@@ -102,7 +96,7 @@ const versions = [
   {
     label: '0.1.0',
     value: '0.1.0'
-  },  
+  },
 ]
 
 // ECharts 绘图选项
@@ -205,32 +199,31 @@ const iteration = {
   columns: [{
     title: '版本号',
     key: 'version'
-    },{
+  }, {
     title: '测试数据集',
     key: 'dataset'
-    },{
+  }, {
     title: '测试情况',
     key: 'result'
-    },{
+  }, {
     title: '缺陷描述',
     key: 'bug'
-    }],
+  }],
   data: [{
-      key: '0',
-      version: '0.0.0',
-      dataset: '强健壮等价类',
-      result: '通过35/36',
-      bug: '等腰与等边条件判断逻辑顺序有误'
-    }, {
-      key: '1',
-      version: '0.1.0',
-      dataset: '强健壮等价类',
-      result: '通过36/36',
-      bug: '测试全部通过'
-    }]
+    key: '0',
+    version: '0.0.0',
+    dataset: '强健壮等价类',
+    result: '通过35/36',
+    bug: '等腰与等边条件判断逻辑顺序有误'
+  }, {
+    key: '1',
+    version: '0.1.0',
+    dataset: '强健壮等价类',
+    result: '通过36/36',
+    bug: '测试全部通过'
+  }]
 }
 </script>
 
 <style scoped>
-
 </style>

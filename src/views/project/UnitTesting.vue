@@ -48,38 +48,32 @@ onMounted(() => {
       //initialPath: '/__vitest__',
     }
   )
-  .then(() => {
-    const iframe = document.getElementById('stackblitz')
-    iframe?.setAttribute('style', 'border: none;border: 1px solid #eee;')
-  })
+    .then(() => {
+      const iframe = document.getElementById('stackblitz')
+      iframe?.setAttribute('style', 'border: none;border: 1px solid #eee;')
+    })
 })
 </script>
 
 <template>
   <div class="root-wrapper">
     <div class="left-part">
-      <n-tabs
-        type="line"
-        animated
-        default-value="home">
-        <n-tab-pane
-          v-for="item in tabs"
-          :name="item.name"
-          :tab="item.tab">
-          <unit-home-vue v-if="item.name === 'home'"/>
+      <n-tabs type="line" animated default-value="home">
+        <n-tab-pane v-for="item in tabs" :name="item.name" :tab="item.tab">
+          <unit-home-vue v-if="item.name === 'home'" />
           <unit-panel-vue :context="item.name" v-else>
             <template #title>
-              {{item.tab}}
+              {{ item.tab }}
             </template>
             <template #test-case>
-              {{item.testCase}}
+              {{ item.testCase }}
             </template>
           </unit-panel-vue>
-        </n-tab-pane>       
+        </n-tab-pane>
       </n-tabs>
     </div>
     <div class="right-part">
-      <div id="stackblitz"/>
+      <div id="stackblitz" />
     </div>
   </div>
 </template>
@@ -90,9 +84,11 @@ onMounted(() => {
   gap: .5em;
   font-size: 1rem;
 }
+
 .left-part {
   width: 36em;
 }
+
 .right-part {
   box-sizing: border-box;
   width: 45.6em;

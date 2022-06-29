@@ -1,12 +1,6 @@
 <template>
-  <test-panel 
-    :context="context"
-    :options="options"
-    :code="code"
-    :versions="versions"
-    :ec-option="ecOption"
-    :iteration="iteration"
-    >
+  <test-panel :context="context" :options="options" :code="code" :versions="versions" :ec-option="ecOption"
+    :iteration="iteration">
     <template #header>
       Question 04. 电信收费问题
     </template>
@@ -15,11 +9,11 @@
     </template>
     <template #detail>
       本问题输入变量为本月通话时间、用户本年度未按时缴费次数两个。
-      <br/>① 首先判断本月通话时长是否符合取值范围，通话时间应该≥0，且不能超过一个月的分钟数，这里为了方便直接使用31*24*60=44640作为最大值；
-      <br/>② 之后还需要判断用户本年度未按时缴费次数是否符合取值范围，显然次数应该≥0，同时在本月之前本年度最多有11个月缴费，所以未按时缴费次数≤11；
-      <br/>③ 计算用户本月的通话时长处于哪一个折扣等级；
-      <br/>④ 计算用户本年度未按时缴费次数是否超出当前折扣等级容许的未按时缴费次数。   
-      <br/>⑤ 通过折后费用加上月租费计算出最终的本月通话费用。    
+      <br />① 首先判断本月通话时长是否符合取值范围，通话时间应该≥0，且不能超过一个月的分钟数，这里为了方便直接使用31*24*60=44640作为最大值；
+      <br />② 之后还需要判断用户本年度未按时缴费次数是否符合取值范围，显然次数应该≥0，同时在本月之前本年度最多有11个月缴费，所以未按时缴费次数≤11；
+      <br />③ 计算用户本月的通话时长处于哪一个折扣等级；
+      <br />④ 计算用户本年度未按时缴费次数是否超出当前折扣等级容许的未按时缴费次数。
+      <br />⑤ 通过折后费用加上月租费计算出最终的本月通话费用。
     </template>
   </test-panel>
 </template>
@@ -40,16 +34,16 @@ const options = [
     children: [
       {
         label: '基本边界值',
-        value: 'basic-boundary',        
+        value: 'basic-boundary',
       },
       {
         label: '健壮边界值',
-        value: 'robustness-boundary',        
+        value: 'robustness-boundary',
       },
       {
         label: '最坏边界值',
-        value: 'worst-boundary',        
-      },            
+        value: 'worst-boundary',
+      },
     ]
   },
   {
@@ -58,21 +52,21 @@ const options = [
     children: [
       {
         label: '弱一般等价类',
-        value: 'weak-general-equivalent',        
+        value: 'weak-general-equivalent',
       },
       {
         label: '强一般等价类',
-        value: 'strong-general-equivalent',        
+        value: 'strong-general-equivalent',
       },
       {
         label: '弱健壮等价类',
-        value: 'weak-robustness-equivalent',        
+        value: 'weak-robustness-equivalent',
       },
       {
         label: '强健壮等价类',
-        value: 'strong-robustness-equivalent',        
-      },                  
-    ]    
+        value: 'strong-robustness-equivalent',
+      },
+    ]
   },
   {
     label: '决策表',
@@ -80,9 +74,9 @@ const options = [
     children: [
       {
         label: '决策表',
-        value: 'decision-table',        
+        value: 'decision-table',
       }
-    ]    
+    ]
   }
 ]
 
@@ -126,11 +120,11 @@ const versions = [
   {
     label: '0.1.0',
     value: '0.1.0'
-  },  
+  },
   {
     label: '0.2.0',
     value: '0.2.0'
-  },  
+  },
 ]
 
 // ECharts 绘图选项
@@ -249,38 +243,37 @@ const iteration = {
   columns: [{
     title: '版本号',
     key: 'version'
-    },{
+  }, {
     title: '测试数据集',
     key: 'dataset'
-    },{
+  }, {
     title: '测试情况',
     key: 'result'
-    },{
+  }, {
     title: '缺陷描述',
     key: 'bug'
-    }],
+  }],
   data: [{
-      key: '0',
-      version: '0.0.0',
-      dataset: '强健壮等价类',
-      result: '通过39/49',
-      bug: '获取最大允许未按时缴费次数时索引值有误'
-    }, {
-      key: '1',
-      version: '0.1.0',
-      dataset: '强健壮等价类',
-      result: '通过46/49',
-      bug: '最终计算结果没有保留两位小数'
-    }, {
-      key: '2',
-      version: '0.2.0',
-      dataset: '强健壮等价类',
-      result: '通过49/49',
-      bug: '测试全部通过'
-    }]
+    key: '0',
+    version: '0.0.0',
+    dataset: '强健壮等价类',
+    result: '通过39/49',
+    bug: '获取最大允许未按时缴费次数时索引值有误'
+  }, {
+    key: '1',
+    version: '0.1.0',
+    dataset: '强健壮等价类',
+    result: '通过46/49',
+    bug: '最终计算结果没有保留两位小数'
+  }, {
+    key: '2',
+    version: '0.2.0',
+    dataset: '强健壮等价类',
+    result: '通过49/49',
+    bug: '测试全部通过'
+  }]
 }
 </script>
 
 <style scoped>
-
 </style>

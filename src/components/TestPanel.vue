@@ -1,13 +1,9 @@
 <template>
   <div class="flex-wrapper">
     <div class="left-flex-item">
-      <n-tabs
-        v-model:value="currTab">
+      <n-tabs v-model:value="currTab">
         <n-tab-pane name="Question" tab="问题描述">
-          <n-card 
-            class="description" 
-            size="small" 
-            header-style="padding: .8em;">
+          <n-card class="description" size="small" header-style="padding: .8em;">
             <template #header>
               <slot name="header">Question 00. 问题名</slot>
             </template>
@@ -20,116 +16,67 @@
               </slot>
             </p>
             <p class="subtitle">代码实现</p>
-            <n-card 
-              class="code-block" 
-              embedded 
-              :bordered="false" 
-              content-style="padding: .5em;">
+            <n-card class="code-block" embedded :bordered="false" content-style="padding: .5em;">
               <n-scrollbar style="max-height: 42vh;">
-                <n-code 
-                  :hljs="hljs" 
-                  :code="code" 
-                  language="js"></n-code>
+                <n-code :hljs="hljs" :code="code" language="js"></n-code>
               </n-scrollbar>
             </n-card>
           </n-card>
         </n-tab-pane>
-        <n-tab-pane v-if="result.length" name="Result" tab="测试结果">      
-          <n-card 
-            class="output" 
-            size="small" 
-            header-style="padding: .8em;">
+        <n-tab-pane v-if="result.length" name="Result" tab="测试结果">
+          <n-card class="output" size="small" header-style="padding: .8em;">
             <template #header>
               Testing Result
             </template>
             <template #header-extra>
-              <n-button
-                v-if="result.length"
-                quaternary
-                size="small"
-                round
-                type="success"
-                @click="exportCsv">
+              <n-button v-if="result.length" quaternary size="small" round type="success" @click="exportCsv">
                 导出
               </n-button>
             </template>
             <!-- 打印测试结果 -->
-            <n-data-table
-              size="small"
-              :max-height="420"
-              :bordered="false"
-              :columns="resultColumns"
-              :data="result"
+            <n-data-table size="small" :max-height="420" :bordered="false" :columns="resultColumns" :data="result"
               :pagination="pagination">
             </n-data-table>
-          </n-card>          
-        </n-tab-pane> 
+          </n-card>
+        </n-tab-pane>
         <n-tab-pane v-if="result.length" name="Visualization" tab="可视化分析">
-          <n-card
-            class="visualization" 
-            size="small" 
-            header-style="padding: .8em;">
+          <n-card class="visualization" size="small" header-style="padding: .8em;">
             <n-scrollbar style="max-height: 78vh;">
               <n-h2>
                 测试情况
               </n-h2>
-              <div id="chart" class="chart"/>
+              <div id="chart" class="chart" />
               <n-h2>
                 版本迭代
               </n-h2>
-              <n-card 
-                class="description" 
-                embedded 
-                :bordered="false" 
-                content-style="padding: .5em;">
-                <div id="iterationChart" class="chart"/>
+              <n-card class="description" embedded :bordered="false" content-style="padding: .5em;">
+                <div id="iterationChart" class="chart" />
               </n-card>
-              <n-data-table
-                size="small"
-                :bordered="false"
-                :columns="iterationColumns"
-                :data="iterationTable">
+              <n-data-table size="small" :bordered="false" :columns="iterationColumns" :data="iterationTable">
               </n-data-table>
             </n-scrollbar>
           </n-card>
-        </n-tab-pane>   
+        </n-tab-pane>
       </n-tabs>
     </div>
     <div class="right-flex-item">
-      <n-card
-        class="upload-box"
-        size="small"
-        header-style="padding: .8em; margin-bottom: .8em;">
+      <n-card class="upload-box" size="small" header-style="padding: .8em; margin-bottom: .8em;">
         <template #header>
           Program Test
         </template>
         <p class="subtitle">Step 01. 选择程序版本</p>
         <n-space vertical>
-          <n-select
-            class="cascader-input"
-            v-model:value="version"
-            :options="props.versions"
-            placeholder="Click to select"
-            @update:value="handleVersionSelect"/>
-        </n-space>        
+          <n-select class="cascader-input" v-model:value="version" :options="props.versions"
+            placeholder="Click to select" @update:value="handleVersionSelect" />
+        </n-space>
         <p class="subtitle">Step 02. 选择用例集</p>
         <n-space vertical>
-          <n-cascader
-            class="cascader-input"
-            v-model:value="usecaseType"
-            :options="options"
-            :show-path="false"
-            :check-strategy="'child'"
-            placeholder="Click to select"/>
+          <n-cascader class="cascader-input" v-model:value="usecaseType" :options="options" :show-path="false"
+            :check-strategy="'child'" placeholder="Click to select" />
         </n-space>
         <p class="subtitle">Step 03. 上传用例集 (Optional)</p>
         <n-space justify="center">
-          <n-upload
-            ref="uploadRef"
-            action="#"
-            :default-upload="false"
-            accept=".csv"
-            @change="handleUpload">
+          <n-upload ref="uploadRef" action="#" :default-upload="false" accept=".csv" @change="handleUpload">
             <n-upload-dragger class="upload-content">
               <div style="margin-bottom: 12px">
                 <n-icon size="2.5em" :depth="3">
@@ -140,19 +87,15 @@
                 点击或者拖动文件到该区域来上传
               </n-text>
               <n-p depth="3" style="margin-top: .5em;">
-                请上传 .csv 格式的文件<br/>(若上面已经选择了测试集，请直接跳转到第三步)
-              </n-p>                                      
+                请上传 .csv 格式的文件<br />(若上面已经选择了测试集，请直接跳转到第三步)
+              </n-p>
             </n-upload-dragger>
           </n-upload>
         </n-space>
         <p class="subtitle">Step 04. 运行测试集</p>
         <n-space justify="center">
-          <n-button
-            class="upload-btn"
-            :disabled="!((fileListLength || usecaseType) && version)"
-            @click="handleTesting"
-            strong
-            type="primary">
+          <n-button class="upload-btn" :disabled="!((fileListLength || usecaseType) && version)" @click="handleTesting"
+            strong type="primary">
             开始测试
           </n-button>
         </n-space>
@@ -277,17 +220,17 @@ let composable: Function, getArgs: (row: Row) => any[]
 const composables = import.meta.glob('../composables/*.ts')
 
 const code = props.code,
-options = ref<CascaderOption[]>(props.options)
+  options = ref<CascaderOption[]>(props.options)
 
 const version = ref(null)
 
 const usecaseType = ref(null)
 
-function handleVersionSelect (value: string) {
+function handleVersionSelect(value: string) {
   for (let index in composables) {
     if (index === `../composables/${props.context}v${value}.ts`) {
-      composables[index]().then(({useSingleTest, useGetArgs}) => {
-        [ composable, getArgs ] = [ useSingleTest, useGetArgs ]
+      composables[index]().then(({ useSingleTest, useGetArgs }) => {
+        [composable, getArgs] = [useSingleTest, useGetArgs]
         //console.log(composable, getArgs)
       })
       break
@@ -341,8 +284,8 @@ const executeTesting = (dataContent: Row[]) => {
     if (row.ActualOutput === row.ExpectedOutput) {
       row.Correctness = `TRUE`
     } else {
-      row.Correctness =  `FALSE`
-      falseNum++ 
+      row.Correctness = `FALSE`
+      falseNum++
     }
     //console.log(row)
   }
@@ -355,7 +298,7 @@ const executeTesting = (dataContent: Row[]) => {
 const uploadRef = ref<Component | null>(null)
 const fileData = ref<any[] | null>(null)
 const fileListLength = ref(0)
-function handleUpload (options: { fileList: string | any[] }){
+function handleUpload(options: { fileList: string | any[] }) {
   fileListLength.value = options.fileList.length;
   if (fileListLength.value !== 0) {
     // 获取手动上传的.csv文件对象,转化为数组
@@ -370,7 +313,7 @@ function handleUpload (options: { fileList: string | any[] }){
     fileData.value = null
   }
 }
-function getLocalFile (filePath: string) {
+function getLocalFile(filePath: string) {
   // 使用XMLHttpRequest读取本地文件
   let xhr = null
   xhr = new XMLHttpRequest()
@@ -391,7 +334,7 @@ const pagination = {
 }
 const currTab = ref('Question')
 const message = useMessage()
-function handleTesting () {
+function handleTesting() {
   if (fileListLength.value) {
     // 使用手动上传的.csv文件
     message.info(`使用用户手动上传的测试用例。`)
@@ -417,7 +360,7 @@ function handleTesting () {
   console.log(result.value, resultColumns.value)
   // 进行测试并回填结果
   const { falseNum, nullAnsNum } = executeTesting(result.value)
-  message.success( `测试完毕，共执行 ${result.value.length} 个用例，通过 ${result.value.length - falseNum} 个用例。`)
+  message.success(`测试完毕，共执行 ${result.value.length} 个用例，通过 ${result.value.length - falseNum} 个用例。`)
 
   // @ts-ignore
   ecOption.series[0].data[0].value = nullAnsNum
@@ -425,11 +368,11 @@ function handleTesting () {
   ecOption.series[0].data[1].value = result.value.length - falseNum
   // @ts-ignore
   ecOption.series[0].data[2].value = falseNum
-  
+
   currTab.value = 'Result'
 }
 // 导出.csv文件
-function exportCsv () {
+function exportCsv() {
   const tableData = []
   const cols = []
   for (let col of resultColumns.value) {
@@ -455,7 +398,7 @@ function exportCsv () {
   let el = document.createElement('a')
   // 链接赋值
   el.href = url
-  el.download = `${props.context}_${fileListLength.value?'manual':usecaseType.value}.csv`
+  el.download = `${props.context}_${fileListLength.value ? 'manual' : usecaseType.value}.csv`
   // 模拟点击事件，开始下载
   el.click()
   // 移除链接，释放资源
@@ -466,70 +409,84 @@ hljs.registerLanguage('javascript', javascript)
 </script>
 
 <style scoped>
-.flex-wrapper{
+.flex-wrapper {
   display: flex;
   flex-direction: row;
 }
-.left-flex-item{
+
+.left-flex-item {
   max-width: 63%;
   flex: 1 0 auto;
   overflow-y: auto;
 }
+
 .visualization {
   width: 100%;
   box-sizing: border-box;
   min-height: 83vh;
-  max-height: 85vh;  
+  max-height: 85vh;
 }
+
 .chart {
   font-size: 1rem;
   width: 42em;
   height: 20em;
 }
-.right-flex-item{
+
+.right-flex-item {
   padding-top: 3.2em;
   margin-left: .6em;
   flex: 1 1 auto;
 }
-.description{
+
+.description {
   box-sizing: border-box;
   width: 100%;
 }
-.output{
+
+.output {
   width: 100%;
   min-height: 83vh;
   max-height: 85vh;
 }
-.subtitle{
+
+.subtitle {
   margin: 0;
   font-size: 1.1em;
   font-weight: 600;
 }
-.text-body{
+
+.text-body {
   margin: 0 0 .8em 0;
   font-size: 1em;
 }
-.code-block{
+
+.code-block {
   overflow-y: auto;
 }
+
 ::-webkit-scrollbar {
   width: 0 !important;
   height: 0;
 }
-.upload-box{
+
+.upload-box {
   box-sizing: border-box;
   height: 100%;
   width: 100%;
 }
-.cascader-input{
+
+.cascader-input {
   width: 50%;
   margin: 1.2em auto;
   overflow-x: hidden;
 }
-.upload-content{
+
+.upload-content {
   margin: 1.2em 0;
 }
-.upload-btn{
+
+.upload-btn {
   margin: 1.2em 0;
 }
 </style>

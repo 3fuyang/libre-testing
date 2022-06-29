@@ -41,13 +41,13 @@ export interface Crumb {
 }
 
 export type ECOption = ComposeOption<
-| LineSeriesOption
-| BarSeriesOption
-| PieSeriesOption
-| TitleComponentOption
-| TooltipComponentOption
-| GridComponentOption
-| DatasetComponentOption
+  | LineSeriesOption
+  | BarSeriesOption
+  | PieSeriesOption
+  | TitleComponentOption
+  | TooltipComponentOption
+  | GridComponentOption
+  | DatasetComponentOption
 >
 
 export interface IterationData {

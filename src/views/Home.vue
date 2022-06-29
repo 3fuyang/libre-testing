@@ -2,32 +2,32 @@
   <n-card class="home-box" content-style="padding-bottom: 0;" footer-style="margin-bottom: 0;padding-bottom: 0;">
     <n-space justify="center">
       <n-icon class="css3-logo" size="9em" color="#5FBC21">
-        <LogoCss3/>
-      </n-icon>    
+        <LogoCss3 />
+      </n-icon>
     </n-space>
     <n-space justify="center">
       <n-p class="project-title">Libre Testing</n-p>
     </n-space>
-    <n-divider class="divider"/>
+    <n-divider class="divider" />
     <n-space justify="center">
-      <n-p class="tech-stack" :depth="3">A Vue 3 + Vite + Naive UI Project</n-p>      
+      <n-p class="tech-stack" :depth="3">A Vue 3 + Vite + Naive UI Project</n-p>
     </n-space>
     <n-space justify="center" :size="[60, 0]">
       <n-icon size="4em" class="vue-logo">
-        <IconVue/>
+        <IconVue />
       </n-icon>
       <div class="flex-wrapper">
-        <n-icon size="2em" :component="AddSharp"/>
+        <n-icon size="2em" :component="AddSharp" />
       </div>
       <n-icon size="4em">
-        <IconVite/>
+        <IconVite />
       </n-icon>
       <div class="flex-wrapper">
-        <n-icon size="2em" :component="AddSharp"/>
-      </div> 
+        <n-icon size="2em" :component="AddSharp" />
+      </div>
       <n-icon size="4em">
-        <IconNaiveUi/>
-      </n-icon>      
+        <IconNaiveUi />
+      </n-icon>
     </n-space>
     <n-space justify="center">
       <n-p class="intro">Automated Software Testing, Simple and Easy to Use</n-p>
@@ -39,10 +39,10 @@
       <section class="flex-column">
         <n-p :depth="3">
           © 2022 LibreTest, Inc.
-        </n-p>  
-        <a class="icp" href="http://beian.miit.gov.cn/" target="_blank">蜀ICP备2022009593号-1</a>              
+        </n-p>
+        <a class="icp" href="http://beian.miit.gov.cn/" target="_blank">蜀ICP备2022009593号-1</a>
       </section>
-    </template>       
+    </template>
   </n-card>
 </template>
 
@@ -56,75 +56,90 @@ import IconVue from '../components/icons/IconVue.vue'
 </script>
 
 <style scoped>
-.home-box{
+.home-box {
   width: 100%;
   height: 88vh;
   overflow: auto;
 }
-.css3-logo{
+
+.css3-logo {
   margin: .4em 0 .1em 0;
 }
-.project-title{
+
+.project-title {
   font-size: 2.4em;
   font-weight: 500;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-.divider{
+
+.divider {
   width: 60%;
   margin: .8em auto;
 }
-.tech-stack{
+
+.tech-stack {
   font-size: 1.2em;
   font-weight: 500;
   margin-bottom: .8em;
 }
-.vue-logo{
+
+.vue-logo {
   padding-top: .05em;
 }
-.intro{
+
+.intro {
   margin-top: .8em;
   font-size: 1.2em;
   font-weight: 510;
 }
-.try{
+
+.try {
   font-size: 1.2em;
   font-weight: 500;
   margin: .8em 0 3.6em 0;
 }
-.flex-wrapper{
+
+.flex-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 100%;
 }
-::-webkit-scrollbar{
+
+::-webkit-scrollbar {
   height: 0;
   width: 0;
 }
-.flex-column{
+
+.flex-column {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.icp{
+
+.icp {
   color: #777;
   margin: 0;
   padding: 0;
   overflow: auto;
 }
-.icp:link{
+
+.icp:link {
   text-decoration: none;
 }
-.icp:visited{
+
+.icp:visited {
   color: #777;
   text-decoration: underline;
 }
-.icp:hover{
+
+.icp:hover {
   color: deepskyblue;
   text-decoration: underline;
 }
-icp:active{
+
+icp:active {
   color: springgreen;
   text-decoration: underline;
 }

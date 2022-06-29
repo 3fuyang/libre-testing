@@ -1,12 +1,6 @@
 <template>
-  <test-panel
-    :context="context"
-    :options="options"
-    :code="code"
-    :versions="versions"
-    :ec-option="ecOption"
-    :iteration="iteration"
-  >
+  <test-panel :context="context" :options="options" :code="code" :versions="versions" :ec-option="ecOption"
+    :iteration="iteration">
     <template #header> Question 02. 万年历问题 </template>
     <template #sub-title> 算法思想 </template>
     <template #detail>

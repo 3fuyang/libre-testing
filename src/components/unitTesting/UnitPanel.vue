@@ -10,13 +10,13 @@ const props = defineProps<{
 // 列数据
 const columns = ref<DataTableColumns>([])
 // 行数据
-const data = ref<{[index: string]: any}[]>([])
+const data = ref<{ [index: string]: any }[]>([])
 // 分页
 const pagination = {
   pageSize: 6
 }
 
-function getLocalFile () {
+function getLocalFile() {
   // 使用XMLHttpRequest读取本地文件
   let xhr = new XMLHttpRequest()
   const okStatus = document.location.protocol === 'file' ? 0 : 200
@@ -40,10 +40,10 @@ const createColumns = (cols: string[]) => {
 // 生成行
 const createRows = (rows: any[]) => {
   rows.forEach(row => {
-    const rowTmp: {[index: string]: any} = {}
+    const rowTmp: { [index: string]: any } = {}
     let counter: number = 0
     for (let prop of columns.value) {
-      rowTmp[(prop as {key: string}).key] = row[counter++]
+      rowTmp[(prop as { key: string }).key] = row[counter++]
     }
     data.value.push(rowTmp)
   })
@@ -67,19 +67,14 @@ getLocalFile()
 <template>
   <n-card class="unit-panel-wrapper">
     <n-h2>
-      <slot name="title"/>
+      <slot name="title" />
     </n-h2>
     <n-text tag="div">
-      <slot name="test-case"/>
+      <slot name="test-case" />
     </n-text>
-    <br/>
-    <n-data-table
-      size="small"
-      :max-height="420"
-      :bordered="false"
-      :columns="columns"
-      :data="data"
-      :pagination="pagination"/>
+    <br />
+    <n-data-table size="small" :max-height="420" :bordered="false" :columns="columns" :data="data"
+      :pagination="pagination" />
   </n-card>
 </template>
 

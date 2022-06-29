@@ -1,12 +1,6 @@
 <template>
-  <test-panel 
-    :context="context"
-    :options="options"
-    :code="code"
-    :versions="versions"
-    :ec-option="ecOption"
-    :iteration="iteration"
-    >
+  <test-panel :context="context" :options="options" :code="code" :versions="versions" :ec-option="ecOption"
+    :iteration="iteration">
     <template #header>
       Question 03. 电脑销售问题
     </template>
@@ -15,10 +9,10 @@
     </template>
     <template #detail>
       最开始需要判断的是主机的销售数量，当这个变量值为-1时是对系统发出进行月度统计的指令，当值不为-1时才继续进行如下计算：
-      <br/>① 因为每月至少销售出一台整机，首先判断各配件的销售数量是否大于1；
-      <br/>② 分别判断各配件是否销售数量超过各自的最大数量；
-      <br/>③ 若①②条件均成立，可进行销售额计算；
-      <br/>④ 判断月度销售额在哪个佣金分段，在不同分段获得不同的佣金比例，计算出最终获得的佣金金额。      
+      <br />① 因为每月至少销售出一台整机，首先判断各配件的销售数量是否大于1；
+      <br />② 分别判断各配件是否销售数量超过各自的最大数量；
+      <br />③ 若①②条件均成立，可进行销售额计算；
+      <br />④ 判断月度销售额在哪个佣金分段，在不同分段获得不同的佣金比例，计算出最终获得的佣金金额。
     </template>
   </test-panel>
 </template>
@@ -39,12 +33,12 @@ const options = [
     children: [
       {
         label: '基本边界值',
-        value: 'basic-boundary',        
+        value: 'basic-boundary',
       },
       {
         label: '健壮边界值',
-        value: 'robustness-boundary',        
-      }            
+        value: 'robustness-boundary',
+      }
     ]
   }
 ]
@@ -86,7 +80,7 @@ const versions = [
   {
     label: '0.1.0',
     value: '0.1.0'
-  },  
+  },
 ]
 
 // ECharts 绘图选项
@@ -189,32 +183,31 @@ const iteration = {
   columns: [{
     title: '版本号',
     key: 'version'
-    },{
+  }, {
     title: '测试数据集',
     key: 'dataset'
-    },{
+  }, {
     title: '测试情况',
     key: 'result'
-    },{
+  }, {
     title: '缺陷描述',
     key: 'bug'
-    }],
+  }],
   data: [{
-      key: '0',
-      version: '0.0.0',
-      dataset: '健壮边界值',
-      result: '通过19/20',
-      bug: '没有考虑主机销售数量为-1时进行统计月度销售额的特殊情况'
-    }, {
-      key: '1',
-      version: '0.1.0',
-      dataset: '健壮边界值',
-      result: '通过20/20',
-      bug: '测试全部通过'
-    }]
+    key: '0',
+    version: '0.0.0',
+    dataset: '健壮边界值',
+    result: '通过19/20',
+    bug: '没有考虑主机销售数量为-1时进行统计月度销售额的特殊情况'
+  }, {
+    key: '1',
+    version: '0.1.0',
+    dataset: '健壮边界值',
+    result: '通过20/20',
+    bug: '测试全部通过'
+  }]
 }
 </script>
 
 <style scoped>
-
 </style>

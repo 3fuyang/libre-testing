@@ -12,22 +12,22 @@ const router = createRouter({
       path: '/triangle-judge',
       name: 'triangle-judge',
       component: () => import('../views/exercise/TriangleJudge.vue')
-    },    
+    },
     {
       path: '/calendar-problem',
       name: 'calendar-problem',
       component: () => import('../views/exercise/CalendarProblem.vue')
-    },    
+    },
     {
       path: '/computer-selling',
       name: 'computer-selling',
       component: () => import('../views/exercise/ComputerSelling.vue')
-    },    
+    },
     {
       path: '/telecom-system',
       name: 'telecom-system',
       component: () => import('../views/exercise/TelecomSystem.vue')
-    },     
+    },
     {
       path: '/unit-testing',
       name: 'unit-testing',

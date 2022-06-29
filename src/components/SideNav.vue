@@ -1,17 +1,15 @@
 <template>
   <div class="logo">
     <n-icon class="image" :size="32" color="#5FBC21">
-      <LogoCss3/>
+      <LogoCss3 />
     </n-icon>
     <span v-if="showTitle" class="title">Libre Testing</span>
   </div>
-  <n-menu 
-    :options="menuOptions" 
-    :default-expanded-keys="defaultExpandedKeys"/>
+  <n-menu :options="menuOptions" :default-expanded-keys="defaultExpandedKeys" />
 </template>
 
 <script setup lang="ts">
-import { h, ref, onUpdated, type Component  } from 'vue'
+import { h, ref, onUpdated, type Component } from 'vue'
 import { RouterLink } from 'vue-router'
 import { NMenu, NIcon } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'
@@ -68,28 +66,28 @@ const menuOptions: MenuOption[] = [
     children: [
       {
         label: () => h(RouterLink, {
-          to:{
+          to: {
             path: '/unit-testing'
           }
-        }, { default: () => '单元测试'}),
+        }, { default: () => '单元测试' }),
         key: 'unit-testing'
       },
       {
         label: () => h(RouterLink, {
-          to:{
+          to: {
             path: '/integration-testing'
           }
-        }, { default: () => '集成测试'}),
+        }, { default: () => '集成测试' }),
         key: 'integration-testing'
-      },      
+      },
       {
         label: () => h(RouterLink, {
-          to:{
+          to: {
             path: '/system-testing'
           }
-        }, { default: () => '系统测试'}),
+        }, { default: () => '系统测试' }),
         key: 'system-testing'
-      },      
+      },
     ]
   }
 ]
@@ -103,25 +101,28 @@ const props = defineProps({
   }
 })
 const showTitle = ref(props.showTitle)
-onUpdated(()=>{
+onUpdated(() => {
   showTitle.value = props.showTitle
 })
 </script>
 
 <style scoped>
-.logo{
+.logo {
   box-sizing: border-box;
   padding: .5em;
   display: flex;
   flex-direction: row;
   border-bottom: 1px solid #eee;
   height: 8vh;
-  align-items: center;}
-.image{
+  align-items: center;
+}
+
+.image {
   padding-left: .05em;
   flex: 2 0 auto;
 }
-.title{
+
+.title {
   padding-left: .5em;
   flex: 1 0 auto;
   font-size: 1.2rem;
