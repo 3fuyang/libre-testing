@@ -10,19 +10,9 @@ Fwio
 
 **测试**：Vitest + Cypress
 
-Online Demo（**在线体验**）: <del>[Libre Testing](https://libretesting.xyz)</del>
+Online Demo（**在线体验**）: [Libre Testing](https://libre-testing.vercel.app)
 
 集成测试与系统测试使用的项目：[Flea Test](https://github.com/3fuyang/flea-test)
-
-> **重要**
-> 
-> Sorry，由于作者遭受毕业设计的摧残，不得不重装了原来的服务器（悲），所以这个项目目前并没有部署。
-> 
-> 朋友，折返吧，指路 [awesome-tjsse-project](https://github.com/jwyjohn/awesome-tjsse-project)。
-> 
-> Best Wishes,
-> 
-> Fwio, 2023/06/16
 
 ## 使用说明
 
