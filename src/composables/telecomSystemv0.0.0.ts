@@ -9,8 +9,8 @@ function telecomSystem(callingTime: number, count: number): string {
         return "未按时缴费次数越界"
     }
 
-    let maxNum: number[] = [1, 2, 3, 3, 6]
-    let level: number = getLevel(callingTime)
+    const maxNum: number[] = [1, 2, 3, 3, 6]
+    const level: number = getLevel(callingTime)
     if (count <= maxNum[level]) {
         return String((25 + 0.15 * callingTime * (1 - (level + 1) * 0.005)))
     } else {
@@ -34,7 +34,7 @@ function getLevel(time: number): number {
 
 // 根据.csv文件的表头字段提取对应的参数，返回参数数组
 function getArgs(row: Row): number[] {
-    let args = [Number.parseInt(row.CallingTime as string), Number.parseInt(row.Count as string)]
+    const args = [Number.parseInt(row.CallingTime as string), Number.parseInt(row.Count as string)]
     return args
 }
 

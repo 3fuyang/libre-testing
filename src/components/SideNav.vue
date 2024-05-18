@@ -1,11 +1,23 @@
 <template>
   <div class="logo">
-    <n-icon class="image" :size="32" color="#5FBC21">
+    <n-icon
+      class="image"
+      :size="32"
+      color="#5FBC21"
+    >
       <LogoCss3 />
     </n-icon>
-    <span v-if="showTitle" class="title">Libre Testing</span>
+    <h1
+      v-if="showTitle"
+      class="title"
+    >
+      Libre Testing
+    </h1>
   </div>
-  <n-menu :options="menuOptions" :default-expanded-keys="defaultExpandedKeys" />
+  <n-menu
+    :options="menuOptions"
+    :default-expanded-keys="defaultExpandedKeys"
+  />
 </template>
 
 <script setup lang="ts">
@@ -108,25 +120,23 @@ onUpdated(() => {
 
 <style scoped>
 .logo {
+  padding: 0 .5em;
   box-sizing: border-box;
-  padding: .5em;
-  display: flex;
   flex-direction: row;
   border-bottom: 1px solid #eee;
   height: 8vh;
   align-items: center;
-}
-
-.image {
-  padding-left: .05em;
-  flex: 2 0 auto;
+  display: flex;
+  gap: 1em;
+  justify-content: center;
 }
 
 .title {
-  padding-left: .5em;
-  flex: 1 0 auto;
   font-size: 1.2rem;
   color: rgb(51, 54, 57);
   font-weight: 500;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 </style>

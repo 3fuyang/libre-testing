@@ -1,23 +1,3 @@
-<template>
-  <test-panel :context="context" :options="options" :code="code" :versions="versions" :ec-option="ecOption"
-    :iteration="iteration">
-    <template #header>
-      Question 04. 电信收费问题
-    </template>
-    <template #sub-title>
-      算法思想
-    </template>
-    <template #detail>
-      本问题输入变量为本月通话时间、用户本年度未按时缴费次数两个。
-      <br />① 首先判断本月通话时长是否符合取值范围，通话时间应该≥0，且不能超过一个月的分钟数，这里为了方便直接使用31*24*60=44640作为最大值；
-      <br />② 之后还需要判断用户本年度未按时缴费次数是否符合取值范围，显然次数应该≥0，同时在本月之前本年度最多有11个月缴费，所以未按时缴费次数≤11；
-      <br />③ 计算用户本月的通话时长处于哪一个折扣等级；
-      <br />④ 计算用户本年度未按时缴费次数是否超出当前折扣等级容许的未按时缴费次数。
-      <br />⑤ 通过折后费用加上月租费计算出最终的本月通话费用。
-    </template>
-  </test-panel>
-</template>
-
 <script setup lang="ts">
 import * as echarts from 'echarts/core'
 import TestPanel from '../../components/TestPanel.vue'
@@ -274,6 +254,28 @@ const iteration = {
   }]
 }
 </script>
+
+<template>
+  <test-panel :context="context" :options="options" :code="code" :versions="versions" :ec-option="ecOption"
+    :iteration="iteration">
+    <template #header>
+      Question 04. 电信收费问题
+    </template>
+    <template #sub-title>
+      算法思想
+    </template>
+    <template #detail>
+      本问题输入变量为本月通话时间、用户本年度未按时缴费次数两个。
+      <ol class="steps-ol">
+        <li>首先判断本月通话时长是否符合取值范围，通话时间应该 ≥0，且不能超过一个月的分钟数，这里为了方便直接使用 31*24*60 = 44640 作为最大值；</li>
+        <li>之后还需要判断用户本年度未按时缴费次数是否符合取值范围，显然次数应该 ≥0，同时在本月之前本年度最多有 11 个月缴费，所以未按时缴费次数 ≤11；</li>
+        <li>计算用户本月的通话时长处于哪一个折扣等级；</li>
+        <li>计算用户本年度未按时缴费次数是否超出当前折扣等级容许的未按时缴费次数；</li>
+        <li>通过折后费用加上月租费计算出最终的本月通话费用。</li>
+      </ol>
+    </template>
+  </test-panel>
+</template>
 
 <style scoped>
 </style>

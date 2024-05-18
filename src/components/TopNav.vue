@@ -1,22 +1,3 @@
-<template>
-  <div class="flex-wrapper">
-    <n-icon size="22" class="arrow" :component="collapsed ? ChevronForwardSharp : ChevronBackSharp"
-      @click="handleCollapse" />
-    <n-breadcrumb class="crumb">
-      <n-breadcrumb-item v-for="crumb in crumbs" :key="crumb.path" :href="crumb.path">
-        <n-dropdown v-if="crumb.path === '#'" key-field="path" @select="handleSelect"
-          :options="crumb.label === '课程练习' ? options1 : options2">
-          {{ crumb.label }}
-        </n-dropdown>
-        <span v-else>
-          {{ crumb.label }}
-        </span>
-      </n-breadcrumb-item>
-    </n-breadcrumb>
-    <n-icon class="icon" size="1.6em" :component="LogoGithub" @click="openGithub" />
-  </div>
-</template>
-
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -126,11 +107,6 @@ function handleSelect(path: string): void {
   router.push(path)
 }
 
-function openGithub(): void {
-  const url = 'https://github.com/3fuyang/software-testing'
-  window.open(url, '_blank')
-}
-
 // 折叠边导航
 const emits = defineEmits(['collapse-sider', 'expand-sider'])
 const collapsed = ref(false)
@@ -144,10 +120,51 @@ function handleCollapse() {
 }
 </script>
 
+<template>
+  <div class="flex-wrapper">
+    <n-icon
+      size="18"
+      class="arrow"
+      :component="collapsed ? ChevronForwardSharp : ChevronBackSharp"
+      @click="handleCollapse"
+    />
+    <n-breadcrumb class="crumb">
+      <n-breadcrumb-item
+        v-for="{ path, label } in crumbs"
+        :key="path"
+        :href="path"
+      >
+        <n-dropdown
+          v-if="path === '#'"
+          key-field="path"
+          :options="label === '课程练习' ? options1 : options2"
+          @select="handleSelect"
+        >
+          {{ label }}
+        </n-dropdown>
+        <span v-else>
+          {{ label }}
+        </span>
+      </n-breadcrumb-item>
+    </n-breadcrumb>
+    <a
+      class="icon-link"
+      href="https://github.com/3fuyang/software-testing"
+      target="_blank"
+    >
+      <n-icon
+        class="icon"
+        size="1.6em"
+        :component="LogoGithub"
+      />
+    </a>
+  </div>
+</template>
+
 <style scoped>
 .flex-wrapper {
   display: flex;
-  flex-direction: row;
+  align-items: center;
   padding-right: 2em;
 }
 
@@ -158,6 +175,10 @@ function handleCollapse() {
 
 .crumb {
   flex: 1 1 auto;
+}
+
+.icon-link {
+  color: initial;
 }
 
 .icon {

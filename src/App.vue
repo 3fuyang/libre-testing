@@ -9,18 +9,42 @@ const collapsed = ref<boolean>(false)
 
 <template>
   <n-message-provider>
-    <n-layout has-sider class="body">
+    <n-layout
+      has-sider
+      class="body"
+    >
       <n-config-provider>
-        <n-layout-sider class="side-bar" width="13vw" :native-scrollbar="false" bordered collapse-mode="width"
-          :collapsed-width="48" :collapsed="collapsed">
-          <SideNav :showTitle="!collapsed" />
+        <n-layout-sider
+          class="side-bar"
+          width="13vw"
+          :native-scrollbar="false"
+          bordered
+          collapse-mode="width"
+          :collapsed-width="48"
+          :collapsed="collapsed"
+        >
+          <SideNav :show-title="!collapsed" />
         </n-layout-sider>
       </n-config-provider>
-      <n-layout bordered class="embedded-body">
-        <n-layout-header bordered class="top-bar">
-          <TopNav @collapse-sider="collapsed = true" @expand-sider="collapsed = false" />
+      <n-layout
+        bordered
+        class="embedded-body"
+      >
+        <n-layout-header
+          bordered
+          class="top-bar"
+        >
+          <TopNav
+            @collapse-sider="collapsed = true"
+            @expand-sider="collapsed = false"
+          />
         </n-layout-header>
-        <n-layout-content embedded class="main-content" :native-scrollbar="false" bordered>
+        <n-layout-content
+          embedded
+          class="main-content"
+          :native-scrollbar="false"
+          bordered
+        >
           <router-view v-slot="{ Component }">
             <!--learn more about <router-view>'s slot API-->
             <keep-alive>

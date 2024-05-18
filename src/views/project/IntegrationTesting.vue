@@ -38,9 +38,18 @@ onMounted(() => {
 <template>
   <div class="root-wrapper">
     <div class="left-part">
-      <n-tabs type="line" animated default-value="home">
-        <n-tab-pane v-for="item in tabs" :name="item.name" :tab="item.tab">
-          <integration-home-vue v-if="item.name === 'home'" />
+      <n-tabs
+        type="line"
+        animated
+        default-value="home"
+      >
+        <n-tab-pane
+          v-for="{name, tab} in tabs"
+          :key="name"
+          :name="name"
+          :tab="tab"
+        >
+          <integration-home-vue v-if="name === 'home'" />
         </n-tab-pane>
       </n-tabs>
     </div>

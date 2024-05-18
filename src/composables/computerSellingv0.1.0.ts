@@ -18,7 +18,7 @@ function computerSelling(host: number, monitor: number, peripheral: number): str
         return "数据非法，外设销售数量不能超过90"
     }
 
-    let totalSales: number = host * 25 + monitor * 30 + peripheral * 45;
+    const totalSales: number = host * 25 + monitor * 30 + peripheral * 45;
     if (totalSales <= 1000) {
         return String(totalSales * 0.1)
     } else if (totalSales <= 1800) {
@@ -30,7 +30,7 @@ function computerSelling(host: number, monitor: number, peripheral: number): str
 
 // 根据.csv文件的表头字段提取对应的参数，返回参数数组
 function getArgs(row: Row): number[] {
-    let args = [Number.parseInt(row.Host as string), Number.parseInt(row.Monitor as string), Number.parseInt(row.Peripheral as string)]
+    const args = [Number.parseInt(row.Host as string), Number.parseInt(row.Monitor as string), Number.parseInt(row.Peripheral as string)]
     return args
 }
 

@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { NCard, NText, NH2, NDataTable, type DataTableColumns } from 'naive-ui'
 import Papa from 'papaparse'
+import type { RowData } from 'naive-ui/es/data-table/src/interface';
 
 const props = defineProps<{
   context: string
@@ -10,14 +11,14 @@ const props = defineProps<{
 // 列数据
 const columns = ref<DataTableColumns>([])
 // 行数据
-const data = ref<{ [index: string]: any }[]>([])
+const data = ref<RowData[]>([])
 // 分页
 const pagination = {
   pageSize: 6
 }
 
 function getLocalFile() {
-  // 使用XMLHttpRequest读取本地文件
+  // 使用 XMLHttpRequest 读取服务端文件
   let xhr = new XMLHttpRequest()
   const okStatus = document.location.protocol === 'file' ? 0 : 200
   xhr.open('GET', `/testUsecases/unitTesting/${props.context}.csv`, false)
@@ -27,39 +28,36 @@ function getLocalFile() {
 }
 
 // 生成列
-const createColumns = (cols: string[]) => {
-  cols.forEach(item => {
+function createColumns(cols: string[]) {
+  for (const col of cols) {
     columns.value.push({
-      key: item,
-      title: item
+      key: col,
+      title: col
     })
-  })
-  //console.log(columns.value)
+  }
 }
 
 // 生成行
-const createRows = (rows: any[]) => {
-  rows.forEach(row => {
-    const rowTmp: { [index: string]: any } = {}
-    let counter: number = 0
-    for (let prop of columns.value) {
+function createRows(rows: string[][]) {
+  for (const row of rows) {
+    const rowTmp: RowData = {}
+    let counter = 0
+    for (const prop of columns.value) {
       rowTmp[(prop as { key: string }).key] = row[counter++]
     }
     data.value.push(rowTmp)
-  })
-  //console.log(data.value)
+  }
 }
 
 const fileData = getLocalFile()
-Papa.parse(fileData as string, {
-  complete: (res) => {
-    const parsedResult = res.data as string[][]
+Papa.parse <string[]>(fileData as string, {
+  complete: ({ data }) => {
+    const parsedResult = [...data]
     createColumns(parsedResult[0])
     parsedResult.splice(0, 1)
     createRows(parsedResult)
   }
 })
-
 
 getLocalFile()
 </script>
@@ -72,9 +70,15 @@ getLocalFile()
     <n-text tag="div">
       <slot name="test-case" />
     </n-text>
-    <br />
-    <n-data-table size="small" :max-height="420" :bordered="false" :columns="columns" :data="data"
-      :pagination="pagination" />
+    <br>
+    <n-data-table
+      size="small"
+      :max-height="420"
+      :bordered="false"
+      :columns="columns"
+      :data="data"
+      :pagination="pagination"
+    />
   </n-card>
 </template>
 

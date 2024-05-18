@@ -1,46 +1,84 @@
 <template>
-  <n-card class="home-box" content-style="padding-bottom: 0;" footer-style="margin-bottom: 0;padding-bottom: 0;">
+  <n-card
+    class="home-box"
+    content-style="padding-bottom: 0;"
+    footer-style="margin-bottom: 0;padding-bottom: 0;"
+  >
     <n-space justify="center">
-      <n-icon class="css3-logo" size="9em" color="#5FBC21">
+      <n-icon
+        class="css3-logo"
+        size="9em"
+        color="#5FBC21"
+      >
         <LogoCss3 />
       </n-icon>
     </n-space>
     <n-space justify="center">
-      <n-p class="project-title">Libre Testing</n-p>
+      <n-p class="project-title">
+        Libre Testing
+      </n-p>
     </n-space>
     <n-divider class="divider" />
     <n-space justify="center">
-      <n-p class="tech-stack" :depth="3">A Vue 3 + Vite + Naive UI Project</n-p>
+      <n-p
+        class="tech-stack"
+        :depth="3"
+      >
+        A Vue 3 + Vite + Naive UI Project
+      </n-p>
     </n-space>
-    <n-space justify="center" :size="[60, 0]">
-      <n-icon size="4em" class="vue-logo">
+    <n-space
+      justify="center"
+      :size="[60, 0]"
+    >
+      <n-icon
+        size="4em"
+        class="vue-logo"
+      >
         <IconVue />
       </n-icon>
       <div class="flex-wrapper">
-        <n-icon size="2em" :component="AddSharp" />
+        <n-icon
+          size="2em"
+          :component="AddSharp"
+        />
       </div>
       <n-icon size="4em">
         <IconVite />
       </n-icon>
       <div class="flex-wrapper">
-        <n-icon size="2em" :component="AddSharp" />
+        <n-icon
+          size="2em"
+          :component="AddSharp"
+        />
       </div>
       <n-icon size="4em">
         <IconNaiveUi />
       </n-icon>
     </n-space>
     <n-space justify="center">
-      <n-p class="intro">Automated Software Testing, Simple and Easy to Use</n-p>
+      <n-p class="intro">
+        Automated Software Testing, Simple and Easy to Use
+      </n-p>
     </n-space>
     <n-space justify="center">
-      <n-p class="try" :depth="3">Have a Try</n-p>
+      <n-p
+        class="try"
+        :depth="3"
+      >
+        Have a Try
+      </n-p>
     </n-space>
     <template #footer>
-      <section class="flex-column">
+      <section class="flex-column footer">
         <n-p :depth="3">
           © 2022 LibreTest, Inc.
         </n-p>
-        <a class="icp" href="http://beian.miit.gov.cn/" target="_blank">蜀ICP备2022009593号-1</a>
+        <a
+          class="icp"
+          href="https://3fuyang.github.io"
+          target="_blank"
+        >Fwio</a>
       </section>
     </template>
   </n-card>
@@ -118,6 +156,10 @@ import IconVue from '../components/icons/IconVue.vue'
   align-items: center;
 }
 
+.footer {
+  padding: .5rem;
+}
+
 .icp {
   color: #777;
   margin: 0;
@@ -135,7 +177,7 @@ import IconVue from '../components/icons/IconVue.vue'
 }
 
 .icp:hover {
-  color: deepskyblue;
+  color: #208368;
   text-decoration: underline;
 }
 

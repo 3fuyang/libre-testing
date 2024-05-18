@@ -2,100 +2,206 @@
   <div class="flex-wrapper">
     <div class="left-flex-item">
       <n-tabs v-model:value="currTab">
-        <n-tab-pane name="Question" tab="问题描述">
-          <n-card class="description" size="small" header-style="padding: .8em;">
+        <n-tab-pane
+          name="Question"
+          tab="问题描述"
+        >
+          <n-card
+            class="description"
+            size="small"
+            header-style="padding: .8em;"
+          >
             <template #header>
-              <slot name="header">Question 00. 问题名</slot>
+              <slot name="header">
+                Question 00. 问题名
+              </slot>
             </template>
             <p class="subtitle">
-              <slot name="sub-title">问题描述 / 算法思想</slot>
+              <slot name="sub-title">
+                问题描述 / 算法思想
+              </slot>
             </p>
             <p class="text-body">
               <slot name="detail">
                 先这样，再那样
               </slot>
             </p>
-            <p class="subtitle">代码实现</p>
-            <n-card class="code-block" embedded :bordered="false" content-style="padding: .5em;">
+            <p class="subtitle">
+              代码实现
+            </p>
+            <n-card
+              class="code-block"
+              embedded
+              :bordered="false"
+              content-style="padding: .5em;"
+            >
               <n-scrollbar style="max-height: 42vh;">
-                <n-code :hljs="hljs" :code="code" language="js"></n-code>
+                <n-code
+                  :hljs="hljs"
+                  :code="code"
+                  language="ts"
+                  show-line-numbers
+                />
               </n-scrollbar>
             </n-card>
           </n-card>
         </n-tab-pane>
-        <n-tab-pane v-if="result.length" name="Result" tab="测试结果">
-          <n-card class="output" size="small" header-style="padding: .8em;">
+        <n-tab-pane
+          v-if="result.length"
+          name="Result"
+          tab="测试结果"
+        >
+          <n-card
+            class="output"
+            size="small"
+            header-style="padding: .8em;"
+          >
             <template #header>
               Testing Result
             </template>
             <template #header-extra>
-              <n-button v-if="result.length" quaternary size="small" round type="success" @click="exportCsv">
+              <n-button
+                v-if="result.length"
+                quaternary
+                size="small"
+                round
+                type="success"
+                @click="exportCsv"
+              >
                 导出
               </n-button>
             </template>
             <!-- 打印测试结果 -->
-            <n-data-table size="small" :max-height="420" :bordered="false" :columns="resultColumns" :data="result"
-              :pagination="pagination">
-            </n-data-table>
+            <n-data-table
+              size="small"
+              :max-height="420"
+              :bordered="false"
+              :columns="resultColumns"
+              :data="result"
+              :pagination="pagination"
+            />
           </n-card>
         </n-tab-pane>
-        <n-tab-pane v-if="result.length" name="Visualization" tab="可视化分析">
-          <n-card class="visualization" size="small" header-style="padding: .8em;">
+        <n-tab-pane
+          v-if="result.length"
+          name="Visualization"
+          tab="可视化分析"
+        >
+          <n-card
+            class="visualization"
+            size="small"
+            header-style="padding: .8em;"
+          >
             <n-scrollbar style="max-height: 78vh;">
               <n-h2>
                 测试情况
               </n-h2>
-              <div id="chart" class="chart" />
+              <div
+                id="chart"
+                class="chart"
+              />
               <n-h2>
                 版本迭代
               </n-h2>
-              <n-card class="description" embedded :bordered="false" content-style="padding: .5em;">
-                <div id="iterationChart" class="chart" />
+              <n-card
+                class="description"
+                embedded
+                :bordered="false"
+                content-style="padding: .5em;"
+              >
+                <div
+                  id="iterationChart"
+                  class="chart"
+                />
               </n-card>
-              <n-data-table size="small" :bordered="false" :columns="iterationColumns" :data="iterationTable">
-              </n-data-table>
+              <n-data-table
+                size="small"
+                :bordered="false"
+                :columns="iterationColumns"
+                :data="iterationTable"
+              />
             </n-scrollbar>
           </n-card>
         </n-tab-pane>
       </n-tabs>
     </div>
     <div class="right-flex-item">
-      <n-card class="upload-box" size="small" header-style="padding: .8em; margin-bottom: .8em;">
+      <n-card
+        class="upload-box"
+        size="small"
+        header-style="padding: .8em; margin-bottom: .8em;"
+      >
         <template #header>
           Program Test
         </template>
-        <p class="subtitle">Step 01. 选择程序版本</p>
+        <p class="subtitle">
+          Step 01. 选择程序版本
+        </p>
         <n-space vertical>
-          <n-select class="cascader-input" v-model:value="version" :options="props.versions"
-            placeholder="Click to select" @update:value="handleVersionSelect" />
+          <n-select
+            v-model:value="version"
+            class="cascader-input"
+            :options="props.versions"
+            placeholder="Click to select"
+            @update:value="handleVersionSelect"
+          />
         </n-space>
-        <p class="subtitle">Step 02. 选择用例集</p>
+        <p class="subtitle">
+          Step 02. 选择用例集
+        </p>
         <n-space vertical>
-          <n-cascader class="cascader-input" v-model:value="usecaseType" :options="options" :show-path="false"
-            :check-strategy="'child'" placeholder="Click to select" />
+          <n-cascader
+            v-model:value="usecaseType"
+            class="cascader-input"
+            :options="options"
+            :show-path="false"
+            :check-strategy="'child'"
+            placeholder="Click to select"
+          />
         </n-space>
-        <p class="subtitle">Step 03. 上传用例集 (Optional)</p>
+        <p class="subtitle">
+          Step 03. 上传用例集 (Optional)
+        </p>
         <n-space justify="center">
-          <n-upload ref="uploadRef" action="#" :default-upload="false" accept=".csv" @change="handleUpload">
+          <n-upload
+            ref="uploadRef"
+            action="#"
+            :default-upload="false"
+            accept=".csv"
+            @change="handleUpload"
+          >
             <n-upload-dragger class="upload-content">
               <div style="margin-bottom: 12px">
-                <n-icon size="2.5em" :depth="3">
+                <n-icon
+                  size="2.5em"
+                  :depth="3"
+                >
                   <cloud-download-outline />
                 </n-icon>
               </div>
               <n-text>
                 点击或者拖动文件到该区域来上传
               </n-text>
-              <n-p depth="3" style="margin-top: .5em;">
-                请上传 .csv 格式的文件<br />(若上面已经选择了测试集，请直接跳转到第三步)
+              <n-p
+                depth="3"
+                style="margin-top: .5em;"
+              >
+                请上传 .csv 格式的文件<br>(若上面已经选择了测试集，请直接跳转到第三步)
               </n-p>
             </n-upload-dragger>
           </n-upload>
         </n-space>
-        <p class="subtitle">Step 04. 运行测试集</p>
+        <p class="subtitle">
+          Step 04. 运行测试集
+        </p>
         <n-space justify="center">
-          <n-button class="upload-btn" :disabled="!((fileListLength || usecaseType) && version)" @click="handleTesting"
-            strong type="primary">
+          <n-button
+            class="upload-btn"
+            :disabled="!((fileListLength || usecaseType) && version)"
+            strong
+            type="primary"
+            @click="handleTesting"
+          >
             开始测试
           </n-button>
         </n-space>
@@ -106,13 +212,13 @@
 
 <script setup lang="ts">
 import { NH2, NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable, useMessage, NSelect } from 'naive-ui'
-import type { CascaderOption } from 'naive-ui'
+import type { CascaderOption, UploadProps } from 'naive-ui'
 import { type Component, onUpdated, ref } from 'vue'
 import { CloudDownloadOutline } from '@vicons/ionicons5'
 import hljs from 'highlight.js/lib/core'
-import javascript from 'highlight.js/lib/languages/javascript'
+import typescript from 'highlight.js/lib/languages/typescript'
 import Papa from 'papaparse'
-import type { Row, Column, ECOption, Iteration } from '../interface'
+import type { Row, Column, ECOption, Iteration, IterationData } from '../interface'
 import * as echarts from 'echarts/core'
 import { LineChart, PieChart, BarChart } from 'echarts/charts'
 import {
@@ -129,11 +235,11 @@ import { CanvasRenderer } from 'echarts/renderers'
 
 
 const props = defineProps<{
-  context: string,  // 测试上下文
-  options: any[],  // 支持的测试用例类型
+  context: string, // 测试上下文
+  options: CascaderOption[], // 支持的测试用例类型
   code: string, // 代码字符串
   iteration: Iteration,
-  versions: any[], // 可选版本集
+  versions: CascaderOption[], // 可选版本集
   ecOption: ECOption // ECharts 选项
 }>()
 
@@ -154,7 +260,7 @@ echarts.use([
 ])
 
 //测试结果饼状图
-const ecOption: ECOption = {
+const echartOption: ECOption = {
   tooltip: {
     trigger: 'item'
   },
@@ -200,24 +306,29 @@ onUpdated(() => {
   if (currTab.value === 'Visualization') {
     // 加载测试结果饼状图
     const eChart = echarts.init(document.getElementById('chart') as HTMLDivElement)
-    eChart.setOption(ecOption)
+    eChart.setOption(echartOption)
 
     // 加载版本迭代柱状图
     const iterationChart = echarts.init(document.getElementById('iterationChart') as HTMLDivElement)
     iterationChart.setOption(props.ecOption)
 
     // 绘制代码版本迭代表
-    //console.log('iteration', props.iteration)
     iterationColumns.value.length = 0
     iterationTable.value.length = 0
     iterationColumns.value.push(...props.iteration.columns)
     iterationTable.value.push(...props.iteration.data)
-    console.log('iteration table', iterationTable)
   }
 })
 
-let composable: Function, getArgs: (row: Row) => any[]
-const composables = import.meta.glob('../composables/*.ts')
+let composable: (...args: number[]) => string, getArgs: (row: Row) => number[]
+
+const composables = import.meta.glob('../composables/*.ts') as Record<
+  string,
+  () => Promise<{
+    useSingleTest: NonNullable<typeof composable>;
+    useGetArgs: NonNullable<typeof getArgs>;
+  }>
+>
 
 const code = props.code,
   options = ref<CascaderOption[]>(props.options)
@@ -227,20 +338,20 @@ const version = ref(null)
 const usecaseType = ref(null)
 
 function handleVersionSelect(value: string) {
-  for (let index in composables) {
+  for (const index in composables) {
     if (index === `../composables/${props.context}v${value}.ts`) {
-      composables[index]().then(({ useSingleTest, useGetArgs }) => {
-        [composable, getArgs] = [useSingleTest, useGetArgs]
-        //console.log(composable, getArgs)
-      })
+      composables[index]()
+        .then(({ useSingleTest, useGetArgs }) => {
+          [composable, getArgs] = [useSingleTest, useGetArgs]
+        })
       break
     }
   }
 }
 
-// 传入.csv对应的数组，创建表头
-const createColumns = (rawData: any[]) => {
-  let cols = []
+// 传入 `.csv` 对应的数组，创建表头
+const createColumns = (rawData: string[][]) => {
+  const cols: { title: string; key: string }[] = []
   for (let item of rawData[0]) {
     cols.push({
       title: item,
@@ -250,7 +361,7 @@ const createColumns = (rawData: any[]) => {
   return cols
 }
 
-const createRows = (rawData: any[]) => {
+const createRows = (rawData: string[][]) => {
   let data = []
   let counter = 0
   const rowNum = rawData.length
@@ -260,7 +371,6 @@ const createRows = (rawData: any[]) => {
     for (let item of resultColumns.value) {
       row[item.key] = rawData[i][j++]
     }
-    //console.log(row)
     data.push(row)
   }
   return data
@@ -271,8 +381,6 @@ const executeTesting = (dataContent: Row[]) => {
   let falseNum = 0
   let nullAnsNum = 0
   for (let row of dataContent) {
-    //console.log(getArgs)
-    //console.log(composable)
     let args = getArgs(row)
     row.ActualOutput = composable.apply(this, args)
     if (row.ActualOutput == null) {
@@ -287,7 +395,6 @@ const executeTesting = (dataContent: Row[]) => {
       row.Correctness = `FALSE`
       falseNum++
     }
-    //console.log(row)
   }
   return {
     falseNum,
@@ -296,25 +403,25 @@ const executeTesting = (dataContent: Row[]) => {
 }
 
 const uploadRef = ref<Component | null>(null)
-const fileData = ref<any[] | null>(null)
+const fileData = ref<string[][] | null>(null)
 const fileListLength = ref(0)
-function handleUpload(options: { fileList: string | any[] }) {
-  fileListLength.value = options.fileList.length;
-  if (fileListLength.value !== 0) {
-    // 获取手动上传的.csv文件对象,转化为数组
-    //console.log(options.fileList[0].file)
-    Papa.parse(options.fileList[0].file, {
-      complete: (res) => {
-        fileData.value = res.data
-        //console.log(fileData.value)
+const handleUpload: UploadProps['onChange'] = ({ fileList }) => {
+  fileListLength.value = fileList.length;
+  const { file } = fileList[0];
+  if (file) {
+    // 获取手动上传的 `.csv` 文件对象,转化为数组
+    Papa.parse<string[]>(file, {
+      complete: ({ data }) => {
+        fileData.value = data
       }
     })
   } else {
     fileData.value = null
   }
 }
+
 function getLocalFile(filePath: string) {
-  // 使用XMLHttpRequest读取本地文件
+  // 使用 XMLHttpRequest 读取服务端文件
   let xhr = null
   xhr = new XMLHttpRequest()
   const okStatus = document.location.protocol === 'file' ? 0 : 200
@@ -325,7 +432,7 @@ function getLocalFile(filePath: string) {
 }
 
 const iterationColumns = ref<Column[]>([])
-const iterationTable = ref<any[]>([])
+const iterationTable = ref<IterationData[]>([])
 
 const resultColumns = ref<Column[]>([])
 const result = ref<Row[]>([])
@@ -336,42 +443,44 @@ const currTab = ref('Question')
 const message = useMessage()
 function handleTesting() {
   if (fileListLength.value) {
-    // 使用手动上传的.csv文件
+    // 使用客户端上传的 `.csv` 文件
     message.info(`使用用户手动上传的测试用例。`)
   } else {
-    // 使用项目本地的.csv文件
-    let rawFile = getLocalFile(`/testUsecases/${props.context}/${usecaseType.value}.csv`)
+    // 使用服务端预设的 `.csv` 文件
+    const rawFile = getLocalFile(`/testUsecases/${props.context}/${usecaseType.value}.csv`)
     if (!rawFile) {
       message.warning(`暂时未准备该类型测试用例，请选择其他用例集或手动上传用例集。`)
       return false
     }
-    //console.log(rawFile)
-    Papa.parse(rawFile, {
-      complete: (res) => {
-        fileData.value = res.data
+    Papa.parse<string[]>(rawFile, {
+      complete: ({ data }) => {
+        fileData.value = data
       }
     })
-    console.log(fileData.value)
+  }
+  if (!fileData.value) {
+    message.error(`未找到测试用例，请重新选择测试用例集或手动上传用例集。`)
+    return false
   }
   // 绘制表头
-  resultColumns.value = createColumns(fileData.value as any[])
+  resultColumns.value = createColumns(fileData.value)
   // 绘制表格
-  result.value = createRows(fileData.value as any[])
-  console.log(result.value, resultColumns.value)
+  result.value = createRows(fileData.value)
   // 进行测试并回填结果
   const { falseNum, nullAnsNum } = executeTesting(result.value)
   message.success(`测试完毕，共执行 ${result.value.length} 个用例，通过 ${result.value.length - falseNum} 个用例。`)
 
-  // @ts-ignore
-  ecOption.series[0].data[0].value = nullAnsNum
-  // @ts-ignore
-  ecOption.series[0].data[1].value = result.value.length - falseNum
-  // @ts-ignore
-  ecOption.series[0].data[2].value = falseNum
+  // @ts-expect-error a mutation
+  echartOption.series[0].data[0].value = nullAnsNum
+  // @ts-expect-error a mutation
+  echartOption.series[0].data[1].value = result.value.length - falseNum
+  // @ts-expect-error a mutation
+  echartOption.series[0].data[2].value = falseNum
 
   currTab.value = 'Result'
 }
-// 导出.csv文件
+
+// 导出 `.csv` 文件
 function exportCsv() {
   const tableData = []
   const cols = []
@@ -379,15 +488,14 @@ function exportCsv() {
     cols.push(col.title)
   }
   tableData.push(cols)
-  for (let item of result.value) {
-    let row: any[] = []
-    for (let property in item) {
-      row.push(item[property])
-    }
-    row.shift()
-    tableData.push(row)
+  for (const rowObj of result.value) {
+    const rowData: string[] = []
+    Object.keys(rowObj).forEach((key) => {
+      rowData.push(rowObj[key] as string)
+    })
+    rowData.shift()
+    tableData.push(rowData)
   }
-  console.log(tableData)
   const csv = Papa.unparse(tableData)
   // 定义文件内容，类型为Blob
   let content = new Blob([csv])
@@ -405,7 +513,7 @@ function exportCsv() {
   urlObject.revokeObjectURL(url)
 }
 
-hljs.registerLanguage('javascript', javascript)
+hljs.registerLanguage('typescript', typescript)
 </script>
 
 <style scoped>

@@ -1,22 +1,3 @@
-<template>
-  <test-panel :context="context" :options="options" :code="code" :versions="versions" :ec-option="ecOption"
-    :iteration="iteration">
-    <template #header>
-      Question 03. 电脑销售问题
-    </template>
-    <template #sub-title>
-      算法思想
-    </template>
-    <template #detail>
-      最开始需要判断的是主机的销售数量，当这个变量值为-1时是对系统发出进行月度统计的指令，当值不为-1时才继续进行如下计算：
-      <br />① 因为每月至少销售出一台整机，首先判断各配件的销售数量是否大于1；
-      <br />② 分别判断各配件是否销售数量超过各自的最大数量；
-      <br />③ 若①②条件均成立，可进行销售额计算；
-      <br />④ 判断月度销售额在哪个佣金分段，在不同分段获得不同的佣金比例，计算出最终获得的佣金金额。
-    </template>
-  </test-panel>
-</template>
-
 <script setup lang="ts">
 import * as echarts from 'echarts/core'
 import TestPanel from '../../components/TestPanel.vue'
@@ -45,7 +26,7 @@ const options = [
 
 // 实现代码
 const code = `function computerSelling(host: number, monitor: number, peripheral: number): string {
-    if (host == -1) {
+    if (host === -1) {
         return "系统开始统计月度销售额"
     }
     if (host <= 0 || monitor <= 0 || peripheral <= 0) {
@@ -208,6 +189,33 @@ const iteration = {
   }]
 }
 </script>
+
+<template>
+  <test-panel
+    :context="context"
+    :options="options"
+    :code="code"
+    :versions="versions"
+    :ec-option="ecOption"
+    :iteration="iteration"
+  >
+    <template #header>
+      Question 03. 电脑销售问题
+    </template>
+    <template #sub-title>
+      算法思想
+    </template>
+    <template #detail>
+      最开始需要判断的是主机的销售数量，当这个变量值为 -1 时是对系统发出进行月度统计的指令，当值不为 -1 时才继续进行如下计算：
+      <ol class="steps-ol">
+        <li>因为每月至少销售出一台整机，首先判断各配件的销售数量是否大于 1；</li>
+        <li>分别判断各配件是否销售数量超过各自的最大数量；</li>
+        <li>若条件 1、2 均成立，可进行销售额计算；</li>
+        <li>判断月度销售额在哪个佣金分段，在不同分段获得不同的佣金比例，计算出最终获得的佣金金额。</li>
+      </ol>
+    </template>
+  </test-panel>
+</template>
 
 <style scoped>
 </style>

@@ -10,10 +10,10 @@ function triangleJudge(a: number, b: number, c: number): string {
         a + c > b &&
         b + c > a
     ) {
-        if (a === b || a === c || b === c) {
-            return '该三角形是等腰三角形'
-        } else if (a === b && a === c) {
+        if (a === b && a ===c ) {
             return '该三角形是等边三角形'
+        } else if (a === b || a === c || b === c) {
+            return '该三角形是等腰三角形'
         } else {
             return '该三角形是普通三角形'
         }
@@ -24,7 +24,7 @@ function triangleJudge(a: number, b: number, c: number): string {
 
 // 根据.csv文件的表头字段提取对应的参数，返回参数数组
 function getArgs(row: Row): number[] {
-    let args = [Number.parseInt(row.Edge1 as string), Number.parseInt(row.Edge2 as string), Number.parseInt(row.Edge3 as string)]
+    const args = [Number.parseInt(row.Edge1 as string), Number.parseInt(row.Edge2 as string), Number.parseInt(row.Edge3 as string)]
     return args
 }
 

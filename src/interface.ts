@@ -1,12 +1,11 @@
-// Reusable Types
-import type { LineSeriesOption, BarSeriesOption, PieSeriesOption } from 'echarts/charts'
+import type { ComposeOption } from 'echarts'
+import type { BarSeriesOption, LineSeriesOption, PieSeriesOption } from 'echarts/charts'
 import type {
+  DatasetComponentOption,
+  GridComponentOption,
   TitleComponentOption,
   TooltipComponentOption,
-  GridComponentOption,
-  DatasetComponentOption,
 } from 'echarts/components'
-import type { ComposeOption } from 'echarts'
 
 export interface Row {
   [index: string]: string | undefined | number

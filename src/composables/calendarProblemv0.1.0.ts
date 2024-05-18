@@ -9,8 +9,8 @@ function calendarProblem(year: number, month: number, day: number): string {
         return "月份数值越界"
     }
 
-    let monthDays: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    let isLeap: number = 0
+    const monthDays: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    let isLeap = 0
     if (year % 4 == 0) {
         isLeap = 1
     }
@@ -19,12 +19,12 @@ function calendarProblem(year: number, month: number, day: number): string {
     }
 
     monthDays[1] += isLeap
-    let maxDays: number = monthDays[month - 1]
+    const maxDays: number = monthDays[month - 1]
     if (day <= 0 || day > maxDays) {
         return "日期数值越界"
     }
 
-    let result: number[] = [year, month, day + 1]
+    const result: number[] = [year, month, day + 1]
 
     if (day == maxDays) {
         result[2] = 1
@@ -39,7 +39,7 @@ function calendarProblem(year: number, month: number, day: number): string {
 
 // 根据.csv文件的表头字段提取对应的参数，返回参数数组
 function getArgs(row: Row): number[] {
-    let args = [Number.parseInt(row.Year as string), Number.parseInt(row.Month as string), Number.parseInt(row.Day as string)]
+    const args = [Number.parseInt(row.Year as string), Number.parseInt(row.Month as string), Number.parseInt(row.Day as string)]
     return args
 }
 

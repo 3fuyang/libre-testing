@@ -58,15 +58,27 @@ onMounted(() => {
 <template>
   <div class="root-wrapper">
     <div class="left-part">
-      <n-tabs type="line" animated default-value="home">
-        <n-tab-pane v-for="item in tabs" :name="item.name" :tab="item.tab">
-          <unit-home-vue v-if="item.name === 'home'" />
-          <unit-panel-vue :context="item.name" v-else>
+      <n-tabs
+        type="line"
+        animated
+        default-value="home"
+      >
+        <n-tab-pane
+          v-for="{ name, tab, testCase } in tabs"
+          :key="name"
+          :name="name"
+          :tab="tab"
+        >
+          <unit-home-vue v-if="name === 'home'" />
+          <unit-panel-vue
+            v-else
+            :context="name"
+          >
             <template #title>
-              {{ item.tab }}
+              {{ tab }}
             </template>
             <template #test-case>
-              {{ item.testCase }}
+              {{ testCase }}
             </template>
           </unit-panel-vue>
         </n-tab-pane>
