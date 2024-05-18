@@ -1,28 +1,35 @@
 # Libre Testing
 
-Fwio
-
 ## 简介
 
 同济大学软件学院 2022 软件测试课设，一个**自动化测试平台**。
 
-- **Web UI**：Vue 3 + Naive UI
-- **Testing**：TypeScript (Static Check) + Vitest (Unit&Integration Testing) + Cypress (E2E Testing)
+- **Web UI**：[Vue 3](https://vuejs.org/) + [Naive UI](https://www.naiveui.com/)
+- **Testing**：[TypeScript](https://www.typescriptlang.org/) (Static Check) + [Vitest](https://vitest.dev/) (Unit & Integration Testing) + [Cypress](https://www.cypress.io/) (E2E Testing)
 
-Online Demo（**在线体验**）: [Libre Testing](https://libre-testing.vercel.app)
+Online Demo（**在线体验**）: [Libre Testing](https://libre-testing.vercel.app) (Deployed with [Vercel](https://vercel.com/))
 
-集成测试与系统测试使用的项目：[Flea Test](https://github.com/3fuyang/flea-test)
+> [!NOTE]
+> 集成测试与系统测试使用的项目：[Flea Test](https://github.com/3fuyang/flea-test)
 
 ## 使用说明
 
 ### How to Run
 
+Make sure [Node.js (`>20.x.x`)](https://nodejs.org/en) is available on your device.
+
 ```bash
+# Enable package manager
 corepack enable
 
+# Install dependencies
 pnpm i
 
+# Run dev server
 pnpm dev
+
+# Build
+pnpm build
 ```
 
 ### 平时练习
@@ -31,8 +38,8 @@ pnpm dev
 
 **使用方法：**
 
-+ **使用自带用例集:** 在右边栏选择**版本号**和**用例类型**后，点击"**开始测试**"按钮即可；
-+ **上传用例集:** 注意，上传用例集功能要求用例集遵循一定的**格式**，具体可参考 `/public/testUsecases/*.csv`
++ **使用自带用例集**：在右边栏选择**版本号**和**用例类型**后，点击"**开始测试**"按钮即可；
++ **上传用例集**：注意，上传用例集功能要求用例集遵循一定的**格式**，具体可参考 `/public/testUsecases/*.csv`
 
 ### 项目测试
 
@@ -43,7 +50,7 @@ pnpm dev
 > [!IMPORTANT]
 > + 单元测试与集成测试的嵌入窗口加载完毕后，如果 Preview (即视图)为空白，需在嵌入窗口的 URL 中追加上 `/__vitest__/`。
 > + 由于 Cypress 本身是一个桌面应用，系统测试需要在 Node 环境中运行，具体参见 [Flea Test](https://github.com/3fuyang/flea-test)。
-> + 集成测试与系统测试使用的是同一个 repo，分别的启动命令应该是 `npm run test:unit` 和 `npm run test:e2e` ，若结果不对，请手动在窗口终端运行对应 script。
+> + 集成测试与系统测试使用的是同一个 repo，分别的启动命令应该是 `npm run test:unit` 和 `npm run test:e2e` ，若结果不符预期，请手动在窗口终端运行对应 script。
 
 ## Notes
 
@@ -58,3 +65,7 @@ Reference：[Cross-Browser support with Cross-Origin isolation](https://blog.sta
 总的来说，StackBlitz 开发了 WebContainers 来实现 Web 应用内的在线 IDE，而其需要一个**安全上下文**（Secure Context），简单来说，即顶级文档必须是经由 **HTTPS** 所提供的。如果在一个 `iframe` 中加载文档且其父文档不是通过 HTTPS 提供的，则其上下文就不被认为是安全上下文。没有使用 HTTPS 协议的条件，便无法成功运行 WebContainers。
 
 > Updated, 2022/6/19: 服务端已经支持 HTTPS 协议，该问题已经解决。
+
+## One More Thing
+
+Best wishes.
