@@ -193,30 +193,26 @@ const iteration = {
 </script>
 
 <template>
-  <test-panel
-    :context="context"
-    :options="options"
-    :code="code"
-    :versions="versions"
-    :ec-option="ecOption"
-    :iteration="iteration"
-  >
-    <template #header>
-      Question 03. 电脑销售问题
-    </template>
-    <template #sub-title>
-      算法思想
-    </template>
-    <template #detail>
-      最开始需要判断的是主机的销售数量，当这个变量值为 -1 时是对系统发出进行月度统计的指令，当值不为 -1 时才继续进行如下计算：
-      <ol class="steps-ol">
-        <li>因为每月至少销售出一台整机，首先判断各配件的销售数量是否大于 1；</li>
-        <li>分别判断各配件是否销售数量超过各自的最大数量；</li>
-        <li>若条件 1、2 均成立，可进行销售额计算；</li>
-        <li>判断月度销售额在哪个佣金分段，在不同分段获得不同的佣金比例，计算出最终获得的佣金金额。</li>
-      </ol>
-    </template>
-  </test-panel>
+  <Suspense>
+    <test-panel :context="context" :options="options" :code="code" :versions="versions" :ec-option="ecOption"
+      :iteration="iteration">
+      <template #header>
+        Question 03. 电脑销售问题
+      </template>
+      <template #sub-title>
+        算法思想
+      </template>
+      <template #detail>
+        最开始需要判断的是主机的销售数量，当这个变量值为 -1 时是对系统发出进行月度统计的指令，当值不为 -1 时才继续进行如下计算：
+        <ol class="steps-ol">
+          <li>因为每月至少销售出一台整机，首先判断各配件的销售数量是否大于 1；</li>
+          <li>分别判断各配件是否销售数量超过各自的最大数量；</li>
+          <li>若条件 1、2 均成立，可进行销售额计算；</li>
+          <li>判断月度销售额在哪个佣金分段，在不同分段获得不同的佣金比例，计算出最终获得的佣金金额。</li>
+        </ol>
+      </template>
+    </test-panel>
+  </Suspense>
 </template>
 
 <style scoped>

@@ -1,223 +1,8 @@
-<template>
-  <div class="flex-wrapper">
-    <div class="left-flex-item">
-      <n-tabs v-model:value="currTab">
-        <n-tab-pane
-          name="Question"
-          tab="问题描述"
-        >
-          <n-card
-            class="description"
-            size="small"
-            header-style="padding: .8em;"
-          >
-            <template #header>
-              <slot name="header">
-                Question 00. 问题名
-              </slot>
-            </template>
-            <p class="subtitle">
-              <slot name="sub-title">
-                问题描述 / 算法思想
-              </slot>
-            </p>
-            <p class="text-body">
-              <slot name="detail">
-                先这样，再那样
-              </slot>
-            </p>
-            <p class="subtitle">
-              代码实现
-            </p>
-            <n-card
-              class="code-block"
-              embedded
-              :bordered="false"
-              content-style="padding: .5em;"
-            >
-              <n-scrollbar style="max-height: 42vh;">
-                <n-code
-                  :hljs="hljs"
-                  :code="code"
-                  language="ts"
-                  show-line-numbers
-                />
-              </n-scrollbar>
-            </n-card>
-          </n-card>
-        </n-tab-pane>
-        <n-tab-pane
-          v-if="result.length"
-          name="Result"
-          tab="测试结果"
-        >
-          <n-card
-            class="output"
-            size="small"
-            header-style="padding: .8em;"
-          >
-            <template #header>
-              Testing Result
-            </template>
-            <template #header-extra>
-              <n-button
-                v-if="result.length"
-                quaternary
-                size="small"
-                round
-                type="success"
-                @click="exportCsv"
-              >
-                导出
-              </n-button>
-            </template>
-            <!-- 打印测试结果 -->
-            <n-data-table
-              size="small"
-              :max-height="420"
-              :bordered="false"
-              :columns="resultColumns"
-              :data="result"
-              :pagination="pagination"
-            />
-          </n-card>
-        </n-tab-pane>
-        <n-tab-pane
-          v-if="result.length"
-          name="Visualization"
-          tab="可视化分析"
-        >
-          <n-card
-            class="visualization"
-            size="small"
-            header-style="padding: .8em;"
-          >
-            <n-scrollbar style="max-height: 78vh;">
-              <n-h2>
-                测试情况
-              </n-h2>
-              <div
-                id="chart"
-                class="chart"
-              />
-              <n-h2>
-                版本迭代
-              </n-h2>
-              <n-card
-                class="description"
-                embedded
-                :bordered="false"
-                content-style="padding: .5em;"
-              >
-                <div
-                  id="iterationChart"
-                  class="chart"
-                />
-              </n-card>
-              <n-data-table
-                size="small"
-                :bordered="false"
-                :columns="iterationColumns"
-                :data="iterationTable"
-              />
-            </n-scrollbar>
-          </n-card>
-        </n-tab-pane>
-      </n-tabs>
-    </div>
-    <div class="right-flex-item">
-      <n-card
-        class="upload-box"
-        size="small"
-        header-style="padding: .8em; margin-bottom: .8em;"
-      >
-        <template #header>
-          Program Test
-        </template>
-        <p class="subtitle">
-          Step 01. 选择程序版本
-        </p>
-        <n-space vertical>
-          <n-select
-            v-model:value="version"
-            class="cascader-input"
-            :options="props.versions"
-            placeholder="Click to select"
-            @update:value="handleVersionSelect"
-          />
-        </n-space>
-        <p class="subtitle">
-          Step 02. 选择用例集
-        </p>
-        <n-space vertical>
-          <n-cascader
-            v-model:value="usecaseType"
-            class="cascader-input"
-            :options="options"
-            :show-path="false"
-            :check-strategy="'child'"
-            placeholder="Click to select"
-          />
-        </n-space>
-        <p class="subtitle">
-          Step 03. 上传用例集 (Optional)
-        </p>
-        <n-space justify="center">
-          <n-upload
-            ref="uploadRef"
-            action="#"
-            :default-upload="false"
-            accept=".csv"
-            @change="handleUpload"
-          >
-            <n-upload-dragger class="upload-content">
-              <div style="margin-bottom: 12px">
-                <n-icon
-                  size="2.5em"
-                  :depth="3"
-                >
-                  <cloud-download-outline />
-                </n-icon>
-              </div>
-              <n-text>
-                点击或者拖动文件到该区域来上传
-              </n-text>
-              <n-p
-                depth="3"
-                style="margin-top: .5em;"
-              >
-                请上传 .csv 格式的文件<br>(若上面已经选择了测试集，请直接跳转到第三步)
-              </n-p>
-            </n-upload-dragger>
-          </n-upload>
-        </n-space>
-        <p class="subtitle">
-          Step 04. 运行测试集
-        </p>
-        <n-space justify="center">
-          <n-button
-            class="upload-btn"
-            :disabled="!((fileListLength || usecaseType) && version)"
-            strong
-            type="primary"
-            @click="handleTesting"
-          >
-            开始测试
-          </n-button>
-        </n-space>
-      </n-card>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { NH2, NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable, useMessage, NSelect } from 'naive-ui'
 import type { CascaderOption, UploadProps } from 'naive-ui'
 import { type Component, onUpdated, ref } from 'vue'
 import { CloudDownloadOutline } from '@vicons/ionicons5'
-import hljs from 'highlight.js/lib/core'
-import typescript from 'highlight.js/lib/languages/typescript'
-import Papa from 'papaparse'
 import type { Row, Column, ECOption, Iteration, IterationData } from '../interface'
 import * as echarts from 'echarts/core'
 import { LineChart, PieChart, BarChart } from 'echarts/charts'
@@ -233,6 +18,9 @@ import {
 import { LabelLayout, UniversalTransition } from 'echarts/features'
 import { CanvasRenderer } from 'echarts/renderers'
 
+const { default: hljs } = await import('highlight.js/lib/core')
+const { default: typescript } = await import('highlight.js/lib/languages/typescript')
+const { default: Papa } = await import('papaparse')
 
 const props = defineProps<{
   context: string, // 测试上下文
@@ -515,6 +303,218 @@ function exportCsv() {
 
 hljs.registerLanguage('typescript', typescript)
 </script>
+
+<template>
+  <div class="flex-wrapper">
+    <div class="left-flex-item">
+      <n-tabs v-model:value="currTab">
+        <n-tab-pane
+          name="Question"
+          tab="问题描述"
+        >
+          <n-card
+            class="description"
+            size="small"
+            header-style="padding: .8em;"
+          >
+            <template #header>
+              <slot name="header">
+                Question 00. 问题名
+              </slot>
+            </template>
+            <p class="subtitle">
+              <slot name="sub-title">
+                问题描述 / 算法思想
+              </slot>
+            </p>
+            <p class="text-body">
+              <slot name="detail">
+                先这样，再那样
+              </slot>
+            </p>
+            <p class="subtitle">
+              代码实现
+            </p>
+            <n-card
+              class="code-block"
+              embedded
+              :bordered="false"
+              content-style="padding: .5em;"
+            >
+              <n-scrollbar style="max-height: 42vh;">
+                <n-code
+                  :hljs="hljs"
+                  :code="code"
+                  language="ts"
+                  show-line-numbers
+                />
+              </n-scrollbar>
+            </n-card>
+          </n-card>
+        </n-tab-pane>
+        <n-tab-pane
+          v-if="result.length"
+          name="Result"
+          tab="测试结果"
+        >
+          <n-card
+            class="output"
+            size="small"
+            header-style="padding: .8em;"
+          >
+            <template #header>
+              Testing Result
+            </template>
+            <template #header-extra>
+              <n-button
+                v-if="result.length"
+                quaternary
+                size="small"
+                round
+                type="success"
+                @click="exportCsv"
+              >
+                导出
+              </n-button>
+            </template>
+            <!-- 打印测试结果 -->
+            <n-data-table
+              size="small"
+              :max-height="420"
+              :bordered="false"
+              :columns="resultColumns"
+              :data="result"
+              :pagination="pagination"
+            />
+          </n-card>
+        </n-tab-pane>
+        <n-tab-pane
+          v-if="result.length"
+          name="Visualization"
+          tab="可视化分析"
+        >
+          <n-card
+            class="visualization"
+            size="small"
+            header-style="padding: .8em;"
+          >
+            <n-scrollbar style="max-height: 78vh;">
+              <n-h2>
+                测试情况
+              </n-h2>
+              <div
+                id="chart"
+                class="chart"
+              />
+              <n-h2>
+                版本迭代
+              </n-h2>
+              <n-card
+                class="description"
+                embedded
+                :bordered="false"
+                content-style="padding: .5em;"
+              >
+                <div
+                  id="iterationChart"
+                  class="chart"
+                />
+              </n-card>
+              <n-data-table
+                size="small"
+                :bordered="false"
+                :columns="iterationColumns"
+                :data="iterationTable"
+              />
+            </n-scrollbar>
+          </n-card>
+        </n-tab-pane>
+      </n-tabs>
+    </div>
+    <div class="right-flex-item">
+      <n-card
+        class="upload-box"
+        size="small"
+        header-style="padding: .8em; margin-bottom: .8em;"
+      >
+        <template #header>
+          Program Test
+        </template>
+        <p class="subtitle">
+          Step 01. 选择程序版本
+        </p>
+        <n-space vertical>
+          <n-select
+            v-model:value="version"
+            class="cascader-input"
+            :options="props.versions"
+            placeholder="Click to select"
+            @update:value="handleVersionSelect"
+          />
+        </n-space>
+        <p class="subtitle">
+          Step 02. 选择用例集
+        </p>
+        <n-space vertical>
+          <n-cascader
+            v-model:value="usecaseType"
+            class="cascader-input"
+            :options="options"
+            :show-path="false"
+            :check-strategy="'child'"
+            placeholder="Click to select"
+          />
+        </n-space>
+        <p class="subtitle">
+          Step 03. 上传用例集 (Optional)
+        </p>
+        <n-space justify="center">
+          <n-upload
+            ref="uploadRef"
+            action="#"
+            :default-upload="false"
+            accept=".csv"
+            @change="handleUpload"
+          >
+            <n-upload-dragger class="upload-content">
+              <div style="margin-bottom: 12px">
+                <n-icon
+                  size="2.5em"
+                  :depth="3"
+                >
+                  <cloud-download-outline />
+                </n-icon>
+              </div>
+              <n-text>
+                点击或者拖动文件到该区域来上传
+              </n-text>
+              <n-p
+                depth="3"
+                style="margin-top: .5em;"
+              >
+                请上传 .csv 格式的文件<br>(若上面已经选择了测试集，请直接跳转到第三步)
+              </n-p>
+            </n-upload-dragger>
+          </n-upload>
+        </n-space>
+        <p class="subtitle">
+          Step 04. 运行测试集
+        </p>
+        <n-space justify="center">
+          <n-button
+            class="upload-btn"
+            :disabled="!((fileListLength || usecaseType) && version)"
+            strong
+            type="primary"
+            @click="handleTesting"
+          >
+            开始测试
+          </n-button>
+        </n-space>
+      </n-card>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .flex-wrapper {

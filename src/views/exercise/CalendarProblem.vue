@@ -267,30 +267,26 @@ const iteration = {
 </script>
 
 <template>
-  <test-panel
-    :context="context"
-    :options="options"
-    :code="code"
-    :versions="versions"
-    :ec-option="ecOption"
-    :iteration="iteration"
-  >
-    <template #header>
-      Question 02. 万年历问题
-    </template>
-    <template #sub-title>
-      算法思想
-    </template>
-    <template #detail>
-      本问题输入变量为年份、月份、日期三个，首先需要对输入的日期进行合法性判断，确定输入日期符合规范后再进行计算下一天的日期。
-      <ol class="steps-ol">
-        <li>首先判断年份是否符合取值范围（1900 ≤ year ≤ 2100）；</li>
-        <li>再判断月份是否符合取值范围（1 ≤ month ≤ 12）；</li>
-        <li>计算该年份下该月的天数 maxDays，然后判断输入日期是否符合取值范围（1 ≤ day ≤ maxDays）；</li>
-        <li>计算下一天的日期，尤其是当出现跨月份、跨年时需要给出正确的日期。</li>
-      </ol>
-    </template>
-  </test-panel>
+  <Suspense>
+    <test-panel :context="context" :options="options" :code="code" :versions="versions" :ec-option="ecOption"
+      :iteration="iteration">
+      <template #header>
+        Question 02. 万年历问题
+      </template>
+      <template #sub-title>
+        算法思想
+      </template>
+      <template #detail>
+        本问题输入变量为年份、月份、日期三个，首先需要对输入的日期进行合法性判断，确定输入日期符合规范后再进行计算下一天的日期。
+        <ol class="steps-ol">
+          <li>首先判断年份是否符合取值范围（1900 ≤ year ≤ 2100）；</li>
+          <li>再判断月份是否符合取值范围（1 ≤ month ≤ 12）；</li>
+          <li>计算该年份下该月的天数 maxDays，然后判断输入日期是否符合取值范围（1 ≤ day ≤ maxDays）；</li>
+          <li>计算下一天的日期，尤其是当出现跨月份、跨年时需要给出正确的日期。</li>
+        </ol>
+      </template>
+    </test-panel>
+  </Suspense>
 </template>
 
 <style scoped>
