@@ -2,7 +2,7 @@
 import * as echarts from 'echarts/core'
 import TestPanel from "../../components/TestPanel.vue"
 import type { ECOption } from '@/interface'
-import { type CascaderOption } from 'naive-ui';
+import { type CascaderOption, NSpin, NSpace } from 'naive-ui';
 
 // 上下文
 const context = "calendarProblem"
@@ -268,8 +268,14 @@ const iteration = {
 
 <template>
   <Suspense>
-    <test-panel :context="context" :options="options" :code="code" :versions="versions" :ec-option="ecOption"
-      :iteration="iteration">
+    <test-panel
+      :context="context"
+      :options="options"
+      :code="code"
+      :versions="versions"
+      :ec-option="ecOption"
+      :iteration="iteration"
+    >
       <template #header>
         Question 02. 万年历问题
       </template>
@@ -286,8 +292,20 @@ const iteration = {
         </ol>
       </template>
     </test-panel>
+    <template #fallback>
+      <n-space
+        class="spin-container"
+        align="center"
+        justify="center"
+      >
+        <n-spin size="large" />
+      </n-space>
+    </template>
   </Suspense>
 </template>
 
-<style scoped>
+<style>
+.spin-container {
+  height: calc(100vh - 5rem);
+}
 </style>

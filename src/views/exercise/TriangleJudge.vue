@@ -1,30 +1,8 @@
-<template>
-  <Suspense>
-    <test-panel :context="context" :options="options" :code="code" :versions="versions" :ec-option="ecOption"
-      :iteration="iteration">
-      <template #header>
-        Question 01. 判断三角形类型
-      </template>
-      <template #sub-title>
-        算法思想
-      </template>
-      <template #detail>
-        本题输入变量有 a, b, c 三个，首先判断其两边之和是否大于第三边，若大于则判断可以构成三角形，再进一步判断该三角形是什么三角形；否则不能构成三角形。
-        <ol class="steps-ol">
-          <li>从键盘输入三角形的三条边；</li>
-          <li>判断两边之和是否大于第三边，若条件成立则判断可构成三角形，否则判断其不能构成三角形；</li>
-          <li>继续判断三角形类型；</li>
-          <li>首先判断其是否三边相等，条件成立则判断其为等边三角形；否则判断其是否有两边相等，条件成立则判断其为等腰三角形；否则判断其为普通三角形。</li>
-        </ol>
-      </template>
-    </test-panel>
-  </Suspense>
-</template>
-
 <script setup lang="ts">
 import type { ECOption } from '@/interface'
 import * as echarts from 'echarts/core'
 import TestPanel from '../../components/TestPanel.vue'
+import { NSpace, NSpin } from 'naive-ui'
 
 // 上下文
 const context = 'triangleJudge'
@@ -230,6 +208,44 @@ const iteration = {
   }]
 }
 </script>
+
+<template>
+  <Suspense>
+    <test-panel
+      :context="context"
+      :options="options"
+      :code="code"
+      :versions="versions"
+      :ec-option="ecOption"
+      :iteration="iteration"
+    >
+      <template #header>
+        Question 01. 判断三角形类型
+      </template>
+      <template #sub-title>
+        算法思想
+      </template>
+      <template #detail>
+        本题输入变量有 a, b, c 三个，首先判断其两边之和是否大于第三边，若大于则判断可以构成三角形，再进一步判断该三角形是什么三角形；否则不能构成三角形。
+        <ol class="steps-ol">
+          <li>从键盘输入三角形的三条边；</li>
+          <li>判断两边之和是否大于第三边，若条件成立则判断可构成三角形，否则判断其不能构成三角形；</li>
+          <li>继续判断三角形类型；</li>
+          <li>首先判断其是否三边相等，条件成立则判断其为等边三角形；否则判断其是否有两边相等，条件成立则判断其为等腰三角形；否则判断其为普通三角形。</li>
+        </ol>
+      </template>
+    </test-panel>
+    <template #fallback>
+      <n-space
+        class="spin-container"
+        align="center"
+        justify="center"
+      >
+        <n-spin size="large" />
+      </n-space>
+    </template>
+  </Suspense>
+</template>
 
 <style>
 .steps-ol {

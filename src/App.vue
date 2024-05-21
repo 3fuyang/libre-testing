@@ -4,7 +4,8 @@ import { NLayout, NLayoutContent, NLayoutSider, NLayoutHeader, NConfigProvider, 
 import SideNav from './components/SideNav.vue'
 import TopNav from './components/TopNav.vue'
 import { ref } from 'vue'
-const collapsed = ref<boolean>(false)
+
+const collapsed = ref(false)
 </script>
 
 <template>
@@ -16,7 +17,7 @@ const collapsed = ref<boolean>(false)
       <n-config-provider>
         <n-layout-sider
           class="side-bar"
-          width="13vw"
+          width="12rem"
           :native-scrollbar="false"
           bordered
           collapse-mode="width"
@@ -28,7 +29,6 @@ const collapsed = ref<boolean>(false)
       </n-config-provider>
       <n-layout
         bordered
-        class="embedded-body"
       >
         <n-layout-header
           bordered
@@ -60,27 +60,23 @@ const collapsed = ref<boolean>(false)
 <style>
 .body {
   height: 100vh;
-  width: 100vw;
+  width: max(100vw, 32rem);
 }
 
 .side-bar {
   height: 100vh;
 }
 
-.embedded-body {
-  height: 100vh;
-}
-
 .top-bar {
-  height: 8vh;
-  padding: .6em;
+  height: 3rem;
+  padding: .6rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .main-content {
-  height: 92vh;
-  padding: .6em;
+  height: calc(100% - 3rem);
+  padding: .6rem;
 }
 </style>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NH2, NTabs, NTabPane, NCard, NCode, NScrollbar, NSpace, NCascader, NUpload, NUploadDragger, NIcon, NText, NP, NButton, NDataTable, useMessage, NSelect } from 'naive-ui'
 import type { CascaderOption, UploadProps } from 'naive-ui'
-import { type Component, onUpdated, ref } from 'vue'
+import { type Component, onUpdated, ref, computed } from 'vue'
 import { CloudDownloadOutline } from '@vicons/ionicons5'
 import type { Row, Column, ECOption, Iteration, IterationData } from '../interface'
 import * as echarts from 'echarts/core'
@@ -272,7 +272,7 @@ function handleTesting() {
 function exportCsv() {
   const tableData = []
   const cols = []
-  for (let col of resultColumns.value) {
+  for (const col of resultColumns.value) {
     cols.push(col.title)
   }
   tableData.push(cols)
@@ -302,6 +302,16 @@ function exportCsv() {
 }
 
 hljs.registerLanguage('typescript', typescript)
+
+const ellipsisColumns = computed(() => {
+  return resultColumns.value.map((col) => {
+    return {
+      ...col,
+      ellipsis: true
+    }
+  })
+})
+
 </script>
 
 <template>
@@ -358,9 +368,8 @@ hljs.registerLanguage('typescript', typescript)
           tab="测试结果"
         >
           <n-card
-            class="output"
             size="small"
-            header-style="padding: .8em;"
+            header-style="padding: .8rem;"
           >
             <template #header>
               Testing Result
@@ -382,7 +391,7 @@ hljs.registerLanguage('typescript', typescript)
               size="small"
               :max-height="420"
               :bordered="false"
-              :columns="resultColumns"
+              :columns="ellipsisColumns"
               :data="result"
               :pagination="pagination"
             />
@@ -519,32 +528,28 @@ hljs.registerLanguage('typescript', typescript)
 <style scoped>
 .flex-wrapper {
   display: flex;
-  flex-direction: row;
+  gap: .5rem;
 }
 
 .left-flex-item {
-  max-width: 63%;
-  flex: 1 0 auto;
+  flex: 3;
   overflow-y: auto;
 }
 
 .visualization {
   width: 100%;
   box-sizing: border-box;
-  min-height: 83vh;
-  max-height: 85vh;
 }
 
 .chart {
   font-size: 1rem;
-  width: 42em;
-  height: 20em;
+  width: 42rem;
+  height: 20rem;
 }
 
 .right-flex-item {
-  padding-top: 3.2em;
-  margin-left: .6em;
-  flex: 1 1 auto;
+  padding-top: 2.8rem;
+  flex: 2;
 }
 
 .description {
@@ -552,21 +557,15 @@ hljs.registerLanguage('typescript', typescript)
   width: 100%;
 }
 
-.output {
-  width: 100%;
-  min-height: 83vh;
-  max-height: 85vh;
-}
-
 .subtitle {
   margin: 0;
-  font-size: 1.1em;
+  font-size: .875rem;
   font-weight: 600;
 }
 
 .text-body {
-  margin: 0 0 .8em 0;
-  font-size: 1em;
+  margin-bottom: .5rem;
+  font-size: .875rem;
 }
 
 .code-block {
@@ -585,16 +584,16 @@ hljs.registerLanguage('typescript', typescript)
 }
 
 .cascader-input {
-  width: 50%;
-  margin: 1.2em auto;
+  width: max(10rem, 50%);
+  margin: 1rem auto;
   overflow-x: hidden;
 }
 
 .upload-content {
-  margin: 1.2em 0;
+  margin: 1rem 0;
 }
 
 .upload-btn {
-  margin: 1.2em 0;
+  margin: 1rem 0;
 }
 </style>

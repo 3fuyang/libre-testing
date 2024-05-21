@@ -2,6 +2,7 @@
 import * as echarts from 'echarts/core'
 import TestPanel from '../../components/TestPanel.vue'
 import type { ECOption } from '@/interface'
+import { NSpace, NSpin } from 'naive-ui'
 
 // 上下文
 const context = 'computerSelling'
@@ -194,8 +195,14 @@ const iteration = {
 
 <template>
   <Suspense>
-    <test-panel :context="context" :options="options" :code="code" :versions="versions" :ec-option="ecOption"
-      :iteration="iteration">
+    <test-panel
+      :context="context"
+      :options="options"
+      :code="code"
+      :versions="versions"
+      :ec-option="ecOption"
+      :iteration="iteration"
+    >
       <template #header>
         Question 03. 电脑销售问题
       </template>
@@ -212,6 +219,15 @@ const iteration = {
         </ol>
       </template>
     </test-panel>
+    <template #fallback>
+      <n-space
+        class="spin-container"
+        align="center"
+        justify="center"
+      >
+        <n-spin size="large" />
+      </n-space>
+    </template>
   </Suspense>
 </template>
 

@@ -120,19 +120,18 @@ onUpdated(() => {
 
 <style scoped>
 .logo {
-  padding: 0 .5em;
-  box-sizing: border-box;
-  flex-direction: row;
+  padding: 0 .5rem;
   border-bottom: 1px solid #eee;
-  height: 8vh;
+  box-sizing: border-box;
+  height: 3rem;
   align-items: center;
   display: flex;
-  gap: 1em;
+  gap: 1rem;
   justify-content: center;
 }
 
 .title {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   color: rgb(51, 54, 57);
   font-weight: 500;
   text-overflow: ellipsis;

@@ -1,3 +1,12 @@
+<script setup lang="ts">
+import { NIcon, NCard, NSpace, NP, NDivider } from 'naive-ui'
+import { AddSharp, LogoCss3 } from '@vicons/ionicons5'
+import IconNaiveUi from '../components/icons/IconNaiveUI.vue'
+import IconVite from '../components/icons/IconVite.vue'
+import IconVue from '../components/icons/IconVue.vue'
+
+</script>
+
 <template>
   <n-card
     class="home-box"
@@ -83,15 +92,6 @@
     </template>
   </n-card>
 </template>
-
-<script setup lang="ts">
-import { NIcon, NCard, NSpace, NP, NDivider } from 'naive-ui'
-import { AddSharp, LogoCss3 } from '@vicons/ionicons5'
-import IconNaiveUi from '../components/icons/IconNaiveUI.vue'
-import IconVite from '../components/icons/IconVite.vue'
-import IconVue from '../components/icons/IconVue.vue'
-
-</script>
 
 <style scoped>
 .home-box {
