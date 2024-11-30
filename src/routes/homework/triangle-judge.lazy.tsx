@@ -1,4 +1,6 @@
 import { Flex } from '@/components/flex'
+import { columns, type TestResultItem } from '@/components/result-table/columns'
+import { DataTable } from '@/components/result-table/table'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -50,7 +52,7 @@ function RouteComponent() {
       </TabsContent>
 
       <TabsContent value="result">
-        <div>测试结果</div>
+        <ResultPanel />
       </TabsContent>
     </Tabs>
   )
@@ -156,6 +158,53 @@ function QuestionPanel() {
         </Flex>
         {/* eslint-disable-next-line @eslint-react/dom/no-dangerously-set-innerhtml */}
         <div dangerouslySetInnerHTML={{ __html: html }} />
+      </CardContent>
+    </Card>
+  )
+}
+
+const mockTestResult: TestResultItem[] = [
+  {
+    id: '1',
+    input: '3, 4, 5',
+    expected: '该三角形是普通三角形',
+    actual: '该三角形是普通三角形',
+    passed: true,
+    duration: 100,
+  },
+  {
+    id: '2',
+    input: '6, 6, 6',
+    expected: '该三角形是等边三角形',
+    actual: '该三角形是等边三角形',
+    passed: true,
+    duration: 60,
+  },
+  {
+    id: '3',
+    input: '2, 5, 9',
+    expected: '所给三边数据不能构成三角形',
+    actual: '所给三边数据不能构成三角形',
+    passed: false,
+    duration: 60,
+  }
+]
+
+function ResultPanel() {
+  return (
+    <Card className="flex-1">
+      <CardHeader className="pb-4">
+        <CardTitle className="text-lg">Question 1. 判断三角形类型</CardTitle>
+        <CardDescription>输入三角形的三条边，判断三角形的类型</CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <div className="container">
+          <DataTable
+            columns={columns}
+            data={mockTestResult}
+          />
+        </div>
       </CardContent>
     </Card>
   )
