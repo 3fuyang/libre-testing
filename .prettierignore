@@ -1,0 +1,20 @@
+# Local
+.DS_Store
+*.local
+*.log*
+.eslintcache
+
+# Dist
+node_modules
+dist/
+.vinxi
+.output
+.vercel
+.netlify
+.wrangler
+src/components/ui
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea
