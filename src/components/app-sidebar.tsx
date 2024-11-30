@@ -93,7 +93,7 @@ export function AppSidebar() {
                     </SidebarGroupLabel>
                     <CollapsibleContent>
                       <SidebarGroupContent>
-                        <SidebarMenu>
+                        <SidebarMenu className="pl-6">
                           {item.children.map((item) => (
                             <SidebarMenuItem key={item.title}>
                               <SidebarMenuButton asChild>

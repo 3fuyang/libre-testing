@@ -8,11 +8,19 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
+
+// Create Virtual Routes
+
+const HomeworkTriangleJudgeLazyImport = createFileRoute(
+  '/homework/triangle-judge',
+)()
 
 // Create/Update Routes
 
@@ -27,6 +35,14 @@ const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any)
+
+const HomeworkTriangleJudgeLazyRoute = HomeworkTriangleJudgeLazyImport.update({
+  id: '/homework/triangle-judge',
+  path: '/homework/triangle-judge',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/homework/triangle-judge.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -46,6 +62,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/homework/triangle-judge': {
+      id: '/homework/triangle-judge'
+      path: '/homework/triangle-judge'
+      fullPath: '/homework/triangle-judge'
+      preLoaderRoute: typeof HomeworkTriangleJudgeLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -54,36 +77,41 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/homework/triangle-judge': typeof HomeworkTriangleJudgeLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/homework/triangle-judge': typeof HomeworkTriangleJudgeLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/homework/triangle-judge': typeof HomeworkTriangleJudgeLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths: '/' | '/about' | '/homework/triangle-judge'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
+  to: '/' | '/about' | '/homework/triangle-judge'
+  id: '__root__' | '/' | '/about' | '/homework/triangle-judge'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  HomeworkTriangleJudgeLazyRoute: typeof HomeworkTriangleJudgeLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  HomeworkTriangleJudgeLazyRoute: HomeworkTriangleJudgeLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,7 +125,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about"
+        "/about",
+        "/homework/triangle-judge"
       ]
     },
     "/": {
@@ -105,6 +134,9 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/homework/triangle-judge": {
+      "filePath": "homework/triangle-judge.lazy.tsx"
     }
   }
 }
