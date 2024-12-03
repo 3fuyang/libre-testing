@@ -1,7 +1,6 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -11,14 +10,12 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
 import { ChevronRight, Gamepad, Paperclip, TestTube2 } from 'lucide-react'
-import { useDarkMode } from 'usehooks-ts'
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from './ui/collapsible'
-import { Label } from './ui/label'
-import { Switch } from './ui/switch'
+import { Link } from '@tanstack/react-router'
 
 const items = [
   {
@@ -97,7 +94,7 @@ export function AppSidebar() {
                           {item.children.map((item) => (
                             <SidebarMenuItem key={item.title}>
                               <SidebarMenuButton asChild>
-                                <a href={item.url}>{item.title}</a>
+                                <Link to={item.url} preload='viewport'>{item.title}</Link>
                               </SidebarMenuButton>
                             </SidebarMenuItem>
                           ))}
@@ -111,26 +108,7 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-
-      <SidebarFooter>
-        <div className="flex items-center justify-center space-x-2">
-          <ThemeSwitch />
-          <Label htmlFor="theme-preference">昼/夜</Label>
-        </div>
-      </SidebarFooter>
     </Sidebar>
-  )
-}
-
-function ThemeSwitch() {
-  const { isDarkMode, toggle } = useDarkMode()
-
-  return (
-    <Switch
-      id="theme-preference"
-      checked={isDarkMode}
-      onCheckedChange={toggle}
-    />
   )
 }
 
@@ -143,7 +121,9 @@ function Version() {
           asChild
           className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
         >
-          <a href="/">
+          <Link
+            to="/"
+          >
             <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
               <TestTube2 className="size-4" />
             </div>
@@ -151,7 +131,7 @@ function Version() {
               <span className="font-semibold">Libre Testing</span>
               <span>v1.0.0</span>
             </div>
-          </a>
+          </Link>
         </SidebarMenuButton>
       </SidebarMenuItem>
     </SidebarMenu>

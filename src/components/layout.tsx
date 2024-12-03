@@ -14,6 +14,10 @@ import {
   BreadcrumbSeparator,
 } from './ui/breadcrumb'
 import { Separator } from './ui/separator'
+import { useTernaryDarkMode, type TernaryDarkMode } from 'usehooks-ts'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from './ui/dropdown-menu'
+import { Laptop, MoonStar, Sun } from 'lucide-react'
+import { Flex } from './flex'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -37,6 +41,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
+
+            <div className="ml-auto">
+              <ThemeSwitch />
+            </div>
           </header>
 
           <div className="p-4">{children}</div>
@@ -44,4 +52,39 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </SidebarProvider>
     </ThemeProvider>
   )
+}
+
+function ThemeSwitch() {
+  const { isDarkMode, ternaryDarkMode, setTernaryDarkMode } = useTernaryDarkMode()
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Flex align="center">
+          {isDarkMode ? <MoonStar className="size-4" /> : <Sun className="size-4" />}
+        </Flex>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent>
+        <DropdownMenuRadioGroup
+          value={ternaryDarkMode}
+          onValueChange={(value) => setTernaryDarkMode(value as TernaryDarkMode)}
+        >
+          <DropdownMenuRadioItem value="light">
+            <Sun className="mr-2 size-4" />
+            Light
+          </DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="dark">
+            <MoonStar className="mr-2 size-4" />
+            Dark
+          </DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="system">
+            <Laptop className="mr-2 size-4" />
+            System
+          </DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+
 }

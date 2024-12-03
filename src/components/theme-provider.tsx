@@ -1,8 +1,8 @@
 import { useEffect, type PropsWithChildren } from 'react'
-import { useDarkMode } from 'usehooks-ts'
+import { useTernaryDarkMode } from 'usehooks-ts'
 
 export function ThemeProvider(props: PropsWithChildren) {
-  const { isDarkMode } = useDarkMode()
+  const { isDarkMode } = useTernaryDarkMode()
 
   useEffect(() => {
     if (isDarkMode) {
