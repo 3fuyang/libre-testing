@@ -10,7 +10,6 @@ const router = createRouter({
 
 // Register things for typesafety
 declare module '@tanstack/react-router' {
-  // eslint-disable-next-line no-unused-vars
   interface Register {
     router: typeof router
   }

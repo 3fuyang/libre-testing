@@ -1,6 +1,5 @@
 import {
   triangleJudgeAtom,
-  triangleJudgeImplementations,
   type TriangleJudgeTestCase,
   type TriangleJudgeVersion,
 } from '@/atoms/triangle-judge'
@@ -26,6 +25,8 @@ import {
 } from '@/components/ui/select'
 import { Tabs, TabsList } from '@/components/ui/tabs'
 import { highlighter } from '@/lib/highlighter'
+// @ts-expect-error Typed worker module
+import testRunnerWorker from '@/workers/test-runner?worker'
 import { TabsContent, TabsTrigger } from '@radix-ui/react-tabs'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { useAtom } from 'jotai'
@@ -132,8 +133,9 @@ function QuestionPanel() {
 }
 
 function ResultPanel() {
-  const [triangleJudgeState] = useAtom(triangleJudgeAtom)
-  const { testResult = [] } = triangleJudgeState
+  const [{ testResult = [] }] = useAtom(triangleJudgeAtom)
+
+  console.log(testResult)
 
   return (
     <Card className="flex-1">
@@ -236,7 +238,6 @@ function TestToolbar() {
             ...triangleJudgeState,
             runningState: 'running',
           })
-          const implementation = triangleJudgeImplementations[version]
           const { cases } = (await import(
             `../../../cases/triangle-judge/${testCase}.json`
           )) as {
@@ -246,35 +247,28 @@ function TestToolbar() {
             }[]
           }
 
-          const result: TestResultItem[] = []
+          const worker: Worker = new testRunnerWorker()
 
-          cases.forEach(({ input, expected }, index) => {
-            const start = performance.now()
-            const actual = implementation(...input)
-            const duration = performance.now() - start
-            result.push({
-              id: `${index + 1}`,
-              input: input.join(', '),
-              expected,
-              actual,
-              passed: actual === expected,
-              duration,
+          worker.postMessage({
+            version,
+            cases,
+          })
+
+          worker.onmessage = (e) => {
+            const result = e.data as TestResultItem[]
+            setTriangleJudgeState({
+              ...triangleJudgeState,
+              runningState: 'idle',
+              testResult: result,
             })
-          })
-
-          setTriangleJudgeState({
-            ...triangleJudgeState,
-            runningState: 'idle',
-            testResult: result,
-          })
-
-          navigate({
-            to: '.',
-            search: {
-              tab: 'result',
-            },
-            replace: true,
-          })
+            navigate({
+              to: '.',
+              search: {
+                tab: 'result',
+              },
+              replace: true,
+            })
+          }
         }}
       >
         <Flex align="center" gap="2">

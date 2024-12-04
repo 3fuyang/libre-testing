@@ -2,6 +2,7 @@
 import react from '@eslint-react/eslint-plugin'
 import pluginJs from '@eslint/js'
 import * as tsParser from '@typescript-eslint/parser'
+import reactCompiler from 'eslint-plugin-react-compiler'
 import hooksPlugin from 'eslint-plugin-react-hooks'
 import tailwind from 'eslint-plugin-tailwindcss'
 import tseslint from 'typescript-eslint'
@@ -18,12 +19,20 @@ export default tseslint.config(
   },
   { files: ['**/*.{js,mjs,cjs,ts}'] },
   pluginJs.configs.recommended,
-  tseslint.configs.eslintRecommended,
+  tseslint.configs.recommended,
   ...tailwind.configs['flat/recommended'],
   {
     plugins: {
-      // @ts-expect-error
+      // @ts-expect-error Hooks plugin is not typed
       'react-hooks': hooksPlugin,
+    },
+  },
+  {
+    plugins: {
+      'react-compiler': reactCompiler,
+    },
+    rules: {
+      'react-compiler/react-compiler': 'error',
     },
   },
   {

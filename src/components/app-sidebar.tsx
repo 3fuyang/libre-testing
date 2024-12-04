@@ -9,13 +9,13 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
+import { Link } from '@tanstack/react-router'
 import { ChevronRight, Gamepad, Paperclip, TestTube2 } from 'lucide-react'
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from './ui/collapsible'
-import { Link } from '@tanstack/react-router'
 
 const items = [
   {
@@ -94,7 +94,9 @@ export function AppSidebar() {
                           {item.children.map((item) => (
                             <SidebarMenuItem key={item.title}>
                               <SidebarMenuButton asChild>
-                                <Link to={item.url} preload='viewport'>{item.title}</Link>
+                                <Link to={item.url} preload="viewport">
+                                  {item.title}
+                                </Link>
                               </SidebarMenuButton>
                             </SidebarMenuItem>
                           ))}
@@ -121,9 +123,7 @@ function Version() {
           asChild
           className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
         >
-          <Link
-            to="/"
-          >
+          <Link to="/">
             <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
               <TestTube2 className="size-4" />
             </div>

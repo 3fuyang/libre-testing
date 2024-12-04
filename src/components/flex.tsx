@@ -2,7 +2,18 @@ import { cn } from '@/lib/utils'
 import { cva } from 'class-variance-authority'
 import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 
-const gapValues = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'] as const
+export const gapValues = [
+  '0',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+] as const
 
 type GapDimension = 'gap' | 'gapX' | 'gapY'
 

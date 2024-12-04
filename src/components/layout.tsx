@@ -3,7 +3,10 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar'
+import { Laptop, MoonStar, Sun } from 'lucide-react'
+import { useTernaryDarkMode, type TernaryDarkMode } from 'usehooks-ts'
 import { AppSidebar } from './app-sidebar'
+import { Flex } from './flex'
 import { ThemeProvider } from './theme-provider'
 import {
   Breadcrumb,
@@ -13,11 +16,14 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from './ui/breadcrumb'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu'
 import { Separator } from './ui/separator'
-import { useTernaryDarkMode, type TernaryDarkMode } from 'usehooks-ts'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from './ui/dropdown-menu'
-import { Laptop, MoonStar, Sun } from 'lucide-react'
-import { Flex } from './flex'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -55,20 +61,27 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 }
 
 function ThemeSwitch() {
-  const { isDarkMode, ternaryDarkMode, setTernaryDarkMode } = useTernaryDarkMode()
+  const { isDarkMode, ternaryDarkMode, setTernaryDarkMode } =
+    useTernaryDarkMode()
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Flex align="center">
-          {isDarkMode ? <MoonStar className="size-4" /> : <Sun className="size-4" />}
+          {isDarkMode ? (
+            <MoonStar className="size-4" />
+          ) : (
+            <Sun className="size-4" />
+          )}
         </Flex>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent>
         <DropdownMenuRadioGroup
           value={ternaryDarkMode}
-          onValueChange={(value) => setTernaryDarkMode(value as TernaryDarkMode)}
+          onValueChange={(value) =>
+            setTernaryDarkMode(value as TernaryDarkMode)
+          }
         >
           <DropdownMenuRadioItem value="light">
             <Sun className="mr-2 size-4" />
@@ -86,5 +99,4 @@ function ThemeSwitch() {
       </DropdownMenuContent>
     </DropdownMenu>
   )
-
 }
