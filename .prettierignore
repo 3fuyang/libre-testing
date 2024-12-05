@@ -13,6 +13,7 @@ dist/
 .netlify
 .wrangler
 src/components/ui
+src/hooks/use-toast.ts
 
 # IDE
 .vscode/*

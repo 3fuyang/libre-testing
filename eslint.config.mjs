@@ -15,6 +15,7 @@ export default tseslint.config(
       'public',
       '.prettierrc.mjs',
       'src/components/ui',
+      'src/hooks/use-toast.ts',
     ],
   },
   { files: ['**/*.{js,mjs,cjs,ts}'] },

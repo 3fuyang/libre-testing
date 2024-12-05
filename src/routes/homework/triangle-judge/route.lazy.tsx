@@ -24,13 +24,16 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Tabs, TabsList } from '@/components/ui/tabs'
+import { useToast } from '@/hooks/use-toast'
 import { highlighter } from '@/lib/highlighter'
+import { cn } from '@/lib/utils'
 // @ts-expect-error Typed worker module
 import testRunnerWorker from '@/workers/test-runner?worker'
 import { TabsContent, TabsTrigger } from '@radix-ui/react-tabs'
 import { createLazyFileRoute } from '@tanstack/react-router'
-import { useAtom } from 'jotai'
-import { Loader2, Play } from 'lucide-react'
+import confetti, { type Options } from 'canvas-confetti'
+import { useAtom, useAtomValue } from 'jotai'
+import { Check, Loader2, Play } from 'lucide-react'
 
 export const Route = createLazyFileRoute('/homework/triangle-judge')({
   component: RouteComponent,
@@ -57,13 +60,13 @@ function RouteComponent() {
       <TabsList className="mb-3 w-full justify-start rounded-none border-b bg-transparent p-0 text-sm">
         <TabsTrigger
           value="question"
-          className="relative rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-2 pt-1 text-muted-foreground shadow-none transition-all data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
+          className="relative rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-2 pt-1 text-muted-foreground shadow-none transition-all hover:text-foreground focus-visible:text-foreground data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
         >
           问题描述
         </TabsTrigger>
         <TabsTrigger
           value="result"
-          className="relative rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-2 pt-1 text-muted-foreground shadow-none transition-all data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
+          className="relative rounded-none border-b-2 border-b-transparent bg-transparent px-4 pb-2 pt-1 text-muted-foreground shadow-none transition-all hover:text-foreground focus-visible:text-foreground data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none"
         >
           测试结果
         </TabsTrigger>
@@ -135,8 +138,6 @@ function QuestionPanel() {
 function ResultPanel() {
   const [{ testResult = [] }] = useAtom(triangleJudgeAtom)
 
-  console.log(testResult)
-
   return (
     <Card className="flex-1">
       <CardHeader className="pb-4">
@@ -147,6 +148,7 @@ function ResultPanel() {
       <CardContent>
         <div className="space-y-4">
           <TestToolbar />
+          <TestResultOverview />
           <div className="container">
             <DataTable columns={columns} data={testResult} />
           </div>
@@ -158,6 +160,8 @@ function ResultPanel() {
 
 function TestToolbar() {
   const navigate = Route.useNavigate()
+  const { toast } = useToast()
+
   const [triangleJudgeState, setTriangleJudgeState] = useAtom(triangleJudgeAtom)
   const { version, testCase, runningState } = triangleJudgeState
 
@@ -261,6 +265,16 @@ function TestToolbar() {
               runningState: 'idle',
               testResult: result,
             })
+
+            toast({
+              title: '测试完成 - 判断三角形类型',
+              description: `共执行 ${cases.length} 个用例，通过数：${result.filter((item) => item.passed).length}`,
+            })
+
+            if (result.every((item) => item.passed)) {
+              triggerConfetti()
+            }
+
             navigate({
               to: '.',
               search: {
@@ -278,4 +292,87 @@ function TestToolbar() {
       </Button>
     </Flex>
   )
+}
+
+function TestResultOverview() {
+  const { testResult = [] } = useAtomValue(triangleJudgeAtom)
+
+  const shouldDisplay = testResult.length > 0
+
+  return (
+    <dl>
+      <Flex gap="6" className="text-sm">
+        <Flex align="center" gap="2">
+          <dt className="leading-none text-muted-foreground">用例总数</dt>
+          <dd
+            className={cn(
+              'leading-none',
+              !shouldDisplay && 'text-muted-foreground',
+            )}
+          >
+            {shouldDisplay ? testResult.length : '--'}
+          </dd>
+        </Flex>
+
+        <Flex align="center" gap="2">
+          <dt className="leading-none text-muted-foreground">通过用例数</dt>
+          <dd
+            className={cn(
+              'leading-none',
+              !shouldDisplay && 'text-muted-foreground',
+            )}
+          >
+            {shouldDisplay ? (
+              <Flex align="center" gap="1">
+                <Check className="size-4 text-green-600 dark:text-green-500" />
+                <span>{testResult.filter((item) => item.passed).length}</span>
+                <span className="text-muted-foreground">/</span>
+                <span>{testResult.length}</span>
+              </Flex>
+            ) : (
+              '--'
+            )}
+          </dd>
+        </Flex>
+      </Flex>
+    </dl>
+  )
+}
+
+function triggerConfetti() {
+  const count = 200
+  const defaults = {
+    origin: { y: 0.7 },
+  } satisfies Options
+
+  function fire(particleRatio: number, opts: Options) {
+    confetti({
+      ...defaults,
+      ...opts,
+      particleCount: Math.floor(count * particleRatio),
+    })
+  }
+
+  fire(0.25, {
+    spread: 26,
+    startVelocity: 55,
+  })
+  fire(0.2, {
+    spread: 60,
+  })
+  fire(0.35, {
+    spread: 100,
+    decay: 0.91,
+    scalar: 0.8,
+  })
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 25,
+    decay: 0.92,
+    scalar: 1.2,
+  })
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 45,
+  })
 }

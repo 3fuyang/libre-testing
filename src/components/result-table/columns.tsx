@@ -62,7 +62,7 @@ export const columns: ColumnDef<TestResultItem>[] = [
       return (
         <Flex align="center" gap="1">
           {passed ? (
-            <CheckIcon className="size-4 text-green-500" />
+            <CheckIcon className="size-4 text-green-600 dark:text-green-500" />
           ) : (
             <Ban className="size-4 text-red-500" />
           )}

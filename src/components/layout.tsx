@@ -24,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { Separator } from './ui/separator'
+import { Toaster } from './ui/toaster'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -56,6 +57,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="p-4">{children}</div>
         </SidebarInset>
       </SidebarProvider>
+      <Toaster />
     </ThemeProvider>
   )
 }

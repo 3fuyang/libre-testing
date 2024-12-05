@@ -2,12 +2,12 @@ import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
 import { Link } from '@tanstack/react-router'
 import { ChevronRight, Gamepad, Paperclip, TestTube2 } from 'lucide-react'
@@ -62,52 +62,46 @@ const items = [
 
 export function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarHeader>
         <Version />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <Collapsible
-                  key={item.title}
-                  title={item.title}
-                  defaultOpen
-                  className="group/collapsible"
-                >
-                  <SidebarGroup>
-                    <SidebarGroupLabel
-                      asChild
-                      className="group/label text-sm text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                    >
-                      <CollapsibleTrigger>
-                        {item.icon && <item.icon className="mr-2" />}
-                        {item.title}{' '}
-                        <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
-                      </CollapsibleTrigger>
-                    </SidebarGroupLabel>
-                    <CollapsibleContent>
-                      <SidebarGroupContent>
-                        <SidebarMenu className="pl-6">
-                          {item.children.map((item) => (
-                            <SidebarMenuItem key={item.title}>
-                              <SidebarMenuButton asChild>
-                                <Link to={item.url} preload="viewport">
-                                  {item.title}
-                                </Link>
-                              </SidebarMenuButton>
-                            </SidebarMenuItem>
-                          ))}
-                        </SidebarMenu>
-                      </SidebarGroupContent>
-                    </CollapsibleContent>
-                  </SidebarGroup>
-                </Collapsible>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
+          <SidebarMenu>
+            {items.map((item) => (
+              <Collapsible
+                key={item.title}
+                title={item.title}
+                defaultOpen
+                asChild
+                className="group/collapsible"
+              >
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton tooltip={item.title}>
+                      {item.icon && <item.icon className="mr-2" />}
+                      {item.title}{' '}
+                      <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {item.children.map((item) => (
+                        <SidebarMenuSubItem key={item.title}>
+                          <SidebarMenuButton asChild>
+                            <Link to={item.url} preload="viewport">
+                              {item.title}
+                            </Link>
+                          </SidebarMenuButton>
+                        </SidebarMenuSubItem>
+                      ))}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+            ))}
+          </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
@@ -127,7 +121,7 @@ function Version() {
             <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
               <TestTube2 className="size-4" />
             </div>
-            <div className="flex flex-col gap-0.5 leading-none">
+            <div className="flex flex-col space-y-1 leading-none tracking-wide">
               <span className="font-semibold">Libre Testing</span>
               <span>v1.0.0</span>
             </div>
