@@ -7,7 +7,12 @@
 - **Web UI**：[Vue 3](https://vuejs.org/) + [Naive UI](https://www.naiveui.com/)
 - **Testing**：[TypeScript](https://www.typescriptlang.org/) (Static Check) + [Vitest](https://vitest.dev/) (Unit & Integration Testing) + [Cypress](https://www.cypress.io/) (E2E Testing)
 
-Online Demo（**在线体验**）: [Libre Testing](https://libre-testing.vercel.app) (Deployed with [Vercel](https://vercel.com/))
+## Online Demo（**在线体验**）
+
+Deployed with [Vercel](https://vercel.com/):
+
+- V1 - [Libre Testing](https://libre-testing.vercel.app)
+- V2(WIP) - [Libre Testing V2](https://libre-testing-git-v2-3fuyangs-projects.vercel.app/)
 
 > [!NOTE]
 > 集成测试与系统测试使用的项目：[Flea Test](https://github.com/3fuyang/flea-test)
@@ -20,6 +25,7 @@ Make sure [Node.js (`>20.x.x`)](https://nodejs.org/en) is available on your devi
 
 ```bash
 # Enable package manager
+# Note: This could be changed since `corepack` is scheduled to be removed from node in the future
 corepack enable
 
 # Install dependencies
