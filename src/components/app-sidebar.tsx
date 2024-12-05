@@ -9,6 +9,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
+import { cn } from '@/lib/utils'
 import { Link } from '@tanstack/react-router'
 import { ChevronRight, Gamepad, Paperclip, TestTube2 } from 'lucide-react'
 import {
@@ -91,7 +92,13 @@ export function AppSidebar() {
                         <SidebarMenuSubItem key={item.title}>
                           <SidebarMenuButton asChild>
                             <Link to={item.url} preload="viewport">
-                              {item.title}
+                              {({ isActive }) => (
+                                <span
+                                  className={cn(isActive && 'text-primary font-medium')}
+                                >
+                                  {item.title}
+                                </span>
+                              )}
                             </Link>
                           </SidebarMenuButton>
                         </SidebarMenuSubItem>
@@ -122,7 +129,7 @@ function Version() {
               <TestTube2 className="size-4" />
             </div>
             <div className="flex flex-col space-y-1 leading-none tracking-wide">
-              <span className="font-semibold">Libre Testing</span>
+              <h1 className="font-semibold">Libre Testing</h1>
               <span>v1.0.0</span>
             </div>
           </Link>

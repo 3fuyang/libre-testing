@@ -54,7 +54,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </header>
 
-          <div className="p-4">{children}</div>
+          <div className="min-h-[calc(100vh_-_4rem)] p-4">{children}</div>
         </SidebarInset>
       </SidebarProvider>
       <Toaster />
@@ -68,12 +68,12 @@ function ThemeSwitch() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger className="block" aria-label="Theme Preference">
         <Flex align="center">
           {isDarkMode ? (
-            <MoonStar className="size-4" />
+            <MoonStar className="size-5" />
           ) : (
-            <Sun className="size-4" />
+            <Sun className="size-5" />
           )}
         </Flex>
       </DropdownMenuTrigger>
