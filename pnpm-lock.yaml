@@ -154,9 +154,6 @@ devDependencies:
   tailwindcss:
     specifier: ^3.4.16
     version: 3.4.16
-  typescript:
-    specifier: ^5.7.2
-    version: 5.7.2
   typescript-eslint:
     specifier: ^8.17.0
     version: 8.17.0(eslint@9.16.0)(typescript@5.7.2)
