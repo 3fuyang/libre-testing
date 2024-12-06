@@ -1,7 +1,7 @@
 import { createHighlighterCore } from 'shiki/core'
 import { createOnigurumaEngine } from 'shiki/engine/oniguruma'
 
-export const highlighter = await createHighlighterCore({
+export const highlighterPromise = createHighlighterCore({
   themes: [
     import('shiki/themes/github-light.mjs'),
     import('shiki/themes/github-dark.mjs'),

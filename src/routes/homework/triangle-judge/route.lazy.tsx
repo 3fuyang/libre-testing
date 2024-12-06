@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/select'
 import { Tabs, TabsList } from '@/components/ui/tabs'
 import { useToast } from '@/hooks/use-toast'
-import { highlighter } from '@/lib/highlighter'
+import { highlighterPromise } from '@/lib/highlighter'
 import { cn } from '@/lib/utils'
 // @ts-expect-error Typed worker module
 import testRunnerWorker from '@/workers/test-runner?worker'
@@ -34,6 +34,7 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import confetti, { type Options } from 'canvas-confetti'
 import { useAtom, useAtomValue } from 'jotai'
 import { Check, Loader2, Play } from 'lucide-react'
+import { use } from 'react'
 
 export const Route = createLazyFileRoute('/homework/triangle-judge')({
   component: RouteComponent,
@@ -104,6 +105,8 @@ function QuestionPanel() {
     return '所给三边数据不能构成三角形'
   }
 }`
+
+  const highlighter = use(highlighterPromise)
 
   const html = highlighter.codeToHtml(code, {
     lang: 'typescript',
