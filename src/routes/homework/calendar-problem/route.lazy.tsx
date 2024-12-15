@@ -1,8 +1,8 @@
 import {
-  triangleJudgeAtom,
-  type TriangleJudgeTestCase,
-  type TriangleJudgeVersion,
-} from '@/atoms/triangle-judge'
+  calendarProblemAtom,
+  type CalendarProblemTestCase,
+  type CalendarProblemVersion,
+} from '@/atoms/calendar-problem'
 import { Flex } from '@/components/flex'
 import { columns, type TestResultItem } from '@/components/result-table/columns'
 import { DataTable } from '@/components/result-table/table'
@@ -36,7 +36,7 @@ import { useAtom, useAtomValue } from 'jotai'
 import { Check, Loader2, Play } from 'lucide-react'
 import { use } from 'react'
 
-export const Route = createLazyFileRoute('/homework/triangle-judge')({
+export const Route = createLazyFileRoute('/homework/calendar-problem')({
   component: RouteComponent,
 })
 
@@ -85,25 +85,39 @@ function RouteComponent() {
 }
 
 function QuestionPanel() {
-  const code = `function triangleJudge(a: number, b: number, c: number): string {
-  if (a <= 0 || b <= 0 || c <= 0 || a > 200 || b > 200 || c > 200) {
-    return '边长数值越界'
+  const code = `function calendarProblem(year: number, month: number, day: number): string {
+  if (year < 1900 || year > 2100) {
+    return "年份数值越界"
   }
-  if (
-    a + b > c &&
-    a + c > b &&
-    b + c > a
-  ) {
-    if (a === b && a === c) {
-      return '该三角形是等边三角形'
-    } else if (a === b || a === c || b === c) {
-      return '该三角形是等腰三角形'
-    } else {
-      return '该三角形是普通三角形'
-    }
-  } else {
-    return '所给三边数据不能构成三角形'
+  if (month <= 0 || month > 12) {
+    return "月份数值越界"
   }
+
+  const monthDays: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  let isLeap = 0
+  if (year % 400 == 0) {
+    isLeap = 1
+  } else if (year % 100 != 0 && year % 4 == 0) {
+    isLeap = 1;
+  }
+
+  monthDays[1] += isLeap
+  const maxDays: number = monthDays[month - 1]
+  if (day <= 0 || day > maxDays) {
+    return "日期数值越界"
+  }
+
+  const result: number[] = [year, month, day + 1]
+
+  if (day == maxDays) {
+    result[2] = 1
+    result[1]++
+  }
+  if (result[1] > 12) {
+    result[1] = 1
+    result[0]++
+  }
+  return result[0] + "/" + result[1] + "/" + result[2]
 }`
 
   const highlighter = use(highlighterPromise)
@@ -119,15 +133,16 @@ function QuestionPanel() {
   return (
     <Card className="flex-1">
       <CardHeader className="pb-4">
-        <CardTitle className="text-lg">Question 1. 判断三角形类型</CardTitle>
-        <CardDescription>输入三角形的三条边，判断三角形的类型</CardDescription>
+        <CardTitle className="text-lg">Question 2. 万年历问题</CardTitle>
+        <CardDescription>
+          输入年份、月份、日期，计算下一天的日期
+        </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">
         <p className="font-medium">算法思想</p>
         <p className="text-sm">
-          本题输入变量有 <code>a</code>, <code>b</code>, <code>c</code>{' '}
-          三个，首先判断其两边之和是否大于第三边，若大于则判断可以构成三角形，再进一步判断该三角形类型；否则不能构成三角形。
+          首先校验输入的日期，确定其符合规范后，再结合各种现实约束，计算下一天的日期。
         </p>
         <p className="font-medium">代码实现</p>
         <TestToolbar />
@@ -139,13 +154,13 @@ function QuestionPanel() {
 }
 
 function ResultPanel() {
-  const [{ testResult = [] }] = useAtom(triangleJudgeAtom)
+  const [{ testResult = [] }] = useAtom(calendarProblemAtom)
 
   return (
     <Card className="flex-1">
       <CardHeader className="pb-4">
-        <CardTitle className="text-lg">Question 1. 判断三角形类型</CardTitle>
-        <CardDescription>输入三角形的三条边，判断三角形的类型</CardDescription>
+        <CardTitle className="text-lg">Question 2. 万年历问题</CardTitle>
+        <CardDescription>输入年份、月份、日期，计算下一天的日期</CardDescription>
       </CardHeader>
 
       <CardContent>
@@ -165,8 +180,9 @@ function TestToolbar() {
   const navigate = Route.useNavigate()
   const { toast } = useToast()
 
-  const [triangleJudgeState, setTriangleJudgeState] = useAtom(triangleJudgeAtom)
-  const { version, testCase, runningState } = triangleJudgeState
+  const [calendarProblemState, setCalendarProblemState] =
+    useAtom(calendarProblemAtom)
+  const { version, testCase, runningState } = calendarProblemState
 
   const isRunning = runningState === 'running'
 
@@ -185,9 +201,9 @@ function TestToolbar() {
         value={version}
         disabled={isRunning}
         onValueChange={(value) =>
-          setTriangleJudgeState({
-            ...triangleJudgeState,
-            version: value as TriangleJudgeVersion,
+          setCalendarProblemState({
+            ...calendarProblemState,
+            version: value as CalendarProblemVersion,
           })
         }
       >
@@ -197,6 +213,7 @@ function TestToolbar() {
         <SelectContent>
           <SelectItem value="0.1.0">0.1.0</SelectItem>
           <SelectItem value="0.2.0">0.2.0</SelectItem>
+          <SelectItem value="0.3.0">0.3.0</SelectItem>
         </SelectContent>
       </Select>
 
@@ -204,9 +221,9 @@ function TestToolbar() {
         value={testCase}
         disabled={isRunning}
         onValueChange={(value) =>
-          setTriangleJudgeState({
-            ...triangleJudgeState,
-            testCase: value as TriangleJudgeTestCase,
+          setCalendarProblemState({
+            ...calendarProblemState,
+            testCase: value as CalendarProblemTestCase,
           })
         }
       >
@@ -234,6 +251,10 @@ function TestToolbar() {
               强健壮等价类
             </SelectItem>
           </SelectGroup>
+          <SelectGroup>
+            <SelectLabel className="text-foreground/80">决策表</SelectLabel>
+            <SelectItem value="decision-table">决策表</SelectItem>
+          </SelectGroup>
         </SelectContent>
       </Select>
 
@@ -241,12 +262,12 @@ function TestToolbar() {
         variant="default"
         disabled={isRunning}
         onClick={async () => {
-          setTriangleJudgeState({
-            ...triangleJudgeState,
+          setCalendarProblemState({
+            ...calendarProblemState,
             runningState: 'running',
           })
           const { cases } = (await import(
-            `../../../cases/triangle-judge/${testCase}.json`
+            `../../../cases/calendar-problem/${testCase}.json`
           )) as {
             cases: {
               input: [number, number, number]
@@ -257,21 +278,21 @@ function TestToolbar() {
           const worker: Worker = new testRunnerWorker()
 
           worker.postMessage({
-            problem: 'triangle-judge',
+            problem: 'calendar-problem',
             version,
             cases,
           })
 
           worker.onmessage = (e) => {
             const result = e.data as TestResultItem[]
-            setTriangleJudgeState({
-              ...triangleJudgeState,
+            setCalendarProblemState({
+              ...calendarProblemState,
               runningState: 'idle',
               testResult: result,
             })
 
             toast({
-              title: '测试完成 - 判断三角形类型',
+              title: '测试完成 - 万年历问题',
               description: `共执行 ${cases.length} 个用例，通过数：${result.filter((item) => item.passed).length}`,
             })
 
@@ -299,7 +320,7 @@ function TestToolbar() {
 }
 
 function TestResultOverview() {
-  const { testResult = [] } = useAtomValue(triangleJudgeAtom)
+  const { testResult = [] } = useAtomValue(calendarProblemAtom)
 
   const shouldDisplay = testResult.length > 0
 

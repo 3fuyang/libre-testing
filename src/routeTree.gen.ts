@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as HomeworkTriangleJudgeRouteImport } from './routes/homework/triangle-judge/route'
+import { Route as HomeworkCalendarProblemRouteImport } from './routes/homework/calendar-problem/route'
 
 // Create/Update Routes
 
@@ -32,6 +33,17 @@ const HomeworkTriangleJudgeRouteRoute = HomeworkTriangleJudgeRouteImport.update(
   import('./routes/homework/triangle-judge/route.lazy').then((d) => d.Route),
 )
 
+const HomeworkCalendarProblemRouteRoute =
+  HomeworkCalendarProblemRouteImport.update({
+    id: '/homework/calendar-problem',
+    path: '/homework/calendar-problem',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./routes/homework/calendar-problem/route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -41,6 +53,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/homework/calendar-problem': {
+      id: '/homework/calendar-problem'
+      path: '/homework/calendar-problem'
+      fullPath: '/homework/calendar-problem'
+      preLoaderRoute: typeof HomeworkCalendarProblemRouteImport
       parentRoute: typeof rootRoute
     }
     '/homework/triangle-judge': {
@@ -57,36 +76,45 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/homework/calendar-problem': typeof HomeworkCalendarProblemRouteRoute
   '/homework/triangle-judge': typeof HomeworkTriangleJudgeRouteRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/homework/calendar-problem': typeof HomeworkCalendarProblemRouteRoute
   '/homework/triangle-judge': typeof HomeworkTriangleJudgeRouteRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/homework/calendar-problem': typeof HomeworkCalendarProblemRouteRoute
   '/homework/triangle-judge': typeof HomeworkTriangleJudgeRouteRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/homework/triangle-judge'
+  fullPaths: '/' | '/homework/calendar-problem' | '/homework/triangle-judge'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/homework/triangle-judge'
-  id: '__root__' | '/' | '/homework/triangle-judge'
+  to: '/' | '/homework/calendar-problem' | '/homework/triangle-judge'
+  id:
+    | '__root__'
+    | '/'
+    | '/homework/calendar-problem'
+    | '/homework/triangle-judge'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HomeworkCalendarProblemRouteRoute: typeof HomeworkCalendarProblemRouteRoute
   HomeworkTriangleJudgeRouteRoute: typeof HomeworkTriangleJudgeRouteRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HomeworkCalendarProblemRouteRoute: HomeworkCalendarProblemRouteRoute,
   HomeworkTriangleJudgeRouteRoute: HomeworkTriangleJudgeRouteRoute,
 }
 
@@ -101,11 +129,15 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/homework/calendar-problem",
         "/homework/triangle-judge"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/homework/calendar-problem": {
+      "filePath": "homework/calendar-problem/route.tsx"
     },
     "/homework/triangle-judge": {
       "filePath": "homework/triangle-judge/route.tsx"
