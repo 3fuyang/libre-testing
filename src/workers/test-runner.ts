@@ -1,4 +1,5 @@
 import { calendarProblemImplementations } from '@/atoms/calendar-problem'
+import { computerSellingImplementations } from '@/atoms/computer-seeling'
 import {
   triangleJudgeImplementations,
 } from '@/atoms/triangle-judge'
@@ -7,6 +8,7 @@ import type { TestResultItem } from '@/components/result-table/columns'
 const implementationMap = {
   'triangle-judge': triangleJudgeImplementations,
   'calendar-problem': calendarProblemImplementations,
+  'computer-selling': computerSellingImplementations,
 } as const
 
 onmessage = (e) => {
