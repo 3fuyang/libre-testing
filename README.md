@@ -11,8 +11,8 @@
 
 Deployed with [Vercel](https://vercel.com/):
 
-- V1 - [Libre Testing](https://libre-testing.vercel.app)
-- V2(WIP) - [Libre Testing V2](https://libre-testing-git-v2-3fuyangs-projects.vercel.app/)
+- V1 - [Libre Testing](https://www.libretesting.xyz)
+- V2 - [Libre Testing V2](https://www.v2.libretesting.xyz), source at [v2](https://github.com/3fuyang/libre-testing/tree/v2)
 
 > [!NOTE]
 > 集成测试与系统测试使用的项目：[Flea Test](https://github.com/3fuyang/flea-test)
