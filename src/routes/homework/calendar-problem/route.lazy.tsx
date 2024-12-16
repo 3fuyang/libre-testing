@@ -160,7 +160,9 @@ function ResultPanel() {
     <Card className="flex-1">
       <CardHeader className="pb-4">
         <CardTitle className="text-lg">Question 2. 万年历问题</CardTitle>
-        <CardDescription>输入年份、月份、日期，计算下一天的日期</CardDescription>
+        <CardDescription>
+          输入年份、月份、日期，计算下一天的日期
+        </CardDescription>
       </CardHeader>
 
       <CardContent>

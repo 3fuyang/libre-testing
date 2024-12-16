@@ -3,7 +3,10 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar'
+import { useBreadcrumb } from '@/hooks/use-breadcrumb'
+import { Link } from '@tanstack/react-router'
 import { Laptop, MoonStar, Sun } from 'lucide-react'
+import type { PropsWithChildren } from 'react'
 import { useTernaryDarkMode, type TernaryDarkMode } from 'usehooks-ts'
 import { AppSidebar } from './app-sidebar'
 import { Flex } from './flex'
@@ -26,7 +29,9 @@ import {
 import { Separator } from './ui/separator'
 import { Toaster } from './ui/toaster'
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: PropsWithChildren) {
+  const breadcrumb = useBreadcrumb()
+
   return (
     <ThemeProvider>
       <SidebarProvider>
@@ -37,15 +42,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Separator orientation="vertical" className="mr-2 h-4" />
             <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
-                    Building Your Application
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
+                <BreadcrumbLink asChild className="hidden md:block">
+                  <Link to="/">Libre Testing</Link>
+                </BreadcrumbLink>
                 <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
+                {breadcrumb.map((segment) => (
+                  <BreadcrumbItem key={segment}>
+                    <BreadcrumbPage>{segment}</BreadcrumbPage>
+                  </BreadcrumbItem>
+                ))}
               </BreadcrumbList>
             </Breadcrumb>
 

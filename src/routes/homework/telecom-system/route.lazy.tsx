@@ -1,4 +1,8 @@
-import { telecomSystemAtom, type TelecomSystemTestCase, type TelecomSystemVersion } from '@/atoms/telecom-system'
+import {
+  telecomSystemAtom,
+  type TelecomSystemTestCase,
+  type TelecomSystemVersion,
+} from '@/atoms/telecom-system'
 import { Flex } from '@/components/flex'
 import { columns, type TestResultItem } from '@/components/result-table/columns'
 import { DataTable } from '@/components/result-table/table'
@@ -173,8 +177,7 @@ function TestToolbar() {
   const navigate = Route.useNavigate()
   const { toast } = useToast()
 
-  const [telecomSystemState, setTelecomSystemState] =
-    useAtom(telecomSystemAtom)
+  const [telecomSystemState, setTelecomSystemState] = useAtom(telecomSystemAtom)
   const { version, testCase, runningState } = telecomSystemState
 
   const isRunning = runningState === 'running'

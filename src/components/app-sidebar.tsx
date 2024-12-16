@@ -91,10 +91,12 @@ export function AppSidebar() {
                       {item.children.map((item) => (
                         <SidebarMenuSubItem key={item.title}>
                           <SidebarMenuButton asChild>
-                            <Link to={item.url} preload="viewport">
+                            <Link to={item.url} preload="intent">
                               {({ isActive }) => (
                                 <span
-                                  className={cn(isActive && 'text-primary font-medium')}
+                                  className={cn(
+                                    isActive && 'text-primary font-medium',
+                                  )}
                                 >
                                   {item.title}
                                 </span>

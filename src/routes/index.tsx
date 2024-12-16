@@ -1,11 +1,20 @@
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { CheckCircle, Code, Zap } from 'lucide-react'
 import * as React from 'react'
 
 export const Route = createFileRoute('/')({
   component: HomeComponent,
+  context: () => ({
+    segment: 'Home',
+  }),
 })
 
 function HomeComponent() {
@@ -19,10 +28,13 @@ function HomeComponent() {
               Testing Made Libre
             </h1>
             <p className="mx-auto mb-8 max-w-2xl text-xl text-muted-foreground">
-              Streamline testing showcase with easy-to-use automatic testing web UI.
+              Streamline testing showcase with easy-to-use automatic testing web
+              UI.
             </p>
             <Button size="lg" asChild>
-              <Link to="/homework/triangle-judge" search={{ tab: 'question' }}>Get Started</Link>
+              <Link to="/homework/triangle-judge" search={{ tab: 'question' }}>
+                Get Started
+              </Link>
             </Button>
           </section>
 
@@ -55,7 +67,15 @@ function HomeComponent() {
   )
 }
 
-function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
+function FeatureCard({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode
+  title: string
+  description: string
+}) {
   return (
     <Card>
       <CardHeader>

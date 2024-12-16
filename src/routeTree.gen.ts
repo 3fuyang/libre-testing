@@ -11,17 +11,24 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
-import { Route as HomeworkTriangleJudgeRouteImport } from './routes/homework/triangle-judge/route'
-import { Route as HomeworkTelecomSystemRouteImport } from './routes/homework/telecom-system/route'
-import { Route as HomeworkComputerSellingRouteImport } from './routes/homework/computer-selling/route'
 import { Route as HomeworkCalendarProblemRouteImport } from './routes/homework/calendar-problem/route'
+import { Route as HomeworkComputerSellingRouteImport } from './routes/homework/computer-selling/route'
+import { Route as HomeworkIndexImport } from './routes/homework/index'
+import { Route as HomeworkTelecomSystemRouteImport } from './routes/homework/telecom-system/route'
+import { Route as HomeworkTriangleJudgeRouteImport } from './routes/homework/triangle-judge/route'
+import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const HomeworkIndexRoute = HomeworkIndexImport.update({
+  id: '/homework/',
+  path: '/homework/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -106,6 +113,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeworkTriangleJudgeRouteImport
       parentRoute: typeof rootRoute
     }
+    '/homework/': {
+      id: '/homework/'
+      path: '/homework'
+      fullPath: '/homework'
+      preLoaderRoute: typeof HomeworkIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -117,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/homework/computer-selling': typeof HomeworkComputerSellingRouteRoute
   '/homework/telecom-system': typeof HomeworkTelecomSystemRouteRoute
   '/homework/triangle-judge': typeof HomeworkTriangleJudgeRouteRoute
+  '/homework': typeof HomeworkIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -125,6 +140,7 @@ export interface FileRoutesByTo {
   '/homework/computer-selling': typeof HomeworkComputerSellingRouteRoute
   '/homework/telecom-system': typeof HomeworkTelecomSystemRouteRoute
   '/homework/triangle-judge': typeof HomeworkTriangleJudgeRouteRoute
+  '/homework': typeof HomeworkIndexRoute
 }
 
 export interface FileRoutesById {
@@ -134,6 +150,7 @@ export interface FileRoutesById {
   '/homework/computer-selling': typeof HomeworkComputerSellingRouteRoute
   '/homework/telecom-system': typeof HomeworkTelecomSystemRouteRoute
   '/homework/triangle-judge': typeof HomeworkTriangleJudgeRouteRoute
+  '/homework/': typeof HomeworkIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -144,6 +161,7 @@ export interface FileRouteTypes {
     | '/homework/computer-selling'
     | '/homework/telecom-system'
     | '/homework/triangle-judge'
+    | '/homework'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -151,6 +169,7 @@ export interface FileRouteTypes {
     | '/homework/computer-selling'
     | '/homework/telecom-system'
     | '/homework/triangle-judge'
+    | '/homework'
   id:
     | '__root__'
     | '/'
@@ -158,6 +177,7 @@ export interface FileRouteTypes {
     | '/homework/computer-selling'
     | '/homework/telecom-system'
     | '/homework/triangle-judge'
+    | '/homework/'
   fileRoutesById: FileRoutesById
 }
 
@@ -167,6 +187,7 @@ export interface RootRouteChildren {
   HomeworkComputerSellingRouteRoute: typeof HomeworkComputerSellingRouteRoute
   HomeworkTelecomSystemRouteRoute: typeof HomeworkTelecomSystemRouteRoute
   HomeworkTriangleJudgeRouteRoute: typeof HomeworkTriangleJudgeRouteRoute
+  HomeworkIndexRoute: typeof HomeworkIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -175,6 +196,7 @@ const rootRouteChildren: RootRouteChildren = {
   HomeworkComputerSellingRouteRoute: HomeworkComputerSellingRouteRoute,
   HomeworkTelecomSystemRouteRoute: HomeworkTelecomSystemRouteRoute,
   HomeworkTriangleJudgeRouteRoute: HomeworkTriangleJudgeRouteRoute,
+  HomeworkIndexRoute: HomeworkIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -191,7 +213,8 @@ export const routeTree = rootRoute
         "/homework/calendar-problem",
         "/homework/computer-selling",
         "/homework/telecom-system",
-        "/homework/triangle-judge"
+        "/homework/triangle-judge",
+        "/homework/"
       ]
     },
     "/": {
@@ -208,6 +231,9 @@ export const routeTree = rootRoute
     },
     "/homework/triangle-judge": {
       "filePath": "homework/triangle-judge/route.tsx"
+    },
+    "/homework/": {
+      "filePath": "homework/index.tsx"
     }
   }
 }

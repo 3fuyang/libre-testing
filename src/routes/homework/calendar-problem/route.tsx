@@ -7,4 +7,9 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute('/homework/calendar-problem')({
   validateSearch: searchSchema,
+  context: () => {
+    return {
+      segment: '万年历问题',
+    }
+  },
 })

@@ -1,5 +1,5 @@
-import type { Options } from "canvas-confetti"
-import confetti from "canvas-confetti"
+import type { Options } from 'canvas-confetti'
+import confetti from 'canvas-confetti'
 
 export function triggerConfetti() {
   const count = 200

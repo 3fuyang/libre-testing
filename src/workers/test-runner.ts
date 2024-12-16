@@ -1,9 +1,7 @@
 import { calendarProblemImplementations } from '@/atoms/calendar-problem'
 import { computerSellingImplementations } from '@/atoms/computer-seeling'
 import { telecomSystemImplementations } from '@/atoms/telecom-system'
-import {
-  triangleJudgeImplementations,
-} from '@/atoms/triangle-judge'
+import { triangleJudgeImplementations } from '@/atoms/triangle-judge'
 import type { TestResultItem } from '@/components/result-table/columns'
 
 const implementationMap = {
@@ -20,11 +18,10 @@ onmessage = (e) => {
     cases: { input: unknown[]; expected: string }[]
   }
   const implementations = implementationMap[problem]
-  const implementation = implementations[version as keyof typeof implementations] as (...args: unknown[]) => string
-  const result = runTest(
-    implementation,
-    cases,
-  )
+  const implementation = implementations[
+    version as keyof typeof implementations
+  ] as (...args: unknown[]) => string
+  const result = runTest(implementation, cases)
   postMessage(result)
 }
 

@@ -1,4 +1,8 @@
-import { computerSellingAtom, type ComputerSellingTestCase, type ComputerSellingVersion } from '@/atoms/computer-seeling'
+import {
+  computerSellingAtom,
+  type ComputerSellingTestCase,
+  type ComputerSellingVersion,
+} from '@/atoms/computer-seeling'
 import { Flex } from '@/components/flex'
 import { columns, type TestResultItem } from '@/components/result-table/columns'
 import { DataTable } from '@/components/result-table/table'
@@ -130,7 +134,8 @@ function QuestionPanel() {
       <CardContent className="space-y-4">
         <p className="font-medium">算法思想</p>
         <p className="text-sm">
-          首先判断主机的销售数量，当这个变量值为 <code>-1</code> 时，发出月度统计，当值不为 <code>-1</code> 时计算总额
+          首先判断主机的销售数量，当这个变量值为 <code>-1</code>{' '}
+          时，发出月度统计，当值不为 <code>-1</code> 时计算总额
         </p>
         <p className="font-medium">代码实现</p>
         <TestToolbar />
@@ -148,7 +153,9 @@ function ResultPanel() {
     <Card className="flex-1">
       <CardHeader className="pb-4">
         <CardTitle className="text-lg">Question 3. 电脑销售系统</CardTitle>
-        <CardDescription>根据输入的主机、显示器、外设数量，计算销售总额</CardDescription>
+        <CardDescription>
+          根据输入的主机、显示器、外设数量，计算销售总额
+        </CardDescription>
       </CardHeader>
 
       <CardContent>

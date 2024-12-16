@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import { cva } from 'class-variance-authority'
-import { forwardRef, type ComponentPropsWithoutRef } from 'react'
+import { type ComponentPropsWithoutRef } from 'react'
 
 export const gapValues = [
   '0',
@@ -67,6 +67,8 @@ interface FlexProps extends ComponentPropsWithoutRef<'div'>, GapPropDefs {
   align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline'
   justify?: 'start' | 'center' | 'end' | 'between' | 'around'
   wrap?: 'no-wrap' | 'wrap' | 'wrap-reverse'
+
+  ref?: React.Ref<HTMLDivElement>
 }
 
 const flexVariants = cva('', {
@@ -104,36 +106,34 @@ const flexVariants = cva('', {
   },
 })
 
-export const Flex = forwardRef<HTMLDivElement, FlexProps>(
-  function Flex(props, ref) {
-    const {
-      as: Tag = 'div',
-      display = 'flex',
-      direction = 'row',
-      align = 'start',
-      justify = 'start',
-      wrap = 'no-wrap',
-      gap = '1',
-      className,
-      ...flexProps
-    } = props
+export function Flex({ ref, ...props }: FlexProps) {
+  const {
+    as: Tag = 'div',
+    display = 'flex',
+    direction = 'row',
+    align = 'start',
+    justify = 'start',
+    wrap = 'no-wrap',
+    gap = '1',
+    className,
+    ...flexProps
+  } = props
 
-    return (
-      <Tag
-        ref={ref}
-        className={cn(
-          flexVariants({
-            display,
-            direction,
-            align,
-            justify,
-            wrap,
-            gap,
-          }),
-          className,
-        )}
-        {...flexProps}
-      />
-    )
-  },
-)
+  return (
+    <Tag
+      ref={ref}
+      className={cn(
+        flexVariants({
+          display,
+          direction,
+          align,
+          justify,
+          wrap,
+          gap,
+        }),
+        className,
+      )}
+      {...flexProps}
+    />
+  )
+}

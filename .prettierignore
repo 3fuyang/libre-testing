@@ -4,6 +4,8 @@
 *.log*
 .eslintcache
 
+pnpm-lock.yaml
+
 # Dist
 node_modules
 dist/

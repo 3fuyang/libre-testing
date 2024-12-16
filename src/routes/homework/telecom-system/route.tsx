@@ -7,4 +7,9 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute('/homework/telecom-system')({
   validateSearch: searchSchema,
+  context: () => {
+    return {
+      segment: '电信收费系统',
+    }
+  },
 })

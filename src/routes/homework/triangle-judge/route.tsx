@@ -7,4 +7,9 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute('/homework/triangle-judge')({
   validateSearch: searchSchema,
+  context: () => {
+    return {
+      segment: '判断三角形',
+    }
+  },
 })
