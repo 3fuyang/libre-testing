@@ -1,0 +1,36 @@
+{
+  "cases": [
+    {
+      "input": [0, 3],
+      "expected": "25"
+    },
+    {
+      "input": [1, 3],
+      "expected": "25.15"
+    },
+    {
+      "input": [44630, 3],
+      "expected": "6518.67"
+    },
+    {
+      "input": [44640, 3],
+      "expected": "6520.12"
+    },
+    {
+      "input": [160, 0],
+      "expected": "48.52"
+    },
+    {
+      "input": [160, 1],
+      "expected": "48.52"
+    },
+    {
+      "input": [160, 10],
+      "expected": "49"
+    },
+    {
+      "input": [160, 11],
+      "expected": "49"
+    }
+  ]
+}

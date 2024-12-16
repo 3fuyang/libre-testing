@@ -1,5 +1,6 @@
 import { calendarProblemImplementations } from '@/atoms/calendar-problem'
 import { computerSellingImplementations } from '@/atoms/computer-seeling'
+import { telecomSystemImplementations } from '@/atoms/telecom-system'
 import {
   triangleJudgeImplementations,
 } from '@/atoms/triangle-judge'
@@ -9,6 +10,7 @@ const implementationMap = {
   'triangle-judge': triangleJudgeImplementations,
   'calendar-problem': calendarProblemImplementations,
   'computer-selling': computerSellingImplementations,
+  'telecom-system': telecomSystemImplementations,
 } as const
 
 onmessage = (e) => {

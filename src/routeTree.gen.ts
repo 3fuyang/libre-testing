@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as HomeworkTriangleJudgeRouteImport } from './routes/homework/triangle-judge/route'
+import { Route as HomeworkTelecomSystemRouteImport } from './routes/homework/telecom-system/route'
 import { Route as HomeworkComputerSellingRouteImport } from './routes/homework/computer-selling/route'
 import { Route as HomeworkCalendarProblemRouteImport } from './routes/homework/calendar-problem/route'
 
@@ -32,6 +33,16 @@ const HomeworkTriangleJudgeRouteRoute = HomeworkTriangleJudgeRouteImport.update(
   } as any,
 ).lazy(() =>
   import('./routes/homework/triangle-judge/route.lazy').then((d) => d.Route),
+)
+
+const HomeworkTelecomSystemRouteRoute = HomeworkTelecomSystemRouteImport.update(
+  {
+    id: '/homework/telecom-system',
+    path: '/homework/telecom-system',
+    getParentRoute: () => rootRoute,
+  } as any,
+).lazy(() =>
+  import('./routes/homework/telecom-system/route.lazy').then((d) => d.Route),
 )
 
 const HomeworkComputerSellingRouteRoute =
@@ -81,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeworkComputerSellingRouteImport
       parentRoute: typeof rootRoute
     }
+    '/homework/telecom-system': {
+      id: '/homework/telecom-system'
+      path: '/homework/telecom-system'
+      fullPath: '/homework/telecom-system'
+      preLoaderRoute: typeof HomeworkTelecomSystemRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/homework/triangle-judge': {
       id: '/homework/triangle-judge'
       path: '/homework/triangle-judge'
@@ -97,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/homework/calendar-problem': typeof HomeworkCalendarProblemRouteRoute
   '/homework/computer-selling': typeof HomeworkComputerSellingRouteRoute
+  '/homework/telecom-system': typeof HomeworkTelecomSystemRouteRoute
   '/homework/triangle-judge': typeof HomeworkTriangleJudgeRouteRoute
 }
 
@@ -104,6 +123,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/homework/calendar-problem': typeof HomeworkCalendarProblemRouteRoute
   '/homework/computer-selling': typeof HomeworkComputerSellingRouteRoute
+  '/homework/telecom-system': typeof HomeworkTelecomSystemRouteRoute
   '/homework/triangle-judge': typeof HomeworkTriangleJudgeRouteRoute
 }
 
@@ -112,6 +132,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/homework/calendar-problem': typeof HomeworkCalendarProblemRouteRoute
   '/homework/computer-selling': typeof HomeworkComputerSellingRouteRoute
+  '/homework/telecom-system': typeof HomeworkTelecomSystemRouteRoute
   '/homework/triangle-judge': typeof HomeworkTriangleJudgeRouteRoute
 }
 
@@ -121,18 +142,21 @@ export interface FileRouteTypes {
     | '/'
     | '/homework/calendar-problem'
     | '/homework/computer-selling'
+    | '/homework/telecom-system'
     | '/homework/triangle-judge'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/homework/calendar-problem'
     | '/homework/computer-selling'
+    | '/homework/telecom-system'
     | '/homework/triangle-judge'
   id:
     | '__root__'
     | '/'
     | '/homework/calendar-problem'
     | '/homework/computer-selling'
+    | '/homework/telecom-system'
     | '/homework/triangle-judge'
   fileRoutesById: FileRoutesById
 }
@@ -141,6 +165,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HomeworkCalendarProblemRouteRoute: typeof HomeworkCalendarProblemRouteRoute
   HomeworkComputerSellingRouteRoute: typeof HomeworkComputerSellingRouteRoute
+  HomeworkTelecomSystemRouteRoute: typeof HomeworkTelecomSystemRouteRoute
   HomeworkTriangleJudgeRouteRoute: typeof HomeworkTriangleJudgeRouteRoute
 }
 
@@ -148,6 +173,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HomeworkCalendarProblemRouteRoute: HomeworkCalendarProblemRouteRoute,
   HomeworkComputerSellingRouteRoute: HomeworkComputerSellingRouteRoute,
+  HomeworkTelecomSystemRouteRoute: HomeworkTelecomSystemRouteRoute,
   HomeworkTriangleJudgeRouteRoute: HomeworkTriangleJudgeRouteRoute,
 }
 
@@ -164,6 +190,7 @@ export const routeTree = rootRoute
         "/",
         "/homework/calendar-problem",
         "/homework/computer-selling",
+        "/homework/telecom-system",
         "/homework/triangle-judge"
       ]
     },
@@ -175,6 +202,9 @@ export const routeTree = rootRoute
     },
     "/homework/computer-selling": {
       "filePath": "homework/computer-selling/route.tsx"
+    },
+    "/homework/telecom-system": {
+      "filePath": "homework/telecom-system/route.tsx"
     },
     "/homework/triangle-judge": {
       "filePath": "homework/triangle-judge/route.tsx"

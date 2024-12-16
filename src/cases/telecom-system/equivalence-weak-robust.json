@@ -1,0 +1,184 @@
+{
+  "cases": [
+    {
+      "input": [30, -1],
+      "expected": "未按时缴费次数越界"
+    },
+    {
+      "input": [90, -1],
+      "expected": "未按时缴费次数越界"
+    },
+    {
+      "input": [150, -1],
+      "expected": "未按时缴费次数越界"
+    },
+    {
+      "input": [240, -1],
+      "expected": "未按时缴费次数越界"
+    },
+    {
+      "input": [360, -1],
+      "expected": "未按时缴费次数越界"
+    },
+    {
+      "input": [-1, 1],
+      "expected": "通话时长数值越界"
+    },
+    {
+      "input": [30, 1],
+      "expected": "29.46"
+    },
+    {
+      "input": [90, 1],
+      "expected": "38.3"
+    },
+    {
+      "input": [150, 1],
+      "expected": "47.05"
+    },
+    {
+      "input": [240, 1],
+      "expected": "60.1"
+    },
+    {
+      "input": [360, 1],
+      "expected": "77.38"
+    },
+    {
+      "input": [44660, 1],
+      "expected": "通话时长数值越界"
+    },
+    {
+      "input": [-1, 2],
+      "expected": "通话时长数值越界"
+    },
+    {
+      "input": [30, 2],
+      "expected": "29.5"
+    },
+    {
+      "input": [90, 2],
+      "expected": "38.3"
+    },
+    {
+      "input": [150, 2],
+      "expected": "47.05"
+    },
+    {
+      "input": [240, 2],
+      "expected": "60.1"
+    },
+    {
+      "input": [360, 2],
+      "expected": "77.38"
+    },
+    {
+      "input": [44660, 2],
+      "expected": "通话时长数值越界"
+    },
+    {
+      "input": [-1, 3],
+      "expected": "通话时长数值越界"
+    },
+    {
+      "input": [30, 3],
+      "expected": "29.5"
+    },
+    {
+      "input": [90, 3],
+      "expected": "38.5"
+    },
+    {
+      "input": [150, 3],
+      "expected": "47.05"
+    },
+    {
+      "input": [240, 3],
+      "expected": "60.1"
+    },
+    {
+      "input": [360, 3],
+      "expected": "77.38"
+    },
+    {
+      "input": [44660, 3],
+      "expected": "通话时长数值越界"
+    },
+    {
+      "input": [-1, 6],
+      "expected": "通话时长数值越界"
+    },
+    {
+      "input": [30, 6],
+      "expected": "29.5"
+    },
+    {
+      "input": [90, 6],
+      "expected": "38.5"
+    },
+    {
+      "input": [150, 6],
+      "expected": "47.5"
+    },
+    {
+      "input": [240, 6],
+      "expected": "61"
+    },
+    {
+      "input": [360, 6],
+      "expected": "77.38"
+    },
+    {
+      "input": [44660, 6],
+      "expected": "通话时长数值越界"
+    },
+    {
+      "input": [-1, 11],
+      "expected": "通话时长数值越界"
+    },
+    {
+      "input": [30, 11],
+      "expected": "29.5"
+    },
+    {
+      "input": [90, 11],
+      "expected": "38.5"
+    },
+    {
+      "input": [150, 11],
+      "expected": "47.5"
+    },
+    {
+      "input": [240, 11],
+      "expected": "61"
+    },
+    {
+      "input": [360, 11],
+      "expected": "79"
+    },
+    {
+      "input": [44660, 11],
+      "expected": "通话时长数值越界"
+    },
+    {
+      "input": [30, 12],
+      "expected": "未按时缴费次数越界"
+    },
+    {
+      "input": [90, 12],
+      "expected": "未按时缴费次数越界"
+    },
+    {
+      "input": [150, 12],
+      "expected": "未按时缴费次数越界"
+    },
+    {
+      "input": [240, 12],
+      "expected": "未按时缴费次数越界"
+    },
+    {
+      "input": [360, 12],
+      "expected": "未按时缴费次数越界"
+    }
+  ]
+}

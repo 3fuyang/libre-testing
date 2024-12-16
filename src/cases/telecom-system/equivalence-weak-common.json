@@ -1,0 +1,24 @@
+{
+  "cases": [
+    {
+      "input": [30, 1],
+      "expected": "29.46"
+    },
+    {
+      "input": [90, 2],
+      "expected": "38.3"
+    },
+    {
+      "input": [150, 3],
+      "expected": "47.05"
+    },
+    {
+      "input": [240, 6],
+      "expected": "61"
+    },
+    {
+      "input": [360, 11],
+      "expected": "79"
+    }
+  ]
+}
