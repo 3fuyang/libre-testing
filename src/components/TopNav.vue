@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { NBreadcrumb, NBreadcrumbItem, NIcon, NDropdown } from 'naive-ui'
+import { NBreadcrumb, NBreadcrumbItem, NIcon, NDropdown, NA } from 'naive-ui'
 import { LogoGithub, ChevronBackSharp, ChevronForwardSharp } from '@vicons/ionicons5'
 import type { Crumb } from '../interface'
 
@@ -158,6 +158,13 @@ function handleCollapse() {
         :component="LogoGithub"
       />
     </a>
+    <n-a
+      href="https://www.v2.libretesting.xyz"
+      target="_blank"
+      class="v2-link"
+    >
+      V2
+    </n-a>
   </div>
 </template>
 
@@ -165,7 +172,7 @@ function handleCollapse() {
 .flex-wrapper {
   display: flex;
   align-items: center;
-  padding-right: 2em;
+  padding-right: 1rem;
 }
 
 .arrow {
@@ -183,5 +190,9 @@ function handleCollapse() {
 
 .icon {
   cursor: pointer;
+}
+
+.v2-link {
+  padding-left: .75rem;
 }
 </style>
