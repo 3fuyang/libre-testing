@@ -11,12 +11,12 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as HomeworkCalendarProblemRouteImport } from './routes/homework/calendar-problem/route'
-import { Route as HomeworkComputerSellingRouteImport } from './routes/homework/computer-selling/route'
-import { Route as HomeworkIndexImport } from './routes/homework/index'
-import { Route as HomeworkTelecomSystemRouteImport } from './routes/homework/telecom-system/route'
-import { Route as HomeworkTriangleJudgeRouteImport } from './routes/homework/triangle-judge/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as HomeworkIndexImport } from './routes/homework/index'
+import { Route as HomeworkTriangleJudgeRouteImport } from './routes/homework/triangle-judge/route'
+import { Route as HomeworkTelecomSystemRouteImport } from './routes/homework/telecom-system/route'
+import { Route as HomeworkComputerSellingRouteImport } from './routes/homework/computer-selling/route'
+import { Route as HomeworkCalendarProblemRouteImport } from './routes/homework/calendar-problem/route'
 
 // Create/Update Routes
 
