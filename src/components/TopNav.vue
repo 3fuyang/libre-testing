@@ -159,7 +159,7 @@ function handleCollapse() {
       />
     </a>
     <n-a
-      href="https://www.v2.libretesting.xyz"
+      href="https://v2.libretesting.xyz"
       target="_blank"
       class="v2-link"
     >
