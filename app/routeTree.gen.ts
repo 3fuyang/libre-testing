@@ -13,10 +13,10 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as HomeworkIndexImport } from './routes/homework/index'
-import { Route as HomeworkTriangleJudgeRouteImport } from './routes/homework/triangle-judge/route'
-import { Route as HomeworkTelecomSystemRouteImport } from './routes/homework/telecom-system/route'
-import { Route as HomeworkComputerSellingRouteImport } from './routes/homework/computer-selling/route'
-import { Route as HomeworkCalendarProblemRouteImport } from './routes/homework/calendar-problem/route'
+import { Route as HomeworkTriangleJudgeImport } from './routes/homework/triangle-judge'
+import { Route as HomeworkTelecomSystemImport } from './routes/homework/telecom-system'
+import { Route as HomeworkComputerSellingImport } from './routes/homework/computer-selling'
+import { Route as HomeworkCalendarProblemImport } from './routes/homework/calendar-problem'
 
 // Create/Update Routes
 
@@ -32,35 +32,29 @@ const HomeworkIndexRoute = HomeworkIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const HomeworkTriangleJudgeRouteRoute = HomeworkTriangleJudgeRouteImport.update(
-  {
-    id: '/homework/triangle-judge',
-    path: '/homework/triangle-judge',
-    getParentRoute: () => rootRoute,
-  } as any,
-)
+const HomeworkTriangleJudgeRoute = HomeworkTriangleJudgeImport.update({
+  id: '/homework/triangle-judge',
+  path: '/homework/triangle-judge',
+  getParentRoute: () => rootRoute,
+} as any)
 
-const HomeworkTelecomSystemRouteRoute = HomeworkTelecomSystemRouteImport.update(
-  {
-    id: '/homework/telecom-system',
-    path: '/homework/telecom-system',
-    getParentRoute: () => rootRoute,
-  } as any,
-)
+const HomeworkTelecomSystemRoute = HomeworkTelecomSystemImport.update({
+  id: '/homework/telecom-system',
+  path: '/homework/telecom-system',
+  getParentRoute: () => rootRoute,
+} as any)
 
-const HomeworkComputerSellingRouteRoute =
-  HomeworkComputerSellingRouteImport.update({
-    id: '/homework/computer-selling',
-    path: '/homework/computer-selling',
-    getParentRoute: () => rootRoute,
-  } as any)
+const HomeworkComputerSellingRoute = HomeworkComputerSellingImport.update({
+  id: '/homework/computer-selling',
+  path: '/homework/computer-selling',
+  getParentRoute: () => rootRoute,
+} as any)
 
-const HomeworkCalendarProblemRouteRoute =
-  HomeworkCalendarProblemRouteImport.update({
-    id: '/homework/calendar-problem',
-    path: '/homework/calendar-problem',
-    getParentRoute: () => rootRoute,
-  } as any)
+const HomeworkCalendarProblemRoute = HomeworkCalendarProblemImport.update({
+  id: '/homework/calendar-problem',
+  path: '/homework/calendar-problem',
+  getParentRoute: () => rootRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -77,28 +71,28 @@ declare module '@tanstack/react-router' {
       id: '/homework/calendar-problem'
       path: '/homework/calendar-problem'
       fullPath: '/homework/calendar-problem'
-      preLoaderRoute: typeof HomeworkCalendarProblemRouteImport
+      preLoaderRoute: typeof HomeworkCalendarProblemImport
       parentRoute: typeof rootRoute
     }
     '/homework/computer-selling': {
       id: '/homework/computer-selling'
       path: '/homework/computer-selling'
       fullPath: '/homework/computer-selling'
-      preLoaderRoute: typeof HomeworkComputerSellingRouteImport
+      preLoaderRoute: typeof HomeworkComputerSellingImport
       parentRoute: typeof rootRoute
     }
     '/homework/telecom-system': {
       id: '/homework/telecom-system'
       path: '/homework/telecom-system'
       fullPath: '/homework/telecom-system'
-      preLoaderRoute: typeof HomeworkTelecomSystemRouteImport
+      preLoaderRoute: typeof HomeworkTelecomSystemImport
       parentRoute: typeof rootRoute
     }
     '/homework/triangle-judge': {
       id: '/homework/triangle-judge'
       path: '/homework/triangle-judge'
       fullPath: '/homework/triangle-judge'
-      preLoaderRoute: typeof HomeworkTriangleJudgeRouteImport
+      preLoaderRoute: typeof HomeworkTriangleJudgeImport
       parentRoute: typeof rootRoute
     }
     '/homework/': {
@@ -115,29 +109,29 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/homework/calendar-problem': typeof HomeworkCalendarProblemRouteRoute
-  '/homework/computer-selling': typeof HomeworkComputerSellingRouteRoute
-  '/homework/telecom-system': typeof HomeworkTelecomSystemRouteRoute
-  '/homework/triangle-judge': typeof HomeworkTriangleJudgeRouteRoute
+  '/homework/calendar-problem': typeof HomeworkCalendarProblemRoute
+  '/homework/computer-selling': typeof HomeworkComputerSellingRoute
+  '/homework/telecom-system': typeof HomeworkTelecomSystemRoute
+  '/homework/triangle-judge': typeof HomeworkTriangleJudgeRoute
   '/homework': typeof HomeworkIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/homework/calendar-problem': typeof HomeworkCalendarProblemRouteRoute
-  '/homework/computer-selling': typeof HomeworkComputerSellingRouteRoute
-  '/homework/telecom-system': typeof HomeworkTelecomSystemRouteRoute
-  '/homework/triangle-judge': typeof HomeworkTriangleJudgeRouteRoute
+  '/homework/calendar-problem': typeof HomeworkCalendarProblemRoute
+  '/homework/computer-selling': typeof HomeworkComputerSellingRoute
+  '/homework/telecom-system': typeof HomeworkTelecomSystemRoute
+  '/homework/triangle-judge': typeof HomeworkTriangleJudgeRoute
   '/homework': typeof HomeworkIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/homework/calendar-problem': typeof HomeworkCalendarProblemRouteRoute
-  '/homework/computer-selling': typeof HomeworkComputerSellingRouteRoute
-  '/homework/telecom-system': typeof HomeworkTelecomSystemRouteRoute
-  '/homework/triangle-judge': typeof HomeworkTriangleJudgeRouteRoute
+  '/homework/calendar-problem': typeof HomeworkCalendarProblemRoute
+  '/homework/computer-selling': typeof HomeworkComputerSellingRoute
+  '/homework/telecom-system': typeof HomeworkTelecomSystemRoute
+  '/homework/triangle-judge': typeof HomeworkTriangleJudgeRoute
   '/homework/': typeof HomeworkIndexRoute
 }
 
@@ -171,19 +165,19 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  HomeworkCalendarProblemRouteRoute: typeof HomeworkCalendarProblemRouteRoute
-  HomeworkComputerSellingRouteRoute: typeof HomeworkComputerSellingRouteRoute
-  HomeworkTelecomSystemRouteRoute: typeof HomeworkTelecomSystemRouteRoute
-  HomeworkTriangleJudgeRouteRoute: typeof HomeworkTriangleJudgeRouteRoute
+  HomeworkCalendarProblemRoute: typeof HomeworkCalendarProblemRoute
+  HomeworkComputerSellingRoute: typeof HomeworkComputerSellingRoute
+  HomeworkTelecomSystemRoute: typeof HomeworkTelecomSystemRoute
+  HomeworkTriangleJudgeRoute: typeof HomeworkTriangleJudgeRoute
   HomeworkIndexRoute: typeof HomeworkIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  HomeworkCalendarProblemRouteRoute: HomeworkCalendarProblemRouteRoute,
-  HomeworkComputerSellingRouteRoute: HomeworkComputerSellingRouteRoute,
-  HomeworkTelecomSystemRouteRoute: HomeworkTelecomSystemRouteRoute,
-  HomeworkTriangleJudgeRouteRoute: HomeworkTriangleJudgeRouteRoute,
+  HomeworkCalendarProblemRoute: HomeworkCalendarProblemRoute,
+  HomeworkComputerSellingRoute: HomeworkComputerSellingRoute,
+  HomeworkTelecomSystemRoute: HomeworkTelecomSystemRoute,
+  HomeworkTriangleJudgeRoute: HomeworkTriangleJudgeRoute,
   HomeworkIndexRoute: HomeworkIndexRoute,
 }
 
@@ -209,16 +203,16 @@ export const routeTree = rootRoute
       "filePath": "index.tsx"
     },
     "/homework/calendar-problem": {
-      "filePath": "homework/calendar-problem/route.tsx"
+      "filePath": "homework/calendar-problem.tsx"
     },
     "/homework/computer-selling": {
-      "filePath": "homework/computer-selling/route.tsx"
+      "filePath": "homework/computer-selling.tsx"
     },
     "/homework/telecom-system": {
-      "filePath": "homework/telecom-system/route.tsx"
+      "filePath": "homework/telecom-system.tsx"
     },
     "/homework/triangle-judge": {
-      "filePath": "homework/triangle-judge/route.tsx"
+      "filePath": "homework/triangle-judge.tsx"
     },
     "/homework/": {
       "filePath": "homework/index.tsx"

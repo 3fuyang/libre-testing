@@ -1,6 +1,7 @@
 // @ts-check
 import react from '@eslint-react/eslint-plugin'
 import pluginJs from '@eslint/js'
+import pluginRouter from '@tanstack/eslint-plugin-router'
 import * as tsParser from '@typescript-eslint/parser'
 import reactCompiler from 'eslint-plugin-react-compiler'
 import hooksPlugin from 'eslint-plugin-react-hooks'
@@ -34,6 +35,14 @@ export default tseslint.config(
     },
     rules: {
       'react-compiler/react-compiler': 'error',
+    },
+  },
+  {
+    plugins: {
+      '@tanstack/router': pluginRouter,
+    },
+    rules: {
+      '@tanstack/router/create-route-property-order': 'error',
     },
   },
   {

@@ -7,6 +7,7 @@ import {
   ScrollRestoration,
 } from '@tanstack/react-router'
 import { Meta, Scripts } from '@tanstack/start'
+import { Provider } from 'jotai'
 import { lazy, type PropsWithChildren } from 'react'
 
 const TanStackRouterDevtools =
@@ -63,10 +64,11 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <RootDocument>
-      <Layout>
-        <Outlet />
-      </Layout>
-      <TanStackRouterDevtools position="bottom-right" />
+      <Provider>
+        <Layout>
+          <Outlet />
+        </Layout>
+      </Provider>
     </RootDocument>
   )
 }
@@ -80,6 +82,7 @@ function RootDocument({ children }: Readonly<PropsWithChildren>) {
       <body>
         {children}
         <ScrollRestoration />
+        <TanStackRouterDevtools position="bottom-right" />
         <Scripts />
       </body>
     </html>
