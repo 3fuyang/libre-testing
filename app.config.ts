@@ -18,12 +18,14 @@ export default defineConfig({
         projects: ['./tsconfig.json']
       })
     ],
-    build: {
-      rollupOptions: {
-        external: [
-          '@/workers/test-runner?worker'
-        ]
-      }
+    // Workers are handled in a completely separate build process,
+    // so that required plugins should be specified explicitly.
+    worker: {
+      plugins: () => [
+        tsConfigPaths({
+          projects: ['./tsconfig.json']
+        })
+      ]
     }
   },
 })

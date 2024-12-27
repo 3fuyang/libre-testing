@@ -273,7 +273,7 @@ function TestToolbar() {
             runningState: 'running',
           })
           const { cases } = (await import(
-            `../../../cases/telecom-system/${testCase}.json`
+            `../../cases/telecom-system/${testCase}.json`
           )) as {
             cases: {
               input: [number, number, number]

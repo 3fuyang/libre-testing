@@ -55,7 +55,7 @@ export const Route = createRootRoute({
         src: 'https://unpkg.com/react-scan/dist/auto.global.js',
         async: true,
       })
-    ]
+    ].filter(Boolean)
   }),
   component: RootComponent,
   notFoundComponent: DefaultGlobalNotFound,

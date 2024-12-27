@@ -256,7 +256,7 @@ function TestToolbar() {
             runningState: 'running',
           })
           const { cases } = (await import(
-            `../../../cases/triangle-judge/${testCase}.json`
+            `../../cases/triangle-judge/${testCase}.json`
           )) as {
             cases: {
               input: [number, number, number]
