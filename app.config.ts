@@ -18,5 +18,12 @@ export default defineConfig({
         projects: ['./tsconfig.json']
       })
     ],
+    build: {
+      rollupOptions: {
+        external: [
+          '@/workers/test-runner?worker'
+        ]
+      }
+    }
   },
 })
