@@ -1,8 +1,8 @@
 import {
-  triangleJudgeAtom,
-  type TriangleJudgeTestCase,
-  type TriangleJudgeVersion,
-} from '@/atoms/triangle-judge'
+  telecomSystemAtom,
+  type TelecomSystemTestCase,
+  type TelecomSystemVersion,
+} from '@/atoms/telecom-system'
 import { Flex } from '@/components/flex'
 import { columns, type TestResultItem } from '@/components/result-table/columns'
 import { DataTable } from '@/components/result-table/table'
@@ -28,16 +28,26 @@ import { useToast } from '@/hooks/use-toast'
 import { triggerConfetti } from '@/lib/confetti'
 import { highlighterPromise } from '@/lib/highlighter'
 import { cn } from '@/lib/utils'
-// @ts-expect-error Typed worker module
 import testRunnerWorker from '@/workers/test-runner?worker'
 import { TabsContent, TabsTrigger } from '@radix-ui/react-tabs'
-import { createLazyFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import { useAtom, useAtomValue } from 'jotai'
 import { Check, Loader2, Play } from 'lucide-react'
 import { use } from 'react'
+import { z } from 'zod'
 
-export const Route = createLazyFileRoute('/homework/triangle-judge')({
+const searchSchema = z.object({
+  tab: z.enum(['question', 'result']).default('question').catch('question'),
+})
+
+export const Route = createFileRoute('/homework/telecom-system')({
+  validateSearch: searchSchema,
   component: RouteComponent,
+  context: () => {
+    return {
+      segment: '电信收费系统',
+    }
+  },
 })
 
 function RouteComponent() {
@@ -85,25 +95,34 @@ function RouteComponent() {
 }
 
 function QuestionPanel() {
-  const code = `function triangleJudge(a: number, b: number, c: number): string {
-  if (a <= 0 || b <= 0 || c <= 0 || a > 200 || b > 200 || c > 200) {
-    return '边长数值越界'
+  const code = `function telecomSystem(callingTime: number, count: number): string {
+  if (callingTime < 0 || callingTime > 31 * 24 * 60) {
+    return "通话时长数值越界"
   }
-  if (
-    a + b > c &&
-    a + c > b &&
-    b + c > a
-  ) {
-    if (a === b && a === c) {
-      return '该三角形是等边三角形'
-    } else if (a === b || a === c || b === c) {
-      return '该三角形是等腰三角形'
-    } else {
-      return '该三角形是普通三角形'
-    }
+  if (count < 0 || count > 11) {
+    return "未按时缴费次数越界"
+  }
+
+  const maxNum: number[] = [1, 2, 3, 3, 6]
+  const level: number = getLevel(callingTime)
+  if (count <= maxNum[level - 1]) {
+    return String(Math.round((25 + 0.15 * callingTime * (1 - (level + 1) * 0.005)) * 100) / 100)
   } else {
-    return '所给三边数据不能构成三角形'
+    return String(Math.round((25 + 0.15 * callingTime) * 100) / 100)
   }
+}
+
+function getLevel(time: number): number {
+  if (time > 0 && time <= 60)
+    return 1
+  else if (time > 60 && time <= 120)
+    return 2
+  else if (time > 120 && time <= 180)
+    return 3
+  else if (time > 180 && time <= 300)
+    return 4
+  else
+    return 5
 }`
 
   const highlighter = use(highlighterPromise)
@@ -119,15 +138,16 @@ function QuestionPanel() {
   return (
     <Card className="flex-1">
       <CardHeader className="pb-4">
-        <CardTitle className="text-lg">Question 1. 判断三角形类型</CardTitle>
-        <CardDescription>输入三角形的三条边，判断三角形的类型</CardDescription>
+        <CardTitle className="text-lg">Question 4. 电信收费系统</CardTitle>
+        <CardDescription>
+          输入本月通话时间、用户本年度未按时缴费次数，计算本月应缴话费
+        </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">
         <p className="font-medium">算法思想</p>
         <p className="text-sm">
-          本题输入变量有 <code>a</code>, <code>b</code>, <code>c</code>{' '}
-          三个，首先判断其两边之和是否大于第三边，若大于则判断可以构成三角形，再进一步判断该三角形类型；否则不能构成三角形。
+          首先校验输入的通话时间、未按时缴费次数，确定其符合规范后，再判断折扣档位，计算本月应缴话费
         </p>
         <p className="font-medium">代码实现</p>
         <TestToolbar />
@@ -139,13 +159,15 @@ function QuestionPanel() {
 }
 
 function ResultPanel() {
-  const [{ testResult = [] }] = useAtom(triangleJudgeAtom)
+  const [{ testResult = [] }] = useAtom(telecomSystemAtom)
 
   return (
     <Card className="flex-1">
       <CardHeader className="pb-4">
-        <CardTitle className="text-lg">Question 1. 判断三角形类型</CardTitle>
-        <CardDescription>输入三角形的三条边，判断三角形的类型</CardDescription>
+        <CardTitle className="text-lg">Question 4. 电信收费系统</CardTitle>
+        <CardDescription>
+          输入本月通话时间、用户本年度未按时缴费次数，计算本月应缴话费
+        </CardDescription>
       </CardHeader>
 
       <CardContent>
@@ -165,8 +187,8 @@ function TestToolbar() {
   const navigate = Route.useNavigate()
   const { toast } = useToast()
 
-  const [triangleJudgeState, setTriangleJudgeState] = useAtom(triangleJudgeAtom)
-  const { version, testCase, runningState } = triangleJudgeState
+  const [telecomSystemState, setTelecomSystemState] = useAtom(telecomSystemAtom)
+  const { version, testCase, runningState } = telecomSystemState
 
   const isRunning = runningState === 'running'
 
@@ -185,9 +207,9 @@ function TestToolbar() {
         value={version}
         disabled={isRunning}
         onValueChange={(value) =>
-          setTriangleJudgeState({
-            ...triangleJudgeState,
-            version: value as TriangleJudgeVersion,
+          setTelecomSystemState({
+            ...telecomSystemState,
+            version: value as TelecomSystemVersion,
           })
         }
       >
@@ -197,6 +219,7 @@ function TestToolbar() {
         <SelectContent>
           <SelectItem value="0.1.0">0.1.0</SelectItem>
           <SelectItem value="0.2.0">0.2.0</SelectItem>
+          <SelectItem value="0.3.0">0.3.0</SelectItem>
         </SelectContent>
       </Select>
 
@@ -204,9 +227,9 @@ function TestToolbar() {
         value={testCase}
         disabled={isRunning}
         onValueChange={(value) =>
-          setTriangleJudgeState({
-            ...triangleJudgeState,
-            testCase: value as TriangleJudgeTestCase,
+          setTelecomSystemState({
+            ...telecomSystemState,
+            testCase: value as TelecomSystemTestCase,
           })
         }
       >
@@ -234,6 +257,10 @@ function TestToolbar() {
               强健壮等价类
             </SelectItem>
           </SelectGroup>
+          <SelectGroup>
+            <SelectLabel className="text-foreground/80">决策表</SelectLabel>
+            <SelectItem value="decision-table">决策表</SelectItem>
+          </SelectGroup>
         </SelectContent>
       </Select>
 
@@ -241,12 +268,12 @@ function TestToolbar() {
         variant="default"
         disabled={isRunning}
         onClick={async () => {
-          setTriangleJudgeState({
-            ...triangleJudgeState,
+          setTelecomSystemState({
+            ...telecomSystemState,
             runningState: 'running',
           })
           const { cases } = (await import(
-            `../../../cases/triangle-judge/${testCase}.json`
+            `../../cases/telecom-system/${testCase}.json`
           )) as {
             cases: {
               input: [number, number, number]
@@ -257,21 +284,21 @@ function TestToolbar() {
           const worker: Worker = new testRunnerWorker()
 
           worker.postMessage({
-            problem: 'triangle-judge',
+            problem: 'telecom-system',
             version,
             cases,
           })
 
           worker.onmessage = (e) => {
             const result = e.data as TestResultItem[]
-            setTriangleJudgeState({
-              ...triangleJudgeState,
+            setTelecomSystemState({
+              ...telecomSystemState,
               runningState: 'idle',
               testResult: result,
             })
 
             toast({
-              title: '测试完成 - 判断三角形类型',
+              title: '测试完成 - 万年历问题',
               description: `共执行 ${cases.length} 个用例，通过数：${result.filter((item) => item.passed).length}`,
             })
 
@@ -299,7 +326,7 @@ function TestToolbar() {
 }
 
 function TestResultOverview() {
-  const { testResult = [] } = useAtomValue(triangleJudgeAtom)
+  const { testResult = [] } = useAtomValue(telecomSystemAtom)
 
   const shouldDisplay = testResult.length > 0
 

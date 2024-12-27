@@ -1,8 +1,8 @@
 import {
-  telecomSystemAtom,
-  type TelecomSystemTestCase,
-  type TelecomSystemVersion,
-} from '@/atoms/telecom-system'
+  computerSellingAtom,
+  type ComputerSellingTestCase,
+  type ComputerSellingVersion,
+} from '@/atoms/computer-seeling'
 import { Flex } from '@/components/flex'
 import { columns, type TestResultItem } from '@/components/result-table/columns'
 import { DataTable } from '@/components/result-table/table'
@@ -28,16 +28,26 @@ import { useToast } from '@/hooks/use-toast'
 import { triggerConfetti } from '@/lib/confetti'
 import { highlighterPromise } from '@/lib/highlighter'
 import { cn } from '@/lib/utils'
-// @ts-expect-error Typed worker module
 import testRunnerWorker from '@/workers/test-runner?worker'
 import { TabsContent, TabsTrigger } from '@radix-ui/react-tabs'
-import { createLazyFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import { useAtom, useAtomValue } from 'jotai'
 import { Check, Loader2, Play } from 'lucide-react'
 import { use } from 'react'
+import { z } from 'zod'
 
-export const Route = createLazyFileRoute('/homework/telecom-system')({
+const searchSchema = z.object({
+  tab: z.enum(['question', 'result']).default('question').catch('question'),
+})
+
+export const Route = createFileRoute('/homework/computer-selling')({
+  validateSearch: searchSchema,
   component: RouteComponent,
+  context: () => {
+    return {
+      segment: '计算机销售系统',
+    }
+  },
 })
 
 function RouteComponent() {
@@ -85,34 +95,31 @@ function RouteComponent() {
 }
 
 function QuestionPanel() {
-  const code = `function telecomSystem(callingTime: number, count: number): string {
-  if (callingTime < 0 || callingTime > 31 * 24 * 60) {
-    return "通话时长数值越界"
+  const code = `function computerSelling(host: number, monitor: number, peripheral: number): string {
+  if (host == -1) {
+    return "系统开始统计月度销售额"
   }
-  if (count < 0 || count > 11) {
-    return "未按时缴费次数越界"
+  if (host <= 0 || monitor <= 0 || peripheral <= 0) {
+    return "数据非法，各部件销售数量不能小于1"
+  }
+  if (host > 70) {
+    return "数据非法，主机销售数量不能超过70"
+  }
+  if (monitor > 80) {
+    return "数据非法，显示器销售数量不能超过80"
+  }
+  if (peripheral > 90) {
+    return "数据非法，外设销售数量不能超过90"
   }
 
-  const maxNum: number[] = [1, 2, 3, 3, 6]
-  const level: number = getLevel(callingTime)
-  if (count <= maxNum[level - 1]) {
-    return String(Math.round((25 + 0.15 * callingTime * (1 - (level + 1) * 0.005)) * 100) / 100)
+  const totalSales: number = host * 25 + monitor * 30 + peripheral * 45;
+  if (totalSales <= 1000) {
+    return String(totalSales * 0.1)
+  } else if (totalSales <= 1800) {
+    return String(totalSales * 0.15)
   } else {
-    return String(Math.round((25 + 0.15 * callingTime) * 100) / 100)
+    return String(totalSales * 0.2)
   }
-}
-
-function getLevel(time: number): number {
-  if (time > 0 && time <= 60)
-    return 1
-  else if (time > 60 && time <= 120)
-    return 2
-  else if (time > 120 && time <= 180)
-    return 3
-  else if (time > 180 && time <= 300)
-    return 4
-  else
-    return 5
 }`
 
   const highlighter = use(highlighterPromise)
@@ -128,16 +135,17 @@ function getLevel(time: number): number {
   return (
     <Card className="flex-1">
       <CardHeader className="pb-4">
-        <CardTitle className="text-lg">Question 4. 电信收费系统</CardTitle>
+        <CardTitle className="text-lg">Question 3. 电脑销售系统</CardTitle>
         <CardDescription>
-          输入本月通话时间、用户本年度未按时缴费次数，计算本月应缴话费
+          根据输入的主机、显示器、外设数量，计算销售总额
         </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">
         <p className="font-medium">算法思想</p>
         <p className="text-sm">
-          首先校验输入的通话时间、未按时缴费次数，确定其符合规范后，再判断折扣档位，计算本月应缴话费
+          首先判断主机的销售数量，当这个变量值为 <code>-1</code>{' '}
+          时，发出月度统计，当值不为 <code>-1</code> 时计算总额
         </p>
         <p className="font-medium">代码实现</p>
         <TestToolbar />
@@ -149,14 +157,14 @@ function getLevel(time: number): number {
 }
 
 function ResultPanel() {
-  const [{ testResult = [] }] = useAtom(telecomSystemAtom)
+  const [{ testResult = [] }] = useAtom(computerSellingAtom)
 
   return (
     <Card className="flex-1">
       <CardHeader className="pb-4">
-        <CardTitle className="text-lg">Question 4. 电信收费系统</CardTitle>
+        <CardTitle className="text-lg">Question 3. 电脑销售系统</CardTitle>
         <CardDescription>
-          输入本月通话时间、用户本年度未按时缴费次数，计算本月应缴话费
+          根据输入的主机、显示器、外设数量，计算销售总额
         </CardDescription>
       </CardHeader>
 
@@ -177,8 +185,9 @@ function TestToolbar() {
   const navigate = Route.useNavigate()
   const { toast } = useToast()
 
-  const [telecomSystemState, setTelecomSystemState] = useAtom(telecomSystemAtom)
-  const { version, testCase, runningState } = telecomSystemState
+  const [computerSellingState, setComputerSellingState] =
+    useAtom(computerSellingAtom)
+  const { version, testCase, runningState } = computerSellingState
 
   const isRunning = runningState === 'running'
 
@@ -197,9 +206,9 @@ function TestToolbar() {
         value={version}
         disabled={isRunning}
         onValueChange={(value) =>
-          setTelecomSystemState({
-            ...telecomSystemState,
-            version: value as TelecomSystemVersion,
+          setComputerSellingState({
+            ...computerSellingState,
+            version: value as ComputerSellingVersion,
           })
         }
       >
@@ -209,7 +218,6 @@ function TestToolbar() {
         <SelectContent>
           <SelectItem value="0.1.0">0.1.0</SelectItem>
           <SelectItem value="0.2.0">0.2.0</SelectItem>
-          <SelectItem value="0.3.0">0.3.0</SelectItem>
         </SelectContent>
       </Select>
 
@@ -217,9 +225,9 @@ function TestToolbar() {
         value={testCase}
         disabled={isRunning}
         onValueChange={(value) =>
-          setTelecomSystemState({
-            ...telecomSystemState,
-            testCase: value as TelecomSystemTestCase,
+          setComputerSellingState({
+            ...computerSellingState,
+            testCase: value as ComputerSellingTestCase,
           })
         }
       >
@@ -232,25 +240,6 @@ function TestToolbar() {
             <SelectItem value="boundary-basic">基本边界值</SelectItem>
             <SelectItem value="boundary-robust">健壮边界值</SelectItem>
           </SelectGroup>
-          <SelectGroup>
-            <SelectLabel className="text-foreground/80">等价类</SelectLabel>
-            <SelectItem value="equivalence-weak-common">
-              弱一般等价类
-            </SelectItem>
-            <SelectItem value="equivalence-strong-common">
-              强一般等价类
-            </SelectItem>
-            <SelectItem value="equivalence-weak-robust">
-              弱健壮等价类
-            </SelectItem>
-            <SelectItem value="equivalence-strong-robust">
-              强健壮等价类
-            </SelectItem>
-          </SelectGroup>
-          <SelectGroup>
-            <SelectLabel className="text-foreground/80">决策表</SelectLabel>
-            <SelectItem value="decision-table">决策表</SelectItem>
-          </SelectGroup>
         </SelectContent>
       </Select>
 
@@ -258,12 +247,12 @@ function TestToolbar() {
         variant="default"
         disabled={isRunning}
         onClick={async () => {
-          setTelecomSystemState({
-            ...telecomSystemState,
+          setComputerSellingState({
+            ...computerSellingState,
             runningState: 'running',
           })
           const { cases } = (await import(
-            `../../../cases/telecom-system/${testCase}.json`
+            `../../cases/computer-selling/${testCase}.json`
           )) as {
             cases: {
               input: [number, number, number]
@@ -274,21 +263,21 @@ function TestToolbar() {
           const worker: Worker = new testRunnerWorker()
 
           worker.postMessage({
-            problem: 'telecom-system',
+            problem: 'computer-selling',
             version,
             cases,
           })
 
           worker.onmessage = (e) => {
             const result = e.data as TestResultItem[]
-            setTelecomSystemState({
-              ...telecomSystemState,
+            setComputerSellingState({
+              ...computerSellingState,
               runningState: 'idle',
               testResult: result,
             })
 
             toast({
-              title: '测试完成 - 万年历问题',
+              title: '测试完成 - 电脑销售问题',
               description: `共执行 ${cases.length} 个用例，通过数：${result.filter((item) => item.passed).length}`,
             })
 
@@ -316,7 +305,7 @@ function TestToolbar() {
 }
 
 function TestResultOverview() {
-  const { testResult = [] } = useAtomValue(telecomSystemAtom)
+  const { testResult = [] } = useAtomValue(computerSellingAtom)
 
   const shouldDisplay = testResult.length > 0
 
