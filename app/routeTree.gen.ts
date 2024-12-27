@@ -38,8 +38,6 @@ const HomeworkTriangleJudgeRouteRoute = HomeworkTriangleJudgeRouteImport.update(
     path: '/homework/triangle-judge',
     getParentRoute: () => rootRoute,
   } as any,
-).lazy(() =>
-  import('./routes/homework/triangle-judge/route.lazy').then((d) => d.Route),
 )
 
 const HomeworkTelecomSystemRouteRoute = HomeworkTelecomSystemRouteImport.update(
@@ -48,8 +46,6 @@ const HomeworkTelecomSystemRouteRoute = HomeworkTelecomSystemRouteImport.update(
     path: '/homework/telecom-system',
     getParentRoute: () => rootRoute,
   } as any,
-).lazy(() =>
-  import('./routes/homework/telecom-system/route.lazy').then((d) => d.Route),
 )
 
 const HomeworkComputerSellingRouteRoute =
@@ -57,22 +53,14 @@ const HomeworkComputerSellingRouteRoute =
     id: '/homework/computer-selling',
     path: '/homework/computer-selling',
     getParentRoute: () => rootRoute,
-  } as any).lazy(() =>
-    import('./routes/homework/computer-selling/route.lazy').then(
-      (d) => d.Route,
-    ),
-  )
+  } as any)
 
 const HomeworkCalendarProblemRouteRoute =
   HomeworkCalendarProblemRouteImport.update({
     id: '/homework/calendar-problem',
     path: '/homework/calendar-problem',
     getParentRoute: () => rootRoute,
-  } as any).lazy(() =>
-    import('./routes/homework/calendar-problem/route.lazy').then(
-      (d) => d.Route,
-    ),
-  )
+  } as any)
 
 // Populate the FileRoutesByPath interface
 

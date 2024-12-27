@@ -28,16 +28,26 @@ import { useToast } from '@/hooks/use-toast'
 import { triggerConfetti } from '@/lib/confetti'
 import { highlighterPromise } from '@/lib/highlighter'
 import { cn } from '@/lib/utils'
-// @ts-expect-error Typed worker module
 import testRunnerWorker from '@/workers/test-runner?worker'
 import { TabsContent, TabsTrigger } from '@radix-ui/react-tabs'
-import { createLazyFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import { useAtom, useAtomValue } from 'jotai'
 import { Check, Loader2, Play } from 'lucide-react'
 import { use } from 'react'
+import { z } from 'zod'
 
-export const Route = createLazyFileRoute('/homework/calendar-problem')({
+const searchSchema = z.object({
+  tab: z.enum(['question', 'result']).default('question').catch('question'),
+})
+
+export const Route = createFileRoute('/homework/calendar-problem')({
+  validateSearch: searchSchema,
   component: RouteComponent,
+  context: () => {
+    return {
+      segment: '万年历问题',
+    }
+  },
 })
 
 function RouteComponent() {

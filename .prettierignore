@@ -14,8 +14,8 @@ dist/
 .vercel
 .netlify
 .wrangler
-src/components/ui
-src/hooks/use-toast.ts
+app/components/ui
+app/hooks/use-toast.ts
 
 # IDE
 .vscode/*

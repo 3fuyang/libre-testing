@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "strictNullChecks": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./app/*"]
     }
   }
 }
