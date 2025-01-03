@@ -47,31 +47,37 @@ export const Route = createFileRoute('/homework/triangle-judge')({
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/triangle-judge/boundary-basic.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/triangle-judge/boundary-robust.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/triangle-judge/equivalence-strong-common.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/triangle-judge/equivalence-strong-robust.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/triangle-judge/equivalence-weak-common.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/triangle-judge/equivalence-weak-robust.json',
       },
     ],

@@ -47,36 +47,43 @@ export const Route = createFileRoute('/homework/calendar-problem')({
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/calendar-problem/boundary-basic.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/calendar-problem/boundary-robust.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/calendar-problem/decision-table.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/calendar-problem/equivalence-strong-common.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/calendar-problem/equivalence-strong-robust.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/calendar-problem/equivalence-weak-common.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/calendar-problem/equivalence-weak-robust.json',
       },
     ],

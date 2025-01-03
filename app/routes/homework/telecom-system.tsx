@@ -47,36 +47,43 @@ export const Route = createFileRoute('/homework/telecom-system')({
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/telecom-system/boundary-basic.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/telecom-system/boundary-robust.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/telecom-system/decision-table.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/telecom-system/equivalence-strong-common.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/telecom-system/equivalence-strong-robust.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/telecom-system/equivalence-weak-common.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/telecom-system/equivalence-weak-robust.json',
       },
     ],

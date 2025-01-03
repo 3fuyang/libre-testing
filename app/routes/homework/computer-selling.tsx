@@ -47,11 +47,13 @@ export const Route = createFileRoute('/homework/computer-selling')({
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/computer-selling/boundary-basic.json',
       },
       {
         rel: 'preload',
         as: 'fetch',
+        crossOrigin: 'anonymous',
         href: '/cases/computer-selling/boundary-robust.json',
       },
     ],
