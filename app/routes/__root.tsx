@@ -18,6 +18,8 @@ const TanStackRouterDevtools = import.meta.env.PROD
       })),
     )
 
+const isProd = import.meta.env.PROD
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -51,25 +53,28 @@ export const Route = createRootRoute({
       },
     ],
     scripts: [
-      import.meta.env.PROD
+      isProd
         ? undefined
         : {
             src: 'https://unpkg.com/react-scan/dist/auto.global.js',
             async: true,
           },
-      import.meta.env.PROD
+      isProd
+        ? {
+            type: "text/partytown",
+            src: 'https://www.googletagmanager.com/gtag/js?id=G-PD9F771L0T',
+            async: true,
+          }
+        : undefined,
+      isProd
         ? {
             dangerouslySetInnerHTML: {
               __html: `
-          <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PD9F771L0T"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
 
-  gtag('config', 'G-PD9F771L0T');
-</script>`,
+gtag('config', 'G-PD9F771L0T');`,
             },
           }
         : undefined,
