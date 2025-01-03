@@ -10,14 +10,13 @@ import { Meta, Scripts } from '@tanstack/start'
 import { Provider } from 'jotai'
 import { lazy, type PropsWithChildren } from 'react'
 
-const TanStackRouterDevtools =
-  import.meta.env.PROD
-    ? () => null
-    : lazy(() =>
-        import('@tanstack/router-devtools').then((res) => ({
-          default: res.TanStackRouterDevtools,
-        })),
-      )
+const TanStackRouterDevtools = import.meta.env.PROD
+  ? () => null
+  : lazy(() =>
+      import('@tanstack/router-devtools').then((res) => ({
+        default: res.TanStackRouterDevtools,
+      })),
+    )
 
 export const Route = createRootRoute({
   head: () => ({
@@ -30,7 +29,8 @@ export const Route = createRootRoute({
       },
       {
         name: 'description',
-        content: 'Streamline testing showcase with easy-to-use automatic testing web UI, thus making testing libre.',
+        content:
+          'Streamline testing showcase with easy-to-use automatic testing web UI, thus making testing libre.',
       },
       {
         name: 'viewport',
@@ -51,11 +51,29 @@ export const Route = createRootRoute({
       },
     ],
     scripts: [
-      import.meta.env.PROD ? undefined : ({
-        src: 'https://unpkg.com/react-scan/dist/auto.global.js',
-        async: true,
-      })
-    ].filter(Boolean)
+      import.meta.env.PROD
+        ? undefined
+        : {
+            src: 'https://unpkg.com/react-scan/dist/auto.global.js',
+            async: true,
+          },
+      import.meta.env.PROD
+        ? {
+            dangerouslySetInnerHTML: {
+              __html: `
+          <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PD9F771L0T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PD9F771L0T');
+</script>`,
+            },
+          }
+        : undefined,
+    ],
   }),
   component: RootComponent,
   notFoundComponent: DefaultGlobalNotFound,
