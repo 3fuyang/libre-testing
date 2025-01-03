@@ -11,6 +11,14 @@ const isProd = process.env.NODE_ENV === 'production'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    prerender: {
+      routes: [
+        '/'
+      ],
+      crawlLinks: true,
+    }
+  },
   react: {
     babel: {
       plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]],
