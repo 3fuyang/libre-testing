@@ -3,6 +3,13 @@ import {
   type TelecomSystemTestCase,
   type TelecomSystemVersion,
 } from '@/atoms/telecom-system'
+import boundaryBasic from '@/cases/telecom-system/boundary-basic.json?url'
+import boundaryRobust from '@/cases/telecom-system/boundary-robust.json?url'
+import decisionTable from '@/cases/telecom-system/decision-table.json?url'
+import equivalentStrongCommon from '@/cases/telecom-system/equivalence-strong-common.json?url'
+import equivalentStrongRobust from '@/cases/telecom-system/equivalence-strong-robust.json?url'
+import equivalentWeakCommon from '@/cases/telecom-system/equivalence-weak-common.json?url'
+import equivalentWeakRobust from '@/cases/telecom-system/equivalence-weak-robust.json?url'
 import { Flex } from '@/components/flex'
 import { columns, type TestResultItem } from '@/components/result-table/columns'
 import { DataTable } from '@/components/result-table/table'
@@ -42,6 +49,45 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute('/homework/telecom-system')({
   validateSearch: searchSchema,
+  head: () => ({
+    links: [
+      {
+        rel: 'preload',
+        as: 'script',
+        href: boundaryBasic,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: boundaryRobust,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: decisionTable,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: equivalentStrongCommon,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: equivalentStrongRobust,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: equivalentWeakCommon,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: equivalentWeakRobust,
+      },
+    ],
+  }),
   component: RouteComponent,
   context: () => {
     return {

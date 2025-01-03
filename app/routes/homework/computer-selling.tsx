@@ -3,6 +3,8 @@ import {
   type ComputerSellingTestCase,
   type ComputerSellingVersion,
 } from '@/atoms/computer-seeling'
+import boundaryBasic from '@/cases/computer-selling/boundary-basic.json?url'
+import boundaryRobust from '@/cases/computer-selling/boundary-robust.json?url'
 import { Flex } from '@/components/flex'
 import { columns, type TestResultItem } from '@/components/result-table/columns'
 import { DataTable } from '@/components/result-table/table'
@@ -42,6 +44,20 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute('/homework/computer-selling')({
   validateSearch: searchSchema,
+  head: () => ({
+    links: [
+      {
+        rel: 'preload',
+        as: 'script',
+        href: boundaryBasic,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: boundaryRobust,
+      },
+    ],
+  }),
   component: RouteComponent,
   context: () => {
     return {

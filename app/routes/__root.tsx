@@ -61,7 +61,7 @@ export const Route = createRootRoute({
           },
       isProd
         ? {
-            type: "text/partytown",
+            type: 'text/partytown',
             src: 'https://www.googletagmanager.com/gtag/js?id=G-PD9F771L0T',
             async: true,
           }
@@ -98,7 +98,7 @@ function RootComponent() {
 
 function RootDocument({ children }: Readonly<PropsWithChildren>) {
   return (
-    <html>
+    <html lang="zh-CN">
       <head>
         <Meta />
       </head>

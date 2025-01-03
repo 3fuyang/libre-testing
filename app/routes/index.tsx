@@ -32,7 +32,11 @@ function HomeComponent() {
               UI.
             </p>
             <Button size="lg" asChild>
-              <Link to="/homework/triangle-judge" search={{ tab: 'question' }} preload='viewport'>
+              <Link
+                to="/homework/triangle-judge"
+                search={{ tab: 'question' }}
+                preload="viewport"
+              >
                 Get Started
               </Link>
             </Button>

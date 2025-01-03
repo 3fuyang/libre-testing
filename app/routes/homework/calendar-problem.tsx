@@ -3,6 +3,13 @@ import {
   type CalendarProblemTestCase,
   type CalendarProblemVersion,
 } from '@/atoms/calendar-problem'
+import boundaryBasic from '@/cases/calendar-problem/boundary-basic.json?url'
+import boundaryRobust from '@/cases/calendar-problem/boundary-robust.json?url'
+import decisionTable from '@/cases/calendar-problem/decision-table.json?url'
+import equivalentStrongCommon from '@/cases/calendar-problem/equivalence-strong-common.json?url'
+import equivalentStrongRobust from '@/cases/calendar-problem/equivalence-strong-robust.json?url'
+import equivalentWeakCommon from '@/cases/calendar-problem/equivalence-weak-common.json?url'
+import equivalentWeakRobust from '@/cases/calendar-problem/equivalence-weak-robust.json?url'
 import { Flex } from '@/components/flex'
 import { columns, type TestResultItem } from '@/components/result-table/columns'
 import { DataTable } from '@/components/result-table/table'
@@ -42,6 +49,45 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute('/homework/calendar-problem')({
   validateSearch: searchSchema,
+  head: () => ({
+    links: [
+      {
+        rel: 'preload',
+        as: 'script',
+        href: boundaryBasic,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: boundaryRobust,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: decisionTable,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: equivalentStrongCommon,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: equivalentStrongRobust,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: equivalentWeakCommon,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: equivalentWeakRobust,
+      },
+    ],
+  }),
   component: RouteComponent,
   context: () => {
     return {

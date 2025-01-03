@@ -3,6 +3,12 @@ import {
   type TriangleJudgeTestCase,
   type TriangleJudgeVersion,
 } from '@/atoms/triangle-judge'
+import boundaryBasic from '@/cases/triangle-judge/boundary-basic.json?url'
+import boundaryRobust from '@/cases/triangle-judge/boundary-robust.json?url'
+import equivalentStrongCommon from '@/cases/triangle-judge/equivalence-strong-common.json?url'
+import equivalentStrongRobust from '@/cases/triangle-judge/equivalence-strong-robust.json?url'
+import equivalentWeakCommon from '@/cases/triangle-judge/equivalence-weak-common.json?url'
+import equivalentWeakRobust from '@/cases/triangle-judge/equivalence-weak-robust.json?url'
 import { Flex } from '@/components/flex'
 import { columns, type TestResultItem } from '@/components/result-table/columns'
 import { DataTable } from '@/components/result-table/table'
@@ -42,6 +48,40 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute('/homework/triangle-judge')({
   validateSearch: searchSchema,
+  head: () => ({
+    links: [
+      {
+        rel: 'preload',
+        as: 'script',
+        href: boundaryBasic,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: boundaryRobust,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: equivalentStrongCommon,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: equivalentStrongRobust,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: equivalentWeakCommon,
+      },
+      {
+        rel: 'preload',
+        as: 'script',
+        href: equivalentWeakRobust,
+      },
+    ],
+  }),
   component: RouteComponent,
   context: () => {
     return {

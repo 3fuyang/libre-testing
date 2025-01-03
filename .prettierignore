@@ -16,6 +16,7 @@ dist/
 .wrangler
 app/components/ui
 app/hooks/use-toast.ts
+app/routeTree.gen.ts
 
 # IDE
 .vscode/*

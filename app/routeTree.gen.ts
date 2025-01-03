@@ -17,6 +17,9 @@ import { Route as HomeworkTriangleJudgeImport } from './routes/homework/triangle
 import { Route as HomeworkTelecomSystemImport } from './routes/homework/telecom-system'
 import { Route as HomeworkComputerSellingImport } from './routes/homework/computer-selling'
 import { Route as HomeworkCalendarProblemImport } from './routes/homework/calendar-problem'
+import { Route as FinalProjectUnitTestingImport } from './routes/final-project/unit-testing'
+import { Route as FinalProjectSystemTestingImport } from './routes/final-project/system-testing'
+import { Route as FinalProjectIntegrationTestingImport } from './routes/final-project/integration-testing'
 
 // Create/Update Routes
 
@@ -56,6 +59,25 @@ const HomeworkCalendarProblemRoute = HomeworkCalendarProblemImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const FinalProjectUnitTestingRoute = FinalProjectUnitTestingImport.update({
+  id: '/final-project/unit-testing',
+  path: '/final-project/unit-testing',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const FinalProjectSystemTestingRoute = FinalProjectSystemTestingImport.update({
+  id: '/final-project/system-testing',
+  path: '/final-project/system-testing',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const FinalProjectIntegrationTestingRoute =
+  FinalProjectIntegrationTestingImport.update({
+    id: '/final-project/integration-testing',
+    path: '/final-project/integration-testing',
+    getParentRoute: () => rootRoute,
+  } as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -65,6 +87,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/final-project/integration-testing': {
+      id: '/final-project/integration-testing'
+      path: '/final-project/integration-testing'
+      fullPath: '/final-project/integration-testing'
+      preLoaderRoute: typeof FinalProjectIntegrationTestingImport
+      parentRoute: typeof rootRoute
+    }
+    '/final-project/system-testing': {
+      id: '/final-project/system-testing'
+      path: '/final-project/system-testing'
+      fullPath: '/final-project/system-testing'
+      preLoaderRoute: typeof FinalProjectSystemTestingImport
+      parentRoute: typeof rootRoute
+    }
+    '/final-project/unit-testing': {
+      id: '/final-project/unit-testing'
+      path: '/final-project/unit-testing'
+      fullPath: '/final-project/unit-testing'
+      preLoaderRoute: typeof FinalProjectUnitTestingImport
       parentRoute: typeof rootRoute
     }
     '/homework/calendar-problem': {
@@ -109,6 +152,9 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/final-project/integration-testing': typeof FinalProjectIntegrationTestingRoute
+  '/final-project/system-testing': typeof FinalProjectSystemTestingRoute
+  '/final-project/unit-testing': typeof FinalProjectUnitTestingRoute
   '/homework/calendar-problem': typeof HomeworkCalendarProblemRoute
   '/homework/computer-selling': typeof HomeworkComputerSellingRoute
   '/homework/telecom-system': typeof HomeworkTelecomSystemRoute
@@ -118,6 +164,9 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/final-project/integration-testing': typeof FinalProjectIntegrationTestingRoute
+  '/final-project/system-testing': typeof FinalProjectSystemTestingRoute
+  '/final-project/unit-testing': typeof FinalProjectUnitTestingRoute
   '/homework/calendar-problem': typeof HomeworkCalendarProblemRoute
   '/homework/computer-selling': typeof HomeworkComputerSellingRoute
   '/homework/telecom-system': typeof HomeworkTelecomSystemRoute
@@ -128,6 +177,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/final-project/integration-testing': typeof FinalProjectIntegrationTestingRoute
+  '/final-project/system-testing': typeof FinalProjectSystemTestingRoute
+  '/final-project/unit-testing': typeof FinalProjectUnitTestingRoute
   '/homework/calendar-problem': typeof HomeworkCalendarProblemRoute
   '/homework/computer-selling': typeof HomeworkComputerSellingRoute
   '/homework/telecom-system': typeof HomeworkTelecomSystemRoute
@@ -139,6 +191,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/final-project/integration-testing'
+    | '/final-project/system-testing'
+    | '/final-project/unit-testing'
     | '/homework/calendar-problem'
     | '/homework/computer-selling'
     | '/homework/telecom-system'
@@ -147,6 +202,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/final-project/integration-testing'
+    | '/final-project/system-testing'
+    | '/final-project/unit-testing'
     | '/homework/calendar-problem'
     | '/homework/computer-selling'
     | '/homework/telecom-system'
@@ -155,6 +213,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/final-project/integration-testing'
+    | '/final-project/system-testing'
+    | '/final-project/unit-testing'
     | '/homework/calendar-problem'
     | '/homework/computer-selling'
     | '/homework/telecom-system'
@@ -165,6 +226,9 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FinalProjectIntegrationTestingRoute: typeof FinalProjectIntegrationTestingRoute
+  FinalProjectSystemTestingRoute: typeof FinalProjectSystemTestingRoute
+  FinalProjectUnitTestingRoute: typeof FinalProjectUnitTestingRoute
   HomeworkCalendarProblemRoute: typeof HomeworkCalendarProblemRoute
   HomeworkComputerSellingRoute: typeof HomeworkComputerSellingRoute
   HomeworkTelecomSystemRoute: typeof HomeworkTelecomSystemRoute
@@ -174,6 +238,9 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FinalProjectIntegrationTestingRoute: FinalProjectIntegrationTestingRoute,
+  FinalProjectSystemTestingRoute: FinalProjectSystemTestingRoute,
+  FinalProjectUnitTestingRoute: FinalProjectUnitTestingRoute,
   HomeworkCalendarProblemRoute: HomeworkCalendarProblemRoute,
   HomeworkComputerSellingRoute: HomeworkComputerSellingRoute,
   HomeworkTelecomSystemRoute: HomeworkTelecomSystemRoute,
@@ -192,6 +259,9 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/final-project/integration-testing",
+        "/final-project/system-testing",
+        "/final-project/unit-testing",
         "/homework/calendar-problem",
         "/homework/computer-selling",
         "/homework/telecom-system",
@@ -201,6 +271,15 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/final-project/integration-testing": {
+      "filePath": "final-project/integration-testing.tsx"
+    },
+    "/final-project/system-testing": {
+      "filePath": "final-project/system-testing.tsx"
+    },
+    "/final-project/unit-testing": {
+      "filePath": "final-project/unit-testing.tsx"
     },
     "/homework/calendar-problem": {
       "filePath": "homework/calendar-problem.tsx"

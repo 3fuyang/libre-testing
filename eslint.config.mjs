@@ -12,11 +12,13 @@ export default tseslint.config(
   {
     ignores: [
       'node_modules',
-      'dist',
+      '.vinxi',
+      '.output',
       'public',
       '.prettierrc.mjs',
       'app/components/ui',
       'app/hooks/use-toast.ts',
+      'app/routeTree.gen.ts',
     ],
   },
   { files: ['**/*.{js,mjs,cjs,ts}'] },
