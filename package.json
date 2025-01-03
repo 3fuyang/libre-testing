@@ -7,7 +7,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "dev": "vinxi dev --port=3001",
-    "build": "vinxi build",
+    "build": "pnpm typecheck && vinxi build",
     "start": "vinxi start",
     "lint": "eslint . --cache",
     "lint:fix": "eslint . --fix --cache",

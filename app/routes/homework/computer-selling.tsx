@@ -3,8 +3,8 @@ import {
   type ComputerSellingTestCase,
   type ComputerSellingVersion,
 } from '@/atoms/computer-seeling'
-import boundaryBasic from '@/cases/computer-selling/boundary-basic.json?url'
-import boundaryRobust from '@/cases/computer-selling/boundary-robust.json?url'
+import boundaryBasic from '@/cases/computer-selling/boundary-basic.json?no-inline'
+import boundaryRobust from '@/cases/computer-selling/boundary-robust.json?no-inline'
 import { Flex } from '@/components/flex'
 import { columns, type TestResultItem } from '@/components/result-table/columns'
 import { DataTable } from '@/components/result-table/table'

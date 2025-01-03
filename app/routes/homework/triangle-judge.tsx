@@ -3,12 +3,12 @@ import {
   type TriangleJudgeTestCase,
   type TriangleJudgeVersion,
 } from '@/atoms/triangle-judge'
-import boundaryBasic from '@/cases/triangle-judge/boundary-basic.json?url'
-import boundaryRobust from '@/cases/triangle-judge/boundary-robust.json?url'
-import equivalentStrongCommon from '@/cases/triangle-judge/equivalence-strong-common.json?url'
-import equivalentStrongRobust from '@/cases/triangle-judge/equivalence-strong-robust.json?url'
-import equivalentWeakCommon from '@/cases/triangle-judge/equivalence-weak-common.json?url'
-import equivalentWeakRobust from '@/cases/triangle-judge/equivalence-weak-robust.json?url'
+import boundaryBasic from '@/cases/triangle-judge/boundary-basic.json?no-inline'
+import boundaryRobust from '@/cases/triangle-judge/boundary-robust.json?no-inline'
+import equivalentStrongCommon from '@/cases/triangle-judge/equivalence-strong-common.json?no-inline'
+import equivalentStrongRobust from '@/cases/triangle-judge/equivalence-strong-robust.json?no-inline'
+import equivalentWeakCommon from '@/cases/triangle-judge/equivalence-weak-common.json?no-inline'
+import equivalentWeakRobust from '@/cases/triangle-judge/equivalence-weak-robust.json?no-inline'
 import { Flex } from '@/components/flex'
 import { columns, type TestResultItem } from '@/components/result-table/columns'
 import { DataTable } from '@/components/result-table/table'
