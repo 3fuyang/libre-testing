@@ -3,12 +3,6 @@ import {
   type TriangleJudgeTestCase,
   type TriangleJudgeVersion,
 } from '@/atoms/triangle-judge'
-import boundaryBasic from '@/cases/triangle-judge/boundary-basic.json?no-inline'
-import boundaryRobust from '@/cases/triangle-judge/boundary-robust.json?no-inline'
-import equivalentStrongCommon from '@/cases/triangle-judge/equivalence-strong-common.json?no-inline'
-import equivalentStrongRobust from '@/cases/triangle-judge/equivalence-strong-robust.json?no-inline'
-import equivalentWeakCommon from '@/cases/triangle-judge/equivalence-weak-common.json?no-inline'
-import equivalentWeakRobust from '@/cases/triangle-judge/equivalence-weak-robust.json?no-inline'
 import { Flex } from '@/components/flex'
 import { columns, type TestResultItem } from '@/components/result-table/columns'
 import { DataTable } from '@/components/result-table/table'
@@ -52,33 +46,33 @@ export const Route = createFileRoute('/homework/triangle-judge')({
     links: [
       {
         rel: 'preload',
-        as: 'script',
-        href: boundaryBasic,
+        as: 'fetch',
+        href: '/cases/triangle-judge/boundary-basic.json',
       },
       {
         rel: 'preload',
-        as: 'script',
-        href: boundaryRobust,
+        as: 'fetch',
+        href: '/cases/triangle-judge/boundary-robust.json',
       },
       {
         rel: 'preload',
-        as: 'script',
-        href: equivalentStrongCommon,
+        as: 'fetch',
+        href: '/cases/triangle-judge/equivalence-strong-common.json',
       },
       {
         rel: 'preload',
-        as: 'script',
-        href: equivalentStrongRobust,
+        as: 'fetch',
+        href: '/cases/triangle-judge/equivalence-strong-robust.json',
       },
       {
         rel: 'preload',
-        as: 'script',
-        href: equivalentWeakCommon,
+        as: 'fetch',
+        href: '/cases/triangle-judge/equivalence-weak-common.json',
       },
       {
         rel: 'preload',
-        as: 'script',
-        href: equivalentWeakRobust,
+        as: 'fetch',
+        href: '/cases/triangle-judge/equivalence-weak-robust.json',
       },
     ],
   }),
@@ -295,9 +289,10 @@ function TestToolbar() {
             ...triangleJudgeState,
             runningState: 'running',
           })
-          const { cases } = (await import(
-            `../../cases/triangle-judge/${testCase}.json`
-          )) as {
+          const casesResp = await fetch(
+            `/cases/triangle-judge/${testCase}.json`,
+          )
+          const { cases } = (await casesResp.json()) as {
             cases: {
               input: [number, number, number]
               expected: string

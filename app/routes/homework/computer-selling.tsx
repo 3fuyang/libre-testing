@@ -3,8 +3,6 @@ import {
   type ComputerSellingTestCase,
   type ComputerSellingVersion,
 } from '@/atoms/computer-seeling'
-import boundaryBasic from '@/cases/computer-selling/boundary-basic.json?no-inline'
-import boundaryRobust from '@/cases/computer-selling/boundary-robust.json?no-inline'
 import { Flex } from '@/components/flex'
 import { columns, type TestResultItem } from '@/components/result-table/columns'
 import { DataTable } from '@/components/result-table/table'
@@ -48,13 +46,13 @@ export const Route = createFileRoute('/homework/computer-selling')({
     links: [
       {
         rel: 'preload',
-        as: 'script',
-        href: boundaryBasic,
+        as: 'fetch',
+        href: '/cases/computer-selling/boundary-basic.json',
       },
       {
         rel: 'preload',
-        as: 'script',
-        href: boundaryRobust,
+        as: 'fetch',
+        href: '/cases/computer-selling/boundary-robust.json',
       },
     ],
   }),
@@ -267,9 +265,10 @@ function TestToolbar() {
             ...computerSellingState,
             runningState: 'running',
           })
-          const { cases } = (await import(
-            `../../cases/computer-selling/${testCase}.json`
-          )) as {
+          const casesResp = await fetch(
+            `/cases/computer-selling/${testCase}.json`,
+          )
+          const { cases } = (await casesResp.json()) as {
             cases: {
               input: [number, number, number]
               expected: string

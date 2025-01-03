@@ -1,5 +1,6 @@
 import type { Options } from 'canvas-confetti'
-import confetti from 'canvas-confetti'
+
+const canvasConfetti = import('canvas-confetti')
 
 export function triggerConfetti() {
   const count = 200
@@ -8,11 +9,13 @@ export function triggerConfetti() {
   } satisfies Options
 
   function fire(particleRatio: number, opts: Options) {
-    confetti({
-      ...defaults,
-      ...opts,
-      particleCount: Math.floor(count * particleRatio),
-    })
+    canvasConfetti.then(({ default: confetti }) =>
+      confetti({
+        ...defaults,
+        ...opts,
+        particleCount: Math.floor(count * particleRatio),
+      }),
+    )
   }
 
   fire(0.25, {
