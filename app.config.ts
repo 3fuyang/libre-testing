@@ -19,7 +19,7 @@ export default defineConfig({
   vite: {
     plugins: [
       isProd ? partytownVite({
-        dest: path.join(__dirname, '.output/public', '~partytown'),
+        dest: path.join(import.meta.dirname, '.output/public', '~partytown'),
       }) : undefined,
       tsConfigPaths({
         projects: ['./tsconfig.json']
