@@ -27,7 +27,7 @@ export default defineConfig({
       }),
     ],
     // Workers are handled in a completely separate build process,
-    // so that required plugins should be specified explicitly.
+    // so required plugins should be specified explicitly.
     worker: {
       plugins: () => [
         tsConfigPaths({
