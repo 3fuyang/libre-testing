@@ -1,11 +1,11 @@
 import { createHighlighterCore } from 'shiki/core'
-import { createOnigurumaEngine } from 'shiki/engine/oniguruma'
+import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 
 export const highlighterPromise = createHighlighterCore({
   themes: [
-    import('shiki/themes/github-light.mjs'),
-    import('shiki/themes/github-dark.mjs'),
+    import('@shikijs/themes/github-light'),
+    import('@shikijs/themes/github-dark'),
   ],
-  langs: [import('shiki/langs/typescript.mjs')],
-  engine: createOnigurumaEngine(import('shiki/wasm')),
+  langs: [import('@shikijs/langs/typescript')],
+  engine: createJavaScriptRegexEngine(),
 })

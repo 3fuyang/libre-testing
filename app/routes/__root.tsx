@@ -4,7 +4,6 @@ import {
   createRootRoute,
   DefaultGlobalNotFound,
   Outlet,
-  ScrollRestoration,
 } from '@tanstack/react-router'
 import { Meta, Scripts } from '@tanstack/start'
 import { Provider } from 'jotai'
@@ -103,7 +102,6 @@ function RootDocument({ children }: Readonly<PropsWithChildren>) {
       </head>
       <body>
         {children}
-        <ScrollRestoration />
         <TanStackRouterDevtools position="bottom-right" />
         <Scripts />
       </body>
