@@ -1,5 +1,5 @@
 import { calendarProblemImplementations } from '@/atoms/calendar-problem'
-import { computerSellingImplementations } from '@/atoms/computer-seeling'
+import { computerSellingImplementations } from '@/atoms/computer-selling'
 import { telecomSystemImplementations } from '@/atoms/telecom-system'
 import { triangleJudgeImplementations } from '@/atoms/triangle-judge'
 import type { TestResultItem } from '@/components/result-table/columns'

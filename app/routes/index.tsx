@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { CheckCircle, Code, Zap } from 'lucide-react'
+import { CheckCircle, Code, RocketIcon, Zap } from 'lucide-react'
 import { motion, type Variants } from 'motion/react'
 import * as React from 'react'
 import { useTernaryDarkMode } from 'usehooks-ts'
@@ -90,13 +90,15 @@ function HomeComponent() {
               UI.
             </motion.p>
             <motion.section custom={2} variants={fadeInVariants}>
-              <Button size="lg" asChild>
+              <Button asChild>
                 <Link
                   to="/homework/triangle-judge"
                   search={{ tab: 'question' }}
                   preload="viewport"
+                  className="group hover:bg-transparent hover:text-foreground focus-visible:bg-transparent focus-visible:text-foreground border-foreground border"
                 >
                   Get Started
+                  <RocketIcon className="group-hover:-translate-y-0.5 transition-transform duration-200" />
                 </Link>
               </Button>
             </motion.section>

@@ -136,9 +136,13 @@ function RouteComponent() {
 
 function QuestionPanel() {
   const code = `function triangleJudge(a: number, b: number, c: number): string {
-  if (a <= 0 || b <= 0 || c <= 0 || a > 200 || b > 200 || c > 200) {
+  if (
+    a <= 0 || b <= 0 || c <= 0 ||
+    a > 200 || b > 200 || c > 200
+  ) {
     return '边长数值越界'
   }
+
   if (
     a + b > c &&
     a + c > b &&
@@ -146,14 +150,16 @@ function QuestionPanel() {
   ) {
     if (a === b && a === c) {
       return '该三角形是等边三角形'
-    } else if (a === b || a === c || b === c) {
-      return '该三角形是等腰三角形'
-    } else {
-      return '该三角形是普通三角形'
     }
-  } else {
-    return '所给三边数据不能构成三角形'
+
+    if (a === b || a === c || b === c) {
+      return '该三角形是等腰三角形'
+    }
+
+    return '该三角形是普通三角形'
   }
+
+  return '所给三边数据不能构成三角形'
 }`
 
   const highlighter = use(highlighterPromise)
