@@ -195,7 +195,7 @@ function getLevel(time: number): number {
       <CardHeader className="pb-4">
         <CardTitle className="text-lg">Question 4. 电信收费系统</CardTitle>
         <CardDescription>
-          输入本月通话时间、用户本年度未按时缴费次数，计算本月应缴话费
+          输入本月通话时间、用户本年度未按时缴费次数，计算本月应缴话费。
         </CardDescription>
       </CardHeader>
 

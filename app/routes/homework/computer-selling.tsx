@@ -160,7 +160,7 @@ function QuestionPanel() {
       <CardHeader className="pb-4">
         <CardTitle className="text-lg">Question 3. 电脑销售系统</CardTitle>
         <CardDescription>
-          根据输入的主机、显示器、外设数量，计算销售总额
+          根据输入的主机、显示器、外设数量，计算销售总额。
         </CardDescription>
       </CardHeader>
 
