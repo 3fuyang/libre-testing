@@ -80,6 +80,46 @@
   }
 }
 
+/* noto-sans-sc-chinese-simplified-wght-normal */
+@font-face {
+  font-family: 'Noto Sans SC Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url(@fontsource-variable/noto-sans-sc/files/noto-sans-sc-chinese-simplified-wght-normal.woff2) format('woff2-variations');
+}
+
+/* geist-sans-latin-400-normal */
+@font-face {
+  font-family: 'Geist Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff2) format('woff2'), url(@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff) format('woff');
+}
+
+/* geist-sans-latin-500-normal */
+@font-face {
+  font-family: 'Geist Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(@fontsource/geist-sans/files/geist-sans-latin-500-normal.woff2) format('woff2'), url(@fontsource/geist-sans/files/geist-sans-latin-500-normal.woff) format('woff');
+}
+
+/* geist-sans-latin-600-normal */
+@font-face {
+  font-family: 'Geist Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(@fontsource/geist-sans/files/geist-sans-latin-600-normal.woff2) format('woff2'), url(@fontsource/geist-sans/files/geist-sans-latin-600-normal.woff) format('woff');
+}
+
+body {
+  font-family: 'Noto Sans SC Variable', sans-serif;
+}
+
 :root {
   --background: hsl(0 0% 100%);
   --foreground: hsl(0 0% 3.9%);

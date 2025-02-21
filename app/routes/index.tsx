@@ -77,7 +77,7 @@ function HomeComponent() {
             <motion.h1
               custom={0}
               variants={fadeInVariants}
-              className="mb-6 text-4xl font-extrabold tracking-wide lg:text-5xl"
+              className="mb-6 text-4xl font-extrabold lg:text-5xl"
             >
               Testing Made Libre
             </motion.h1>
