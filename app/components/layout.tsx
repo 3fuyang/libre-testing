@@ -28,6 +28,7 @@ import {
 } from './ui/dropdown-menu'
 import { Separator } from './ui/separator'
 import { Toaster } from './ui/toaster'
+import { flushSync } from 'react-dom'
 
 export default function Layout({ children }: PropsWithChildren) {
   const breadcrumb = useBreadcrumb()
@@ -115,9 +116,17 @@ function ThemeSwitch() {
       <DropdownMenuContent>
         <DropdownMenuRadioGroup
           value={ternaryDarkMode}
-          onValueChange={(value) =>
-            setTernaryDarkMode(value as TernaryDarkMode)
-          }
+          onValueChange={(value) => {
+            if (document.startViewTransition) {
+              document.startViewTransition(() => {
+                flushSync(() => {
+                  setTernaryDarkMode(value as TernaryDarkMode)
+                })
+              })
+            } else {
+              setTernaryDarkMode(value as TernaryDarkMode)
+            }
+          }}
         >
           <DropdownMenuRadioItem value="light">
             <Sun className="mr-2 size-4" />
