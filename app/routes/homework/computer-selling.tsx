@@ -42,6 +42,12 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute('/homework/computer-selling')({
   validateSearch: searchSchema,
+  context: () => {
+    return {
+      segment: '计算机销售系统',
+    }
+  },
+  component: RouteComponent,
   head: () => ({
     links: [
       {
@@ -58,12 +64,6 @@ export const Route = createFileRoute('/homework/computer-selling')({
       },
     ],
   }),
-  component: RouteComponent,
-  context: () => {
-    return {
-      segment: '计算机销售系统',
-    }
-  },
 })
 
 function RouteComponent() {

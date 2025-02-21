@@ -5,7 +5,6 @@ import pluginRouter from '@tanstack/eslint-plugin-router'
 import * as tsParser from '@typescript-eslint/parser'
 import reactCompiler from 'eslint-plugin-react-compiler'
 import hooksPlugin from 'eslint-plugin-react-hooks'
-import tailwind from 'eslint-plugin-tailwindcss'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
@@ -24,7 +23,6 @@ export default tseslint.config(
   { files: ['**/*.{js,mjs,cjs,ts}'] },
   pluginJs.configs.recommended,
   tseslint.configs.recommended,
-  ...tailwind.configs['flat/recommended'],
   {
     plugins: {
       // @ts-expect-error Hooks plugin is not typed
