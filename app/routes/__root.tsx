@@ -3,9 +3,10 @@ import indexCss from '@/index.css?url'
 import {
   createRootRoute,
   DefaultGlobalNotFound,
+  HeadContent,
   Outlet,
+  Scripts,
 } from '@tanstack/react-router'
-import { Meta, Scripts } from '@tanstack/start'
 import { Provider } from 'jotai'
 import { lazy, type PropsWithChildren } from 'react'
 
@@ -98,7 +99,7 @@ function RootDocument({ children }: Readonly<PropsWithChildren>) {
   return (
     <html lang="zh-CN">
       <head>
-        <Meta />
+        <HeadContent />
       </head>
       <body>
         {children}

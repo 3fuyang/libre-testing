@@ -75,6 +75,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -86,7 +87,8 @@
   font-style: normal;
   font-display: swap;
   font-weight: 100 900;
-  src: url(@fontsource-variable/noto-sans-sc/files/noto-sans-sc-chinese-simplified-wght-normal.woff2) format('woff2-variations');
+  src: url(@fontsource-variable/noto-sans-sc/files/noto-sans-sc-chinese-simplified-wght-normal.woff2)
+    format('woff2-variations');
 }
 
 /* geist-sans-latin-400-normal */
@@ -95,7 +97,11 @@
   font-style: normal;
   font-display: swap;
   font-weight: 400;
-  src: url(@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff2) format('woff2'), url(@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff) format('woff');
+  src:
+    url(@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff2)
+      format('woff2'),
+    url(@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff)
+      format('woff');
 }
 
 /* geist-sans-latin-500-normal */
@@ -104,7 +110,11 @@
   font-style: normal;
   font-display: swap;
   font-weight: 500;
-  src: url(@fontsource/geist-sans/files/geist-sans-latin-500-normal.woff2) format('woff2'), url(@fontsource/geist-sans/files/geist-sans-latin-500-normal.woff) format('woff');
+  src:
+    url(@fontsource/geist-sans/files/geist-sans-latin-500-normal.woff2)
+      format('woff2'),
+    url(@fontsource/geist-sans/files/geist-sans-latin-500-normal.woff)
+      format('woff');
 }
 
 /* geist-sans-latin-600-normal */
@@ -113,7 +123,11 @@
   font-style: normal;
   font-display: swap;
   font-weight: 600;
-  src: url(@fontsource/geist-sans/files/geist-sans-latin-600-normal.woff2) format('woff2'), url(@fontsource/geist-sans/files/geist-sans-latin-600-normal.woff) format('woff');
+  src:
+    url(@fontsource/geist-sans/files/geist-sans-latin-600-normal.woff2)
+      format('woff2'),
+    url(@fontsource/geist-sans/files/geist-sans-latin-600-normal.woff)
+      format('woff');
 }
 
 body {
@@ -155,6 +169,7 @@ body {
   --sidebar-border: hsl(220 13% 91%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
+
 .dark {
   --background: hsl(0 0% 3.9%);
   --foreground: hsl(0 0% 98%);
@@ -200,6 +215,7 @@ body {
   counter-reset: step;
   counter-increment: step 0;
 }
+
 .shiki code .line::before {
   @apply text-foreground/80 mr-6 inline-block w-4 text-right;
   content: counter(step);
@@ -214,4 +230,22 @@ html.dark .shiki span {
   font-style: var(--shiki-dark-font-style) !important;
   font-weight: var(--shiki-dark-font-weight) !important;
   text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+::view-transition-new(theme-switch) {
+  animation: curtain-fall 500ms ease-out;
+}
+
+::view-transition-old(theme-switch) {
+  animation: none;
+  z-index: -10;
+}
+
+@keyframes curtain-fall {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
 }

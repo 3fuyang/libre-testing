@@ -116,13 +116,16 @@ function ThemeSwitch() {
       <DropdownMenuContent>
         <DropdownMenuRadioGroup
           value={ternaryDarkMode}
-          onValueChange={(value) => {
+          onValueChange={async (value) => {
             if (document.startViewTransition) {
-              document.startViewTransition(() => {
+              document.body.style.viewTransitionName = 'theme-switch'
+              const viewTransition = document.startViewTransition(() => {
                 flushSync(() => {
                   setTernaryDarkMode(value as TernaryDarkMode)
                 })
               })
+              await viewTransition.finished
+              document.body.style.viewTransitionName = ''
             } else {
               setTernaryDarkMode(value as TernaryDarkMode)
             }
