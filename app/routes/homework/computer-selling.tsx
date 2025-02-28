@@ -44,7 +44,7 @@ export const Route = createFileRoute('/homework/computer-selling')({
   validateSearch: searchSchema,
   context: () => {
     return {
-      segment: '计算机销售系统',
+      segment: '电脑销售系统',
     }
   },
   component: RouteComponent,
@@ -160,7 +160,7 @@ function QuestionPanel() {
       <CardHeader className="pb-4">
         <CardTitle className="text-lg">Question 3. 电脑销售系统</CardTitle>
         <CardDescription>
-          根据输入的主机、显示器、外设数量，计算销售总额。
+          根据输入的主机、显示器、外设数量，计算销售总额
         </CardDescription>
       </CardHeader>
 
@@ -168,7 +168,7 @@ function QuestionPanel() {
         <p className="font-medium">算法思想</p>
         <p className="text-sm">
           首先判断主机的销售数量，当这个变量值为 <code>-1</code>{' '}
-          时，发出月度统计，当值不为 <code>-1</code> 时计算总额
+          时，发出月度统计，当值不为 <code>-1</code> 时计算总额。
         </p>
         <p className="font-medium">代码实现</p>
         <TestToolbar />

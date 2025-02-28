@@ -25,7 +25,6 @@ export default tseslint.config(
   tseslint.configs.recommended,
   {
     plugins: {
-      // @ts-expect-error Hooks plugin is not typed
       'react-hooks': hooksPlugin,
     },
   },

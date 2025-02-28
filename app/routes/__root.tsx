@@ -51,6 +51,11 @@ export const Route = createRootRoute({
         rel: 'icon',
         href: '/favicon.webp',
       },
+      {
+        rel: 'dns-prefetch',
+        href: 'https://www.libretesting.xyz',
+      },
+      isProd ? { rel: 'preconnect', href: 'https://www.googletagmanager.com' } : undefined,
     ],
     scripts: [
       isProd

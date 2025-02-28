@@ -7,6 +7,7 @@ import { useBreadcrumb } from '@/hooks/use-breadcrumb'
 import { Link } from '@tanstack/react-router'
 import { Laptop, MoonStar, Sun } from 'lucide-react'
 import type { PropsWithChildren } from 'react'
+import { flushSync } from 'react-dom'
 import { useTernaryDarkMode, type TernaryDarkMode } from 'usehooks-ts'
 import { AppSidebar } from './app-sidebar'
 import { Flex } from './flex'
@@ -28,7 +29,6 @@ import {
 } from './ui/dropdown-menu'
 import { Separator } from './ui/separator'
 import { Toaster } from './ui/toaster'
-import { flushSync } from 'react-dom'
 
 export default function Layout({ children }: PropsWithChildren) {
   const breadcrumb = useBreadcrumb()
@@ -60,6 +60,9 @@ export default function Layout({ children }: PropsWithChildren) {
             <Flex align="center" className="ml-auto space-x-2">
               <ThemeSwitch />
               <GitHubLink />
+              <a className='tracking-wide underline text-foreground' href="https://www.libretesting.xyz" target="_blank" rel="noopener noreferrer">
+                v1
+              </a>
             </Flex>
           </header>
 

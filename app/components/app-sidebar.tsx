@@ -8,6 +8,7 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubItem,
+  useSidebar,
 } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
 import { Link } from '@tanstack/react-router'
@@ -17,6 +18,14 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from './ui/collapsible'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu'
 
 const items = [
   {
@@ -62,6 +71,10 @@ const items = [
 ]
 
 export function AppSidebar() {
+  const { state, isMobile } = useSidebar()
+
+  const shouldRenderDropdown = !isMobile && state === 'collapsed'
+
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -70,46 +83,79 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
-            {items.map((item) => (
-              <Collapsible
-                key={item.title}
-                title={item.title}
-                defaultOpen
-                asChild
-                className="group/collapsible"
-              >
-                <SidebarMenuItem>
-                  <CollapsibleTrigger asChild>
-                    <SidebarMenuButton tooltip={item.title}>
-                      {item.icon && <item.icon className="mr-2" />}
-                      {item.title}{' '}
-                      <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
-                    </SidebarMenuButton>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <SidebarMenuSub>
-                      {item.children.map((item) => (
-                        <SidebarMenuSubItem key={item.title}>
-                          <SidebarMenuButton asChild>
-                            <Link to={item.url} preload="intent">
-                              {({ isActive }) => (
-                                <span
-                                  className={cn(
-                                    isActive && 'text-primary font-medium',
-                                  )}
-                                >
-                                  {item.title}
-                                </span>
-                              )}
-                            </Link>
-                          </SidebarMenuButton>
-                        </SidebarMenuSubItem>
+            {shouldRenderDropdown &&
+              items.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <SidebarMenuButton tooltip={item.title}>
+                        {item.icon && <item.icon className="mr-2" />}
+                      </SidebarMenuButton>
+                    </DropdownMenuTrigger>
+
+                    <DropdownMenuContent side="right" align="start">
+                      <DropdownMenuLabel>{item.title}</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      {item.children.map((subItem) => (
+                        <DropdownMenuItem key={subItem.url}>
+                          <Link to={subItem.url} preload="intent">
+                            {({ isActive }) => (
+                              <span
+                                className={cn(
+                                  isActive && 'text-primary font-medium',
+                                )}
+                              >
+                                {subItem.title}
+                              </span>
+                            )}
+                          </Link>
+                        </DropdownMenuItem>
                       ))}
-                    </SidebarMenuSub>
-                  </CollapsibleContent>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </SidebarMenuItem>
-              </Collapsible>
-            ))}
+              ))}
+            {!shouldRenderDropdown &&
+              items.map((item) => (
+                <Collapsible
+                  key={item.title}
+                  title={item.title}
+                  defaultOpen
+                  asChild
+                  className="group/collapsible"
+                >
+                  <SidebarMenuItem>
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuButton tooltip={item.title}>
+                        {item.icon && <item.icon className="mr-2" />}
+                        {item.title}{' '}
+                        <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
+                      </SidebarMenuButton>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        {item.children.map((item) => (
+                          <SidebarMenuSubItem key={item.title}>
+                            <SidebarMenuButton asChild>
+                              <Link to={item.url} preload="intent">
+                                {({ isActive }) => (
+                                  <span
+                                    className={cn(
+                                      isActive && 'text-primary font-medium',
+                                    )}
+                                  >
+                                    {item.title}
+                                  </span>
+                                )}
+                              </Link>
+                            </SidebarMenuButton>
+                          </SidebarMenuSubItem>
+                        ))}
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  </SidebarMenuItem>
+                </Collapsible>
+              ))}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>

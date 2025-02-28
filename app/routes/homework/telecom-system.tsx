@@ -195,14 +195,14 @@ function getLevel(time: number): number {
       <CardHeader className="pb-4">
         <CardTitle className="text-lg">Question 4. 电信收费系统</CardTitle>
         <CardDescription>
-          输入本月通话时间、用户本年度未按时缴费次数，计算本月应缴话费。
+          输入本月通话时间、用户本年度未按时缴费次数，计算本月应缴话费
         </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">
         <p className="font-medium">算法思想</p>
         <p className="text-sm">
-          首先校验输入的通话时间、未按时缴费次数，确定其符合规范后，再判断折扣档位，计算本月应缴话费
+          首先校验输入的通话时间、未按时缴费次数，确定其符合规范后，再判断折扣档位，计算本月应缴话费。
         </p>
         <p className="font-medium">代码实现</p>
         <TestToolbar />
