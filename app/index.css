@@ -81,16 +81,6 @@
   }
 }
 
-/* noto-sans-sc-chinese-simplified-wght-normal */
-@font-face {
-  font-family: 'Noto Sans SC Variable';
-  font-style: normal;
-  font-display: swap;
-  font-weight: 100 900;
-  src: url(@fontsource-variable/noto-sans-sc/files/noto-sans-sc-chinese-simplified-wght-normal.woff2)
-    format('woff2-variations');
-}
-
 /* geist-sans-latin-400-normal */
 @font-face {
   font-family: 'Geist Sans';
@@ -145,7 +135,7 @@
 }
 
 body {
-  font-family: 'Noto Sans SC Variable', sans-serif;
+  font-family: 'Geist Sans Variable', sans-serif;
 }
 
 :root {

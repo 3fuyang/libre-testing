@@ -155,7 +155,7 @@ function FeatureCard({
       <CardHeader>
         <CardTitle className="flex items-start space-x-2">
           {icon}
-          <span className="hyphens-auto break-all leading-8">{title}</span>
+          <span className="hyphens-auto break-all leading-8 tracking-wide">{title}</span>
         </CardTitle>
       </CardHeader>
       <CardContent>
